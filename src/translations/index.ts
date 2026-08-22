@@ -509,7 +509,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '1. Oggetto',
             paragraphs: [
-              'I presenti Termini e Condizioni regolano l’accesso e l’utilizzo del sito web www.studiodentisticomarostica.it (di seguito “Sito”), di proprietà di Studio Dentistico Marostica.',
+              'I presenti Termini e Condizioni regolano l’accesso e l’utilizzo del sito web www.studiodentisticomarostica.com (di seguito “Sito”), di proprietà di Studio Dentistico Marostica.',
               'L’utilizzo del Sito implica l’accettazione integrale dei presenti Termini.',
             ],
           },
@@ -1069,7 +1069,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '1. Scope',
             paragraphs: [
-              'These Terms and Conditions govern access to and use of the website www.studiodentisticomarostica.it (the “Website”), owned by Studio Dentistico Marostica.',
+              'These Terms and Conditions govern access to and use of the website www.studiodentisticomarostica.com (the “Website”), owned by Studio Dentistico Marostica.',
               'Use of the Website implies full acceptance of these Terms.',
             ],
           },

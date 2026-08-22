@@ -1,5 +1,6 @@
 User-agent: *
 Allow: /
 Disallow: /admin
+Disallow: /reviews/submit
 
-Sitemap: https://studiodentisticomarostica.it/sitemap.xml
+Sitemap: https://www.studiodentisticomarostica.com/sitemap.xml
