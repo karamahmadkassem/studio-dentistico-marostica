@@ -43,7 +43,7 @@ const Footer: React.FC = () => {
                 <Facebook size={18} />
               </a>
               <a
-                href="https://instagram.com"
+                href="https://www.instagram.com/studiodentisticomarostica?igsh=cDE2MnlzaHo0eWhs"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-white/10 text-white transition-colors hover:bg-[#4AACE1]"
                 aria-label="Instagram"
                 target="_blank"
