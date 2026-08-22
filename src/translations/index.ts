@@ -218,7 +218,7 @@ export const translations: Record<Language, TranslationValue> = {
     about: {
       hero: {
         title: 'Chi siamo',
-        subtitle: 'Storia, valori e professionisti al servizio del tuo sorriso.',
+        subtitle: 'Storia e valori al servizio del tuo sorriso.',
       },
       mission: {
         title: 'La nostra missione',
@@ -781,7 +781,7 @@ export const translations: Record<Language, TranslationValue> = {
     about: {
       hero: {
         title: 'About us',
-        subtitle: 'Our story, values, and the team behind your smile.',
+        subtitle: 'Our story and values at the heart of your smile.',
       },
       mission: {
         title: 'Our mission',

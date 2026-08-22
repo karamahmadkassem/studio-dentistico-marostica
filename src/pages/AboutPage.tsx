@@ -75,50 +75,6 @@ const AboutPage: React.FC = () => {
     return t('about.history.items') as { year: string; title: string; text: string }[];
   }, [sections.history, isIt, t]);
 
-  const team = useMemo(() => {
-    const members = sections.team?.members as
-      | { name: string; role_it: string; role_en: string; bio_it: string; bio_en: string; image: string }[]
-      | undefined;
-    if (members?.length) {
-      return members.map((m) => ({
-        name: m.name,
-        role: isIt ? m.role_it : m.role_en,
-        bio: isIt ? m.bio_it : m.bio_en,
-        image: m.image,
-      }));
-    }
-    return [
-      {
-        name: 'Dott. Alessandro Bianchi',
-        role: 'Direttore Sanitario | Odontoiatra',
-        bio: 'Laureato in Odontoiatria e Protesi Dentaria. Specializzato in Implantologia e Chirurgia Orale.',
-        image:
-          'https://images.pexels.com/photos/5327585/pexels-photo-5327585.jpeg?auto=compress&cs=tinysrgb&w=800',
-      },
-      {
-        name: 'Dott.ssa Maria Rossi',
-        role: 'Odontoiatra',
-        bio: 'Esperta in trattamenti per adulti e bambini con tecniche moderne.',
-        image:
-          'https://images.pexels.com/photos/5407206/pexels-photo-5407206.jpeg?auto=compress&cs=tinysrgb&w=800',
-      },
-      {
-        name: 'Dott. Roberto Verdi',
-        role: 'Endodontista',
-        bio: 'Specializzato in trattamenti canalari complessi e tecnologie avanzate per il comfort.',
-        image:
-          'https://images.pexels.com/photos/5214958/pexels-photo-5214958.jpeg?auto=compress&cs=tinysrgb&w=800',
-      },
-      {
-        name: 'Luisa Neri',
-        role: 'Igienista Dentale',
-        bio: 'Dedicata alla prevenzione e al mantenimento della salute orale.',
-        image:
-          'https://images.pexels.com/photos/5327921/pexels-photo-5327921.jpeg?auto=compress&cs=tinysrgb&w=800',
-      },
-    ];
-  }, [sections.team, isIt]);
-
   const technology = useMemo(() => {
     const tech = sections.technology;
     if (tech) {
@@ -208,31 +164,6 @@ const AboutPage: React.FC = () => {
       </Section>
 
       <Section muted>
-        <FadeIn>
-          <h2 className="heading-section mb-12 text-center">{t('about.team.title')}</h2>
-        </FadeIn>
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {team.map((member, i) => (
-            <FadeIn key={member.name} delay={i * 0.06}>
-              <article>
-                <div className="mb-4 aspect-[3/4] overflow-hidden">
-                  <img
-                    src={member.image}
-                    alt={member.name}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <h3 className="font-display text-lg font-semibold text-ink">{member.name}</h3>
-                <p className="mb-2 text-sm font-medium text-brand-cyan">{member.role}</p>
-                <p className="text-sm leading-relaxed text-ink-muted">{member.bio}</p>
-              </article>
-            </FadeIn>
-          ))}
-        </div>
-      </Section>
-
-      <Section>
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <FadeIn>
             <div className="aspect-[4/3] overflow-hidden">

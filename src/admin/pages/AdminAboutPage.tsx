@@ -7,7 +7,6 @@ const SECTIONS = [
   { key: 'mission', label: 'Mission' },
   { key: 'values', label: 'Values' },
   { key: 'history', label: 'History' },
-  { key: 'team', label: 'Team' },
   { key: 'technology', label: 'Technology' },
 ] as const;
 
@@ -46,15 +45,6 @@ type HistoryItem = {
   text_en: string;
 };
 
-type TeamMember = {
-  name: string;
-  role_it: string;
-  role_en: string;
-  bio_it: string;
-  bio_en: string;
-  image: string;
-};
-
 type TechnologyContent = {
   title_it: string;
   title_en: string;
@@ -84,10 +74,6 @@ const defaultValues = (): ValueItem[] =>
 
 const defaultHistory = (): HistoryItem[] => [
   { year: '', title_it: '', title_en: '', text_it: '', text_en: '' },
-];
-
-const defaultTeam = (): TeamMember[] => [
-  { name: '', role_it: '', role_en: '', bio_it: '', bio_en: '', image: '' },
 ];
 
 const defaultTechnology = (): TechnologyContent => ({
@@ -138,19 +124,6 @@ function parseHistory(raw: Record<string, unknown> | undefined): HistoryItem[] {
     title_en: String(item.title_en ?? ''),
     text_it: String(item.text_it ?? ''),
     text_en: String(item.text_en ?? ''),
-  }));
-}
-
-function parseTeam(raw: Record<string, unknown> | undefined): TeamMember[] {
-  const members = raw?.members as TeamMember[] | undefined;
-  if (!members?.length) return defaultTeam();
-  return members.map((member) => ({
-    name: String(member.name ?? ''),
-    role_it: String(member.role_it ?? ''),
-    role_en: String(member.role_en ?? ''),
-    bio_it: String(member.bio_it ?? ''),
-    bio_en: String(member.bio_en ?? ''),
-    image: String(member.image ?? ''),
   }));
 }
 
@@ -223,14 +196,12 @@ const AdminAboutPage: React.FC = () => {
   const [mission, setMission] = useState<MissionContent>(defaultMission());
   const [values, setValues] = useState<ValueItem[]>(defaultValues());
   const [history, setHistory] = useState<HistoryItem[]>(defaultHistory());
-  const [team, setTeam] = useState<TeamMember[]>(defaultTeam());
   const [technology, setTechnology] = useState<TechnologyContent>(defaultTechnology());
 
   const applySection = (key: SectionKey, content: Record<string, unknown> | undefined) => {
     if (key === 'mission') setMission(parseMission(content));
     if (key === 'values') setValues(parseValues(content));
     if (key === 'history') setHistory(parseHistory(content));
-    if (key === 'team') setTeam(parseTeam(content));
     if (key === 'technology') setTechnology(parseTechnology(content));
   };
 
@@ -255,7 +226,6 @@ const AdminAboutPage: React.FC = () => {
     if (key === 'mission') return { ...mission };
     if (key === 'values') return { items: values };
     if (key === 'history') return { items: history };
-    if (key === 'team') return { members: team };
     return {
       ...technology,
       items_it: technology.items_it.map((item) => item.trim()).filter(Boolean),
@@ -278,10 +248,6 @@ const AdminAboutPage: React.FC = () => {
 
   const updateHistory = (index: number, patch: Partial<HistoryItem>) => {
     setHistory((prev) => prev.map((item, i) => (i === index ? { ...item, ...patch } : item)));
-  };
-
-  const updateTeam = (index: number, patch: Partial<TeamMember>) => {
-    setTeam((prev) => prev.map((item, i) => (i === index ? { ...item, ...patch } : item)));
   };
 
   const updateValue = (index: number, patch: Partial<ValueItem>) => {
@@ -423,76 +389,6 @@ const AdminAboutPage: React.FC = () => {
                       valueEn={item.text_en}
                       onChangeIt={(v) => updateHistory(index, { text_it: v })}
                       onChangeEn={(v) => updateHistory(index, { text_en: v })}
-                      multiline
-                      rows={3}
-                    />
-                  </div>
-                </div>
-              ))}
-            </div>
-          )}
-
-          {active === 'team' && (
-            <div className="space-y-4">
-              <div className="flex items-center justify-between gap-3">
-                <p className="text-sm text-ink-muted">Add or edit team members shown on the About page.</p>
-                <button
-                  type="button"
-                  className="btn-navy flex items-center gap-1 px-3 py-2 text-sm"
-                  onClick={() =>
-                    setTeam((prev) => [...prev, { name: '', role_it: '', role_en: '', bio_it: '', bio_en: '', image: '' }])
-                  }
-                >
-                  <Plus size={16} /> Add member
-                </button>
-              </div>
-              {team.map((member, index) => (
-                <div key={index} className="rounded-md border border-ink-soft/20 p-4">
-                  <div className="mb-4 flex items-start justify-between gap-3">
-                    <div className="grid flex-1 gap-4 sm:grid-cols-2">
-                      <div>
-                        <label className="label-field">Name</label>
-                        <input
-                          className="input-field"
-                          value={member.name}
-                          onChange={(e) => updateTeam(index, { name: e.target.value })}
-                        />
-                      </div>
-                      <div>
-                        <label className="label-field">Photo URL</label>
-                        <input
-                          className="input-field"
-                          placeholder="https://…"
-                          value={member.image}
-                          onChange={(e) => updateTeam(index, { image: e.target.value })}
-                        />
-                      </div>
-                    </div>
-                    {team.length > 1 && (
-                      <button
-                        type="button"
-                        className="admin-icon-btn text-red-600"
-                        onClick={() => setTeam((prev) => prev.filter((_, i) => i !== index))}
-                        aria-label="Remove member"
-                      >
-                        <Trash2 size={16} />
-                      </button>
-                    )}
-                  </div>
-                  <div className="space-y-4">
-                    <BilingualField
-                      label="Role"
-                      valueIt={member.role_it}
-                      valueEn={member.role_en}
-                      onChangeIt={(v) => updateTeam(index, { role_it: v })}
-                      onChangeEn={(v) => updateTeam(index, { role_en: v })}
-                    />
-                    <BilingualField
-                      label="Bio"
-                      valueIt={member.bio_it}
-                      valueEn={member.bio_en}
-                      onChangeIt={(v) => updateTeam(index, { bio_it: v })}
-                      onChangeEn={(v) => updateTeam(index, { bio_en: v })}
                       multiline
                       rows={3}
                     />
