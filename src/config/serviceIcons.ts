@@ -6,17 +6,23 @@ import {
   Leaf,
   Baby,
   Scissors,
+  Sparkles,
+  Shield,
+  AlignCenter,
   type LucideIcon,
 } from 'lucide-react';
 
 export const SERVICE_ICONS: { key: string; label: string; Icon: LucideIcon }[] = [
-  { key: 'smile', label: 'General dentistry', Icon: Smile },
-  { key: 'activity', label: 'Implants / surgery', Icon: Activity },
-  { key: 'heart', label: 'Aesthetics', Icon: Heart },
-  { key: 'layers', label: 'Prosthetics', Icon: Layers },
-  { key: 'leaf', label: 'Periodontics', Icon: Leaf },
-  { key: 'baby', label: 'Pediatric', Icon: Baby },
-  { key: 'scissors', label: 'Oral surgery', Icon: Scissors },
+  { key: 'smile', label: 'Conservativa', Icon: Smile },
+  { key: 'sparkles', label: 'Sbiancamento', Icon: Sparkles },
+  { key: 'activity', label: 'Implants / endodontics', Icon: Activity },
+  { key: 'heart', label: 'Estetica', Icon: Heart },
+  { key: 'layers', label: 'Protesi', Icon: Layers },
+  { key: 'leaf', label: 'Igiene orale', Icon: Leaf },
+  { key: 'shield', label: 'Prevenzione', Icon: Shield },
+  { key: 'baby', label: 'Pedodonzia', Icon: Baby },
+  { key: 'scissors', label: 'Chirurgia orale', Icon: Scissors },
+  { key: 'align', label: 'Ortodonzia', Icon: AlignCenter },
 ];
 
 export const SERVICE_ICON_MAP: Record<string, LucideIcon> = Object.fromEntries(

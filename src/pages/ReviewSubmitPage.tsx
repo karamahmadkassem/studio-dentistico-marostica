@@ -1,12 +1,12 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
 import { Star, Send, CheckCircle2 } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import RequiredMark from '../components/RequiredMark';
-import { submitReview } from '../lib/api';
-import { CONTACT_SERVICE_KEYS } from '../config/contactServices';
+import { fetchPublishedServices, submitReview } from '../lib/api';
+import type { Service } from '../types/database';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const ReviewSubmitPage: React.FC = () => {
@@ -20,10 +20,15 @@ const ReviewSubmitPage: React.FC = () => {
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
+  const [services, setServices] = useState<Service[]>([]);
 
-  const treatmentOptions = CONTACT_SERVICE_KEYS.map((key) => ({
-    id: key,
-    label: String(t(`services.services.${key}.title`)),
+  useEffect(() => {
+    fetchPublishedServices(language).then(setServices).catch(() => setServices([]));
+  }, [language]);
+
+  const treatmentOptions = services.map((service) => ({
+    id: service.slug,
+    label: language === 'it' ? service.title_it : service.title_en,
   }));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {

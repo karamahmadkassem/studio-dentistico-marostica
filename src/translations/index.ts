@@ -293,6 +293,7 @@ export const translations: Record<Language, TranslationValue> = {
       info: {
         title: 'Informazioni di contatto',
         address: 'Indirizzo',
+        mobile: 'Cellulare',
         phone: 'Telefono',
         email: 'Email',
         hours: 'Orari di apertura',
@@ -421,9 +422,11 @@ export const translations: Record<Language, TranslationValue> = {
     footer: {
       tagline: 'Il tuo sorriso è la nostra priorità.',
       rights: 'Tutti i diritti riservati.',
-      address: 'Via Roma 123, 36063 Marostica (VI)',
-      phone: '+39 346 793 3245',
-      phoneHref: '+393467933245',
+      address: 'Via XXIV Maggio 39, Marostica - Vicenza',
+      mobile: '351 8228984',
+      mobileHref: '+393518228984',
+      phone: '0424 73061',
+      phoneHref: '+39042473061',
       email: 'info@studiodentisticomarostica.it',
       hoursWeek: 'Lun – Ven: 9:00 – 19:00',
       hoursSat: 'Sab: 9:00 – 13:00',
@@ -441,7 +444,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '1. Titolare del trattamento',
             paragraphs: [
-              'Il Titolare del trattamento dei dati personali è Studio Dentistico Marostica, con sede in Via Roma 123, 36063 Marostica (VI), email info@studiodentisticomarostica.it, telefono +39 346 793 3245.',
+              'Il Titolare del trattamento dei dati personali è Studio Dentistico Marostica, con sede in Via XXIV Maggio 39, Marostica - Vicenza, email info@studiodentisticomarostica.it, cellulare 351 8228984, telefono 0424 73061.',
               'Per qualsiasi richiesta relativa alla privacy è possibile contattare il Titolare ai recapiti indicati.',
             ],
           },
@@ -516,7 +519,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '2. Informazioni sullo studio',
             paragraphs: [
-              'Studio Dentistico Marostica è uno studio odontoiatrico con sede in Via Roma 123, 36063 Marostica (VI). Per appuntamenti e informazioni: telefono +39 346 793 3245, email info@studiodentisticomarostica.it.',
+              'Studio Dentistico Marostica è uno studio odontoiatrico con sede in Via XXIV Maggio 39, Marostica - Vicenza. Per appuntamenti e informazioni: cellulare 351 8228984, telefono 0424 73061, email info@studiodentisticomarostica.it.',
             ],
           },
           {
@@ -853,6 +856,7 @@ export const translations: Record<Language, TranslationValue> = {
       info: {
         title: 'Contact information',
         address: 'Address',
+        mobile: 'Mobile',
         phone: 'Phone',
         email: 'Email',
         hours: 'Opening hours',
@@ -981,9 +985,11 @@ export const translations: Record<Language, TranslationValue> = {
     footer: {
       tagline: 'Your smile is our priority.',
       rights: 'All rights reserved.',
-      address: 'Via Roma 123, 36063 Marostica (VI)',
-      phone: '+39 346 793 3245',
-      phoneHref: '+393467933245',
+      address: 'Via XXIV Maggio 39, Marostica - Vicenza',
+      mobile: '351 8228984',
+      mobileHref: '+393518228984',
+      phone: '0424 73061',
+      phoneHref: '+39042473061',
       email: 'info@studiodentisticomarostica.it',
       hoursWeek: 'Mon – Fri: 9:00 – 19:00',
       hoursSat: 'Sat: 9:00 – 13:00',
@@ -1001,7 +1007,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '1. Data controller',
             paragraphs: [
-              'The data controller is Studio Dentistico Marostica, located at Via Roma 123, 36063 Marostica (VI), Italy, email info@studiodentisticomarostica.it, phone +39 346 793 3245.',
+              'The data controller is Studio Dentistico Marostica, located at Via XXIV Maggio 39, Marostica - Vicenza, Italy, email info@studiodentisticomarostica.it, mobile 351 8228984, phone 0424 73061.',
               'For any privacy-related request, you may contact the controller using the details above.',
             ],
           },
@@ -1076,7 +1082,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '2. Information about the practice',
             paragraphs: [
-              'Studio Dentistico Marostica is a dental practice located at Via Roma 123, 36063 Marostica (VI), Italy. For appointments and information: phone +39 346 793 3245, email info@studiodentisticomarostica.it.',
+              'Studio Dentistico Marostica is a dental practice located at Via XXIV Maggio 39, Marostica - Vicenza, Italy. For appointments and information: mobile 351 8228984, phone 0424 73061, email info@studiodentisticomarostica.it.',
             ],
           },
           {

@@ -26,6 +26,7 @@ const ContactPage: React.FC = () => {
   const [error, setError] = useState('');
 
   const faqItems = t('contact.faq.items') as { q: string; a: string }[];
+  const mobileHref = String(t('footer.mobileHref'));
   const phoneHref = String(t('footer.phoneHref'));
   const { lines: openingHoursLines } = useOpeningHours();
 
@@ -105,6 +106,15 @@ const ContactPage: React.FC = () => {
                 <li className="flex gap-4">
                   <Phone size={22} className="mt-1 shrink-0 text-brand-cyan" />
                   <div>
+                    <h3 className="mb-1 font-semibold text-ink">{t('contact.info.mobile')}</h3>
+                    <a href={`tel:${mobileHref}`} className="text-ink-muted hover:text-brand-cyan">
+                      {t('footer.mobile')}
+                    </a>
+                  </div>
+                </li>
+                <li className="flex gap-4">
+                  <Phone size={22} className="mt-1 shrink-0 text-brand-cyan" />
+                  <div>
                     <h3 className="mb-1 font-semibold text-ink">{t('contact.info.phone')}</h3>
                     <a href={`tel:${phoneHref}`} className="text-ink-muted hover:text-brand-cyan">
                       {t('footer.phone')}
@@ -142,7 +152,7 @@ const ContactPage: React.FC = () => {
                 </h3>
                 <div className="h-64 overflow-hidden rounded-md bg-surface-muted md:h-80">
                   <iframe
-                    src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d22520.114982646507!2d11.638625126241206!3d45.74721738817678!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4778d294958a5c55%3A0x536acef8f5f61b5c!2s36063%20Marostica%20VI!5e0!3m2!1sit!2sit!4v1697730905815!5m2!1sit!2sit"
+                    src="https://maps.google.com/maps?q=Via%20XXIV%20Maggio%2039,%20Marostica%20VI&t=&z=16&ie=UTF8&iwloc=&output=embed"
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
@@ -318,7 +328,7 @@ const ContactPage: React.FC = () => {
               {t('contact.cta.subtitle')}
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a href={`tel:${phoneHref}`} className="btn-white">
+              <a href={`tel:${String(t('footer.mobileHref'))}`} className="btn-white">
                 {t('contact.cta.call')}
               </a>
               <button type="button" onClick={scrollToForm} className="btn-primary">

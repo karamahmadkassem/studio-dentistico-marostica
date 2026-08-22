@@ -34,7 +34,7 @@ const Footer: React.FC = () => {
             </p>
             <div className="flex gap-3">
               <a
-                href="https://facebook.com"
+                href="https://www.facebook.com/profile.php?id=61556290275439"
                 className="inline-flex h-10 w-10 items-center justify-center rounded-md bg-white/10 text-white transition-colors hover:bg-[#4AACE1]"
                 aria-label="Facebook"
                 target="_blank"
@@ -81,11 +81,22 @@ const Footer: React.FC = () => {
                 <MapPin size={18} className="mt-0.5 shrink-0 text-[#4AACE1]" />
                 <span>{String(t('footer.address'))}</span>
               </li>
-              <li className="flex items-center gap-3">
-                <Phone size={18} className="shrink-0 text-[#4AACE1]" />
-                <a href={`tel:${String(t('footer.phoneHref'))}`} className="hover:text-[#4AACE1]">
-                  {String(t('footer.phone'))}
-                </a>
+              <li className="flex items-start gap-3">
+                <Phone size={18} className="mt-0.5 shrink-0 text-[#4AACE1]" />
+                <div>
+                  <p>
+                    <span className="text-white/60">{String(t('contact.info.mobile'))}: </span>
+                    <a href={`tel:${String(t('footer.mobileHref'))}`} className="hover:text-[#4AACE1]">
+                      {String(t('footer.mobile'))}
+                    </a>
+                  </p>
+                  <p className="mt-1">
+                    <span className="text-white/60">{String(t('contact.info.phone'))}: </span>
+                    <a href={`tel:${String(t('footer.phoneHref'))}`} className="hover:text-[#4AACE1]">
+                      {String(t('footer.phone'))}
+                    </a>
+                  </p>
+                </div>
               </li>
               <li className="flex items-center gap-3">
                 <Mail size={18} className="shrink-0 text-[#4AACE1]" />

@@ -1,11 +1,15 @@
 export const CONTACT_SERVICE_KEYS = [
-  'general',
-  'implants',
-  'aesthetics',
-  'prosthetics',
-  'periodontics',
-  'pediatric',
-  'surgery',
+  'sbiancamento-dentale',
+  'conservativa',
+  'endodonzia',
+  'chirurgia-orale',
+  'pedodonzia',
+  'igiene-orale',
+  'implantologia',
+  'protesi',
+  'prevenzione',
+  'ortodonzia',
+  'estetica-dentale',
 ] as const;
 
 export type ContactServiceKey = (typeof CONTACT_SERVICE_KEYS)[number];

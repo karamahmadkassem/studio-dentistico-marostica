@@ -126,7 +126,7 @@ const ServicesPage: React.FC = () => {
               {t('services.cta.subtitle')}
             </p>
             <div className="flex flex-col items-center justify-center gap-3 sm:flex-row">
-              <a href={`tel:${String(t('footer.phoneHref'))}`} className="btn-white">
+              <a href={`tel:${String(t('footer.mobileHref'))}`} className="btn-white">
                 {t('services.cta.call')}
               </a>
               <Link to="/contact" className="btn-primary">
