@@ -5,7 +5,6 @@ import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import { fetchBlogPostBySlug } from '../lib/api';
-import { STATIC_BLOG_POSTS } from '../config/staticFallback';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const BlogPostPage: React.FC = () => {
@@ -52,30 +51,11 @@ const BlogPostPage: React.FC = () => {
               : '',
             image: dbPost.image_url ?? '',
           });
-          setLoading(false);
-          return;
+        } else if (!cancelled) {
+          setPost(null);
         }
       } catch {
-        /* fallback below */
-      }
-      const fallback = STATIC_BLOG_POSTS.find((p) => p.slug === slug);
-      if (!cancelled && fallback) {
-        const isIt = language === 'it';
-        setPost({
-          title: isIt ? fallback.title_it : fallback.title_en,
-          excerpt: isIt ? fallback.excerpt_it : fallback.excerpt_en,
-          body: isIt ? fallback.body_it : fallback.body_en,
-          author: fallback.author,
-          date: new Date(fallback.published_at).toLocaleDateString(isIt ? 'it-IT' : 'en-GB', {
-            day: 'numeric',
-            month: 'long',
-            year: 'numeric',
-          }),
-          category: isIt ? fallback.category_it : fallback.category_en,
-          image: fallback.image_url,
-        });
-      } else if (!cancelled) {
-        setPost(null);
+        if (!cancelled) setPost(null);
       }
       if (!cancelled) setLoading(false);
     }

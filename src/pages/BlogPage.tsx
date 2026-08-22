@@ -6,7 +6,6 @@ import PageHero from '../components/PageHero';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import { fetchPublishedBlogPosts, subscribeNewsletter } from '../lib/api';
-import { STATIC_BLOG_POSTS } from '../config/staticFallback';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 interface DisplayPost {
@@ -32,24 +31,6 @@ const BlogPage: React.FC = () => {
     const isIt = language === 'it';
     fetchPublishedBlogPosts()
       .then((rows) => {
-        if (rows.length === 0) {
-          setPosts(
-            STATIC_BLOG_POSTS.map((p) => ({
-              slug: p.slug,
-              title: isIt ? p.title_it : p.title_en,
-              excerpt: isIt ? p.excerpt_it : p.excerpt_en,
-              date: new Date(p.published_at).toLocaleDateString(isIt ? 'it-IT' : 'en-GB', {
-                day: 'numeric',
-                month: 'long',
-                year: 'numeric',
-              }),
-              author: p.author,
-              category: isIt ? p.category_it : p.category_en,
-              image: p.image_url,
-            })),
-          );
-          return;
-        }
         setPosts(
           rows.map((p) => ({
             slug: p.slug,
@@ -73,21 +54,7 @@ const BlogPage: React.FC = () => {
         );
       })
       .catch(() => {
-        setPosts(
-          STATIC_BLOG_POSTS.map((p) => ({
-            slug: p.slug,
-            title: isIt ? p.title_it : p.title_en,
-            excerpt: isIt ? p.excerpt_it : p.excerpt_en,
-            date: new Date(p.published_at).toLocaleDateString(isIt ? 'it-IT' : 'en-GB', {
-              day: 'numeric',
-              month: 'long',
-              year: 'numeric',
-            }),
-            author: p.author,
-            category: isIt ? p.category_it : p.category_en,
-            image: p.image_url,
-          })),
-        );
+        setPosts([]);
       });
   }, [language]);
 

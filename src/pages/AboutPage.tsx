@@ -63,14 +63,27 @@ const AboutPage: React.FC = () => {
 
   const historyItems = useMemo(() => {
     const items = sections.history?.items as
-      | { year: string; title_it: string; title_en: string; text_it: string; text_en: string }[]
+      | {
+          year?: string;
+          year_it?: string;
+          year_en?: string;
+          title_it: string;
+          title_en: string;
+          text_it: string;
+          text_en: string;
+        }[]
       | undefined;
     if (items?.length) {
-      return items.map((item) => ({
-        year: item.year,
-        title: isIt ? item.title_it : item.title_en,
-        text: isIt ? item.text_it : item.text_en,
-      }));
+      return items.map((item) => {
+        const legacyYear = item.year ?? '';
+        return {
+          year: isIt
+            ? (item.year_it ?? legacyYear)
+            : (item.year_en ?? (legacyYear === 'Oggi' ? 'Today' : legacyYear)),
+          title: isIt ? item.title_it : item.title_en,
+          text: isIt ? item.text_it : item.text_en,
+        };
+      });
     }
     return t('about.history.items') as { year: string; title: string; text: string }[];
   }, [sections.history, isIt, t]);
@@ -168,7 +181,7 @@ const AboutPage: React.FC = () => {
           <FadeIn>
             <div className="aspect-[4/3] overflow-hidden">
               <img
-                src="https://images.pexels.com/photos/3952214/pexels-photo-3952214.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src="https://images.pexels.com/photos/6627536/pexels-photo-6627536.jpeg?auto=compress&cs=tinysrgb&w=1200"
                 alt={technology.title}
                 className="h-full w-full object-cover"
                 loading="lazy"

@@ -38,7 +38,8 @@ type ValueItem = {
 };
 
 type HistoryItem = {
-  year: string;
+  year_it: string;
+  year_en: string;
   title_it: string;
   title_en: string;
   text_it: string;
@@ -73,7 +74,7 @@ const defaultValues = (): ValueItem[] =>
   }));
 
 const defaultHistory = (): HistoryItem[] => [
-  { year: '', title_it: '', title_en: '', text_it: '', text_en: '' },
+  { year_it: '', year_en: '', title_it: '', title_en: '', text_it: '', text_en: '' },
 ];
 
 const defaultTechnology = (): TechnologyContent => ({
@@ -118,13 +119,17 @@ function parseValues(raw: Record<string, unknown> | undefined): ValueItem[] {
 function parseHistory(raw: Record<string, unknown> | undefined): HistoryItem[] {
   const items = raw?.items as HistoryItem[] | undefined;
   if (!items?.length) return defaultHistory();
-  return items.map((item) => ({
-    year: String(item.year ?? ''),
-    title_it: String(item.title_it ?? ''),
-    title_en: String(item.title_en ?? ''),
-    text_it: String(item.text_it ?? ''),
-    text_en: String(item.text_en ?? ''),
-  }));
+  return items.map((item) => {
+    const legacyYear = String(item.year ?? '');
+    return {
+      year_it: String(item.year_it ?? legacyYear),
+      year_en: String(item.year_en ?? (legacyYear === 'Oggi' ? 'Today' : legacyYear)),
+      title_it: String(item.title_it ?? ''),
+      title_en: String(item.title_en ?? ''),
+      text_it: String(item.text_it ?? ''),
+      text_en: String(item.text_en ?? ''),
+    };
+  });
 }
 
 function parseTechnology(raw: Record<string, unknown> | undefined): TechnologyContent {
@@ -347,24 +352,20 @@ const AdminAboutPage: React.FC = () => {
                 <button
                   type="button"
                   className="btn-navy flex items-center gap-1 px-3 py-2 text-sm"
-                  onClick={() => setHistory((prev) => [...prev, { year: '', title_it: '', title_en: '', text_it: '', text_en: '' }])}
+                  onClick={() =>
+                    setHistory((prev) => [
+                      ...prev,
+                      { year_it: '', year_en: '', title_it: '', title_en: '', text_it: '', text_en: '' },
+                    ])
+                  }
                 >
                   <Plus size={16} /> Add entry
                 </button>
               </div>
               {history.map((item, index) => (
                 <div key={index} className="rounded-md border border-ink-soft/20 p-4">
-                  <div className="mb-4 flex items-center justify-between gap-3">
-                    <div className="w-32">
-                      <label className="label-field">Year</label>
-                      <input
-                        className="input-field"
-                        placeholder="e.g. 2005"
-                        value={item.year}
-                        onChange={(e) => updateHistory(index, { year: e.target.value })}
-                      />
-                    </div>
-                    {history.length > 1 && (
+                  {history.length > 1 && (
+                    <div className="mb-4 flex justify-end">
                       <button
                         type="button"
                         className="admin-icon-btn text-red-600"
@@ -373,9 +374,16 @@ const AdminAboutPage: React.FC = () => {
                       >
                         <Trash2 size={16} />
                       </button>
-                    )}
-                  </div>
+                    </div>
+                  )}
                   <div className="space-y-4">
+                    <BilingualField
+                      label="Year / label"
+                      valueIt={item.year_it}
+                      valueEn={item.year_en}
+                      onChangeIt={(v) => updateHistory(index, { year_it: v })}
+                      onChangeEn={(v) => updateHistory(index, { year_en: v })}
+                    />
                     <BilingualField
                       label="Title"
                       valueIt={item.title_it}

@@ -1,27 +1,6 @@
 /** Static content used when Supabase is not configured or DB is empty. */
 
-export const STATIC_BLOG_POSTS = [
-  {
-    slug: 'prevenzione-salute-orale',
-    title_it: "L'importanza della prevenzione nella salute orale",
-    title_en: 'The importance of prevention in oral health',
-    excerpt_it:
-      'La prevenzione è fondamentale per mantenere denti e gengive sani. Scopri i consigli dei nostri esperti.',
-    excerpt_en:
-      'Prevention is essential for healthy teeth and gums. Discover our experts’ advice.',
-    body_it:
-      'La prevenzione resta il pilastro della salute orale. Visite periodiche, igiene professionale e abitudini quotidiane corrette permettono di individuare precocemente carie, infiammazioni gengivali e altre patologie.\n\nAllo Studio Dentistico Marostica dedichiamo tempo all’educazione del paziente: spieghiamo tecniche di spazzolamento, uso del filo interdentale e scelta degli ausili più adatti.',
-    body_en:
-      'Prevention remains the cornerstone of oral health. Regular check-ups, professional hygiene, and good daily habits help detect cavities, gum inflammation, and other issues early.\n\nAt Studio Dentistico Marostica we invest time in patient education: brushing techniques, flossing, and choosing the right tools.',
-    author: 'Studio Dentistico Marostica',
-    category_it: 'Prevenzione',
-    category_en: 'Prevention',
-    category_slug: 'prevenzione',
-    image_url:
-      'https://images.pexels.com/photos/3845126/pexels-photo-3845126.jpeg?auto=compress&cs=tinysrgb&w=1200',
-    published_at: '2025-05-15T10:00:00Z',
-  },
-];
+export const STATIC_BLOG_POSTS: never[] = [];
 
 export const STATIC_REVIEWS = [
   {

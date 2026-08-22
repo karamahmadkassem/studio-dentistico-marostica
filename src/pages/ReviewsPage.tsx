@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Star, ThumbsUp } from 'lucide-react';
+import { Star } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import Section from '../components/Section';
@@ -15,7 +15,6 @@ interface DisplayReview {
   rating: number;
   text: string;
   treatmentType: string;
-  helpful: number;
 }
 
 const ReviewsPage: React.FC = () => {
@@ -41,7 +40,6 @@ const ReviewsPage: React.FC = () => {
               rating: r.rating,
               text: r.body,
               treatmentType: r.treatment_type,
-              helpful: r.helpful_count,
             })),
           );
           return;
@@ -58,7 +56,6 @@ const ReviewsPage: React.FC = () => {
             rating: r.rating,
             text: r.body,
             treatmentType: r.treatment_type,
-            helpful: r.helpful_count,
           })),
         );
       })
@@ -75,7 +72,6 @@ const ReviewsPage: React.FC = () => {
             rating: r.rating,
             text: r.body,
             treatmentType: r.treatment_type,
-            helpful: r.helpful_count,
           })),
         );
       });
@@ -171,13 +167,9 @@ const ReviewsPage: React.FC = () => {
                   </div>
                 </div>
                 <p className="mb-4 leading-relaxed text-ink-muted">{review.text}</p>
-                <div className="flex items-center justify-between text-sm">
+                <div className="text-sm">
                   <span className="rounded-full bg-brand-cyan-soft px-3 py-1 font-medium text-brand-navy">
                     {review.treatmentType}
-                  </span>
-                  <span className="inline-flex items-center gap-1 text-ink-soft">
-                    <ThumbsUp size={14} />
-                    {t('reviews.helpful')} ({review.helpful})
                   </span>
                 </div>
               </article>
