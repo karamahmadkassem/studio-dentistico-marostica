@@ -18,6 +18,17 @@ export function isPastDate(date: Date): boolean {
   return startOfDay(date).getTime() < startOfDay(new Date()).getTime();
 }
 
+/** True when the slot start time has already passed (browser local time). */
+export function isSlotInPast(date: Date, time: string): boolean {
+  const dateKey = formatDateKey(date);
+  const todayKey = formatDateKey(new Date());
+  if (dateKey < todayKey) return true;
+  if (dateKey > todayKey) return false;
+  const now = new Date();
+  const nowMinutes = now.getHours() * 60 + now.getMinutes();
+  return parseTimeToMinutes(time) <= nowMinutes;
+}
+
 export function isDayOpen(date: Date): boolean {
   return date.getDay() !== 0;
 }

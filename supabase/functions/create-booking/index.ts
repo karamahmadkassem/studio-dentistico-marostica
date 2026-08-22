@@ -1,6 +1,7 @@
 import { handleOptions, jsonResponse, errorResponse } from '../_shared/cors.ts';
 import { getServiceClient } from '../_shared/supabase.ts';
 import { sendEmail, bookingPendingEmail } from '../_shared/brevo.ts';
+import { getClinicTodayKey, isSlotInPast } from '../_shared/slots.ts';
 
 function normalizeTime(time: string): string {
   const parts = time.split(':');
@@ -30,6 +31,14 @@ Deno.serve(async (req) => {
 
     if (!firstName || !lastName || !phone || !email || !appointmentDate || !appointmentTime) {
       return errorResponse('Missing required fields', 400);
+    }
+
+    const today = getClinicTodayKey();
+    if (appointmentDate < today) {
+      return errorResponse('Cannot book a date in the past', 400);
+    }
+    if (isSlotInPast(appointmentDate, appointmentTime)) {
+      return errorResponse('Time slot is no longer available', 409);
     }
 
     const supabase = getServiceClient();

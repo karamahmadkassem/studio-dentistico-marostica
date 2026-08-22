@@ -64,7 +64,13 @@ const HomePage: React.FC = () => {
   }, [dbServices, language, t]);
 
   const testimonials = useMemo(() => {
-    if (dbReviews.length > 0) return dbReviews.slice(0, 3);
+    if (dbReviews.length > 0) {
+      return dbReviews.slice(0, 3).map((r) => ({
+        name: r.name,
+        text: r.body,
+        rating: r.rating,
+      }));
+    }
     return STATIC_REVIEWS.slice(0, 3).map((r) => ({
       name: r.name,
       text: r.body,

@@ -2,6 +2,7 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { ChevronLeft, ChevronRight, X } from 'lucide-react';
 import { adminApi } from '../../lib/api';
 import type { Appointment, OpeningHour } from '../../types/database';
+import { useAdminNotifications } from '../AdminNotificationsContext';
 import {
   SLOT_MINUTES,
   parseTimeToMinutes,
@@ -41,6 +42,7 @@ function generateSlotsFromHours(hours: OpeningHour[], dayOfWeek: number): string
 }
 
 const AdminCalendarPage: React.FC = () => {
+  const { refreshToken } = useAdminNotifications();
   const [view, setView] = useState<ViewMode>('week');
   const [cursor, setCursor] = useState(() => new Date());
   const [appointments, setAppointments] = useState<Appointment[]>([]);
@@ -69,8 +71,8 @@ const AdminCalendarPage: React.FC = () => {
     return { from: formatDateKey(start), to: formatDateKey(end) };
   }, [view, cursor]);
 
-  const load = useCallback(async () => {
-    setLoading(true);
+  const load = useCallback(async (options?: { silent?: boolean }) => {
+    if (!options?.silent) setLoading(true);
     try {
       const [appts, hrs] = await Promise.all([
         adminApi.getAppointments(range.from, range.to),
@@ -85,13 +87,18 @@ const AdminCalendarPage: React.FC = () => {
         })),
       );
     } finally {
-      setLoading(false);
+      if (!options?.silent) setLoading(false);
     }
   }, [range.from, range.to]);
 
   useEffect(() => {
     load();
   }, [load]);
+
+  useEffect(() => {
+    if (refreshToken === 0) return;
+    load({ silent: true });
+  }, [refreshToken, load]);
 
   const apptMap = useMemo(() => {
     const map = new Map<string, Appointment>();

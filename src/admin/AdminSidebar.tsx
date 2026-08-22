@@ -9,6 +9,7 @@ import {
   LogOut,
 } from 'lucide-react';
 import { adminLogout } from '../lib/api';
+import { useAdminNotifications } from './AdminNotificationsContext';
 
 const navItems = [
   { to: '/admin/calendar', label: 'Calendar', icon: Calendar },
@@ -19,6 +20,8 @@ const navItems = [
 ];
 
 const AdminSidebar: React.FC = () => {
+  const { pendingCount } = useAdminNotifications();
+
   const handleLogout = async () => {
     await adminLogout();
     window.location.href = '/admin/login';
@@ -43,6 +46,9 @@ const AdminSidebar: React.FC = () => {
           >
             <Icon size={18} />
             {label}
+            {to === '/admin/calendar' && pendingCount > 0 && (
+              <span className="admin-sidebar-badge">{pendingCount}</span>
+            )}
           </NavLink>
         ))}
       </nav>

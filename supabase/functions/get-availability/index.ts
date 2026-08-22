@@ -3,6 +3,8 @@ import { getServiceClient } from '../_shared/supabase.ts';
 import {
   formatDateKey,
   generateSlotsForDay,
+  getClinicTodayKey,
+  isSlotInPast,
   type OpeningHourRow,
 } from '../_shared/slots.ts';
 
@@ -36,16 +38,20 @@ Deno.serve(async (req) => {
         (booked ?? []).map((b) => String(b.appointment_time).slice(0, 5)),
       );
 
-      const today = formatDateKey(new Date());
-      const isPast = dateStr < today;
+      const today = getClinicTodayKey();
+      const isPastDay = dateStr < today;
       const isClosed = openingHours.find((h) => h.day_of_week === dayOfWeek)?.is_closed ?? true;
 
       return jsonResponse({
         date: dateStr,
-        isClosed: isClosed || isPast,
+        isClosed: isClosed || isPastDay,
         slots: allSlots.map((time) => ({
           time,
-          available: !isPast && !isClosed && !bookedTimes.has(time),
+          available:
+            !isPastDay &&
+            !isClosed &&
+            !bookedTimes.has(time) &&
+            !isSlotInPast(dateStr, time),
         })),
       });
     }

@@ -12,6 +12,7 @@ import {
   getTimeSlotsForDate,
   isDayOpen,
   isPastDate,
+  isSlotInPast,
 } from '../config/appointmentSchedule';
 import type { OpeningHour, SlotInfo } from '../types/database';
 
@@ -70,7 +71,12 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
       const fallback = getTimeSlotsForDate(selectedDate);
       const booked = getBookedSlotsForDate(selectedDate);
       setDayClosed(!isDayOpen(selectedDate) || isPastDate(selectedDate));
-      setLiveSlots(fallback.map((time) => ({ time, available: !booked.has(time) })));
+      setLiveSlots(
+        fallback.map((time) => ({
+          time,
+          available: !booked.has(time) && !isSlotInPast(selectedDate, time),
+        })),
+      );
       return;
     }
     setLoadingSlots(true);
