@@ -1,7 +1,10 @@
+import type { OpeningHour } from '../types/database';
+
 export const SLOT_MINUTES = 30;
+export const CLINIC_TIMEZONE = 'Europe/Rome';
 
 export const WEEKDAY_HOURS = { open: 9, close: 19 };
-export const SATURDAY_HOURS = { open: 9, close: 13 };
+export const SATURDAY_HOURS = { open: 9, close: 12 };
 
 export function formatDateKey(date: Date): string {
   const year = date.getFullYear();
@@ -10,23 +13,48 @@ export function formatDateKey(date: Date): string {
   return `${year}-${month}-${day}`;
 }
 
+export function getClinicDateTimeParts(now: Date = new Date()): {
+  dateKey: string;
+  minutes: number;
+} {
+  const formatter = new Intl.DateTimeFormat('en-GB', {
+    timeZone: CLINIC_TIMEZONE,
+    year: 'numeric',
+    month: '2-digit',
+    day: '2-digit',
+    hour: '2-digit',
+    minute: '2-digit',
+    hour12: false,
+  });
+  const parts = formatter.formatToParts(now);
+  const value = (type: Intl.DateTimeFormatPartTypes) =>
+    parts.find((p) => p.type === type)?.value ?? '00';
+  const hour = value('hour') === '24' ? '00' : value('hour');
+  return {
+    dateKey: `${value('year')}-${value('month')}-${value('day')}`,
+    minutes: parseTimeToMinutes(`${hour}:${value('minute')}`),
+  };
+}
+
+export function getClinicTodayKey(now: Date = new Date()): string {
+  return getClinicDateTimeParts(now).dateKey;
+}
+
 export function startOfDay(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
 
 export function isPastDate(date: Date): boolean {
-  return startOfDay(date).getTime() < startOfDay(new Date()).getTime();
+  return formatDateKey(date) < getClinicTodayKey();
 }
 
-/** True when the slot start time has already passed (browser local time). */
-export function isSlotInPast(date: Date, time: string): boolean {
+/** True when the slot start time has already passed (clinic local time). */
+export function isSlotInPast(date: Date, time: string, now: Date = new Date()): boolean {
   const dateKey = formatDateKey(date);
-  const todayKey = formatDateKey(new Date());
+  const { dateKey: todayKey, minutes: nowMinutes } = getClinicDateTimeParts(now);
   if (dateKey < todayKey) return true;
   if (dateKey > todayKey) return false;
-  const now = new Date();
-  const nowMinutes = now.getHours() * 60 + now.getMinutes();
-  return parseTimeToMinutes(time) <= nowMinutes;
+  return parseTimeToMinutes(time.slice(0, 5)) <= nowMinutes;
 }
 
 export function isDayOpen(date: Date): boolean {
@@ -57,10 +85,21 @@ export function formatMinutesToTime(total: number): string {
 export function getTimeSlotsForDate(date: Date): string[] {
   const schedule = getDaySchedule(date);
   if (!schedule) return [];
+  return buildSlotsBetween(schedule.open * 60, schedule.close * 60);
+}
 
+export function getTimeSlotsFromOpeningHours(date: Date, hours: OpeningHour[]): string[] {
+  const row = hours.find((h) => h.day_of_week === date.getDay());
+  if (!row || row.is_closed || !row.open_time || !row.close_time) return [];
+  return buildSlotsBetween(
+    parseTimeToMinutes(row.open_time.slice(0, 5)),
+    parseTimeToMinutes(row.close_time.slice(0, 5)),
+  );
+}
+
+function buildSlotsBetween(startMinutes: number, endMinutes: number): string[] {
   const slots: string[] = [];
-  let totalMinutes = schedule.open * 60;
-  const endMinutes = schedule.close * 60;
+  let totalMinutes = startMinutes;
 
   while (totalMinutes + SLOT_MINUTES <= endMinutes) {
     const hour = Math.floor(totalMinutes / 60);

@@ -9,12 +9,41 @@ import {
   buildMonthGrid,
   formatDateKey,
   getBookedSlotsForDate,
+  getClinicTodayKey,
   getTimeSlotsForDate,
+  getTimeSlotsFromOpeningHours,
   isDayOpen,
   isPastDate,
   isSlotInPast,
 } from '../config/appointmentSchedule';
 import type { OpeningHour, SlotInfo } from '../types/database';
+
+function slotsForDate(date: Date, openingHours: OpeningHour[]): string[] {
+  if (openingHours.length >= 7) {
+    return getTimeSlotsFromOpeningHours(date, openingHours);
+  }
+  return getTimeSlotsForDate(date);
+}
+
+function applySlotAvailability(date: Date, slots: SlotInfo[]): SlotInfo[] {
+  return slots
+    .filter(({ time }) => !isSlotInPast(date, time))
+    .map(({ time, available }) => ({
+      time,
+      available: available && !isSlotInPast(date, time),
+    }));
+}
+
+function buildFallbackSlots(date: Date, openingHours: OpeningHour[]): SlotInfo[] {
+  const booked = getBookedSlotsForDate(date);
+  return applySlotAvailability(
+    date,
+    slotsForDate(date, openingHours).map((time) => ({
+      time,
+      available: !booked.has(time),
+    })),
+  );
+}
 
 interface AppointmentCalendarProps {
   selectedDate: Date | null;
@@ -68,29 +97,23 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
     }
     const dateKey = formatDateKey(selectedDate);
     if (!isSupabaseConfigured) {
-      const fallback = getTimeSlotsForDate(selectedDate);
-      const booked = getBookedSlotsForDate(selectedDate);
       setDayClosed(!isDayOpen(selectedDate) || isPastDate(selectedDate));
-      setLiveSlots(
-        fallback.map((time) => ({
-          time,
-          available: !booked.has(time) && !isSlotInPast(selectedDate, time),
-        })),
-      );
+      setLiveSlots(buildFallbackSlots(selectedDate, openingHours));
       return;
     }
     setLoadingSlots(true);
     fetchAvailability(dateKey)
       .then((data) => {
-        setDayClosed(data.isClosed);
-        setLiveSlots(data.slots);
+        const enriched = applySlotAvailability(selectedDate, data.slots);
+        setDayClosed(data.isClosed || enriched.length === 0);
+        setLiveSlots(enriched);
       })
       .catch(() => {
-        const fallback = getTimeSlotsForDate(selectedDate);
-        setLiveSlots(fallback.map((time) => ({ time, available: true })));
+        setDayClosed(isPastDate(selectedDate) || isDayClosed(selectedDate));
+        setLiveSlots(buildFallbackSlots(selectedDate, openingHours));
       })
       .finally(() => setLoadingSlots(false));
-  }, [selectedDate]);
+  }, [selectedDate, openingHours]);
 
   const shiftMonth = (delta: number) => {
     setViewDate((current) => new Date(current.getFullYear(), current.getMonth() + delta, 1));
@@ -165,7 +188,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
             const disabled = isDateDisabled(date);
             const isSelected =
               selectedDate !== null && formatDateKey(selectedDate) === formatDateKey(date);
-            const isToday = formatDateKey(date) === formatDateKey(new Date());
+            const isToday = formatDateKey(date) === getClinicTodayKey();
 
             return (
               <button
