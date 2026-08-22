@@ -1,0 +1,59 @@
+import React from 'react';
+import { NavLink } from 'react-router-dom';
+import {
+  Calendar,
+  Layers,
+  Users,
+  Newspaper,
+  Star,
+  LogOut,
+} from 'lucide-react';
+import { adminLogout } from '../lib/api';
+
+const navItems = [
+  { to: '/admin/calendar', label: 'Calendar', icon: Calendar },
+  { to: '/admin/services', label: 'Services', icon: Layers },
+  { to: '/admin/about', label: 'About', icon: Users },
+  { to: '/admin/blog', label: 'Blog', icon: Newspaper },
+  { to: '/admin/reviews', label: 'Reviews', icon: Star },
+];
+
+const AdminSidebar: React.FC = () => {
+  const handleLogout = async () => {
+    await adminLogout();
+    window.location.href = '/admin/login';
+  };
+
+  return (
+    <aside className="admin-sidebar">
+      <div className="admin-sidebar-brand">
+        <img src="/logo.png" alt="" className="admin-sidebar-logo" />
+        <span className="admin-sidebar-title">
+          Admin <span className="accent">Panel</span>
+        </span>
+      </div>
+      <nav className="admin-sidebar-nav">
+        {navItems.map(({ to, label, icon: Icon }) => (
+          <NavLink
+            key={to}
+            to={to}
+            className={({ isActive }) =>
+              `admin-sidebar-link${isActive ? ' admin-sidebar-link--active' : ''}`
+            }
+          >
+            <Icon size={18} />
+            {label}
+          </NavLink>
+        ))}
+      </nav>
+      <div className="admin-sidebar-footer">
+        <button type="button" onClick={handleLogout} className="admin-sidebar-logout">
+          <LogOut size={18} />
+          Logout
+        </button>
+      </div>
+    </aside>
+  );
+};
+
+export default AdminSidebar;
