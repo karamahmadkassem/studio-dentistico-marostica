@@ -94,9 +94,9 @@ export const translations: Record<Language, TranslationValue> = {
           details: [
             'Controlli periodici e prevenzione',
             'Otturazioni estetiche in composito',
-            'Devitalizzazioni e endodonzia',
             'Estrazioni semplici',
             'Visite di urgenza',
+            'Piani di cura personalizzati',
           ],
         },
         'dental-hygiene': {
@@ -133,6 +133,30 @@ export const translations: Record<Language, TranslationValue> = {
             'Pianificazione digitale',
             'Riabilitazioni complete',
             'All-on-4 e soluzioni su misura',
+          ],
+        },
+        endodonzia: {
+          title: 'Endodonzia',
+          description:
+            'Devitalizzazioni e ritrattamenti canalari per salvare i denti naturali con precisione.',
+          details: [
+            'Devitalizzazioni',
+            'Ritrattamenti endodontici',
+            'Cura del dolore acuto',
+            'Salvataggio dei denti naturali',
+            'Trattamenti sotto microscopio',
+          ],
+        },
+        protesi: {
+          title: 'Protesi',
+          description:
+            'Protesi fissa e mobile su denti naturali e impianti per funzione ed estetica.',
+          details: [
+            'Corone e ponti fissi',
+            'Protesi parziali removibili',
+            'Protesi complete',
+            'Soluzioni su impianti',
+            'Materiali di alta qualità',
           ],
         },
         'cosmetic-dentistry': {
@@ -601,9 +625,9 @@ export const translations: Record<Language, TranslationValue> = {
           details: [
             'Regular check-ups and prevention',
             'Aesthetic composite fillings',
-            'Root canal therapy and endodontics',
             'Simple extractions',
             'Emergency visits',
+            'Personalised treatment plans',
           ],
         },
         'dental-hygiene': {
@@ -640,6 +664,30 @@ export const translations: Record<Language, TranslationValue> = {
             'Digital planning',
             'Full rehabilitations',
             'All-on-4 and tailored solutions',
+          ],
+        },
+        endodonzia: {
+          title: 'Endodontics',
+          description:
+            'Root canal treatments and retreatments to save natural teeth with precision.',
+          details: [
+            'Root canal therapy',
+            'Endodontic retreatments',
+            'Acute pain relief',
+            'Saving natural teeth',
+            'Microscope-assisted treatment',
+          ],
+        },
+        protesi: {
+          title: 'Dental prosthetics',
+          description:
+            'Fixed and removable prosthetics on natural teeth and implants for function and aesthetics.',
+          details: [
+            'Fixed crowns and bridges',
+            'Removable partial dentures',
+            'Complete dentures',
+            'Implant-supported solutions',
+            'High-quality materials',
           ],
         },
         'cosmetic-dentistry': {
