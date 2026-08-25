@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
 import { Globe, Menu, X } from 'lucide-react';
+import { ASSETS } from '../config/assets';
 import { useLanguage } from '../context/LanguageContext';
 
 const Header: React.FC = () => {
@@ -89,7 +90,7 @@ const Header: React.FC = () => {
             aria-label={String(t('common.brand'))}
           >
             <img
-              src="/logo.png"
+              src={ASSETS.brand.logo}
               alt=""
               className="site-logo shrink-0"
             />

@@ -177,15 +177,6 @@ const ReviewsPage: React.FC = () => {
           ))}
         </div>
       </Section>
-
-      <Section>
-        <FadeIn>
-          <div className="mx-auto max-w-2xl rounded-md bg-surface-muted p-8 text-center">
-            <h2 className="heading-section mb-3">{t('reviews.inviteOnly.title')}</h2>
-            <p className="text-body">{t('reviews.inviteOnly.message')}</p>
-          </div>
-        </FadeIn>
-      </Section>
     </div>
   );
 };

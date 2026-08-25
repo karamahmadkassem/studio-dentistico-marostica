@@ -11,9 +11,11 @@ import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import ReviewsCarousel from '../components/ReviewsCarousel';
-import ServiceIcon from '../components/ServiceIcon';
+import ServicesCarousel from '../components/ServicesCarousel';
 import { fetchPublishedReviews, fetchPublishedServices } from '../lib/api';
-import { SERVICE_IMAGES, STATIC_REVIEWS } from '../config/staticFallback';
+import { mergeDbAndTranslationServices } from '../lib/serviceDisplay';
+import { ASSETS } from '../config/assets';
+import { STATIC_REVIEWS } from '../config/staticFallback';
 import type { Service } from '../types/database';
 import { usePageTitle } from '../hooks/usePageTitle';
 
@@ -32,37 +34,10 @@ const HomePage: React.FC = () => {
       .catch(() => setDbReviews([]));
   }, [language]);
 
-  const services = useMemo(() => {
-    const isIt = language === 'it';
-    if (dbServices.length > 0) {
-      return dbServices.slice(0, 4).map((s, i) => ({
-        iconKey: s.icon_key,
-        title: isIt ? s.title_it : s.title_en,
-        description: isIt ? s.description_it : s.description_en,
-        image: SERVICE_IMAGES[i % SERVICE_IMAGES.length],
-      }));
-    }
-    return [
-      {
-        iconKey: 'smile',
-        title: t('home.services.general.title'),
-        description: t('home.services.general.description'),
-        image: SERVICE_IMAGES[0],
-      },
-      {
-        iconKey: 'activity',
-        title: t('home.services.implants.title'),
-        description: t('home.services.implants.description'),
-        image: SERVICE_IMAGES[1],
-      },
-      {
-        iconKey: 'heart',
-        title: t('home.services.aesthetics.title'),
-        description: t('home.services.aesthetics.description'),
-        image: SERVICE_IMAGES[2],
-      },
-    ];
-  }, [dbServices, language, t]);
+  const services = useMemo(
+    () => mergeDbAndTranslationServices(dbServices, language, t),
+    [dbServices, language, t],
+  );
 
   const testimonials = useMemo(() => {
     if (dbReviews.length > 0) {
@@ -110,8 +85,7 @@ const HomePage: React.FC = () => {
         <div
           className="absolute inset-0 bg-cover bg-center"
           style={{
-            backgroundImage:
-              'url(https://images.pexels.com/photos/3845625/pexels-photo-3845625.jpeg?auto=compress&cs=tinysrgb&w=1920)',
+            backgroundImage: `url(${ASSETS.home.jumbotron})`,
           }}
           aria-hidden
         />
@@ -161,7 +135,7 @@ const HomePage: React.FC = () => {
           <FadeIn>
             <div className="aspect-[4/3] overflow-hidden">
               <img
-                src="https://images.pexels.com/photos/3845126/pexels-photo-3845126.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                src={ASSETS.about.hero}
                 alt={t('home.about.title')}
                 className="h-full w-full object-cover"
                 loading="lazy"
@@ -181,39 +155,17 @@ const HomePage: React.FC = () => {
       {/* Services */}
       <Section muted>
         <FadeIn>
-          <div className="mb-12 max-w-2xl">
-            <h2 className="heading-section mb-3">{t('home.services.title')}</h2>
-            <p className="text-body">{t('home.services.subtitle')}</p>
+          <div className="mb-12 flex flex-col gap-4 md:flex-row md:items-end md:justify-between">
+            <div className="max-w-2xl">
+              <h2 className="heading-section mb-3">{t('home.services.title')}</h2>
+              <p className="text-body">{t('home.services.subtitle')}</p>
+            </div>
+            <Link to="/services" className="link-accent shrink-0">
+              {t('home.services.cta')} <ChevronRight size={16} className="ml-1" />
+            </Link>
           </div>
         </FadeIn>
-        <div className="grid grid-cols-1 gap-8 sm:grid-cols-2 lg:grid-cols-4">
-          {services.map((service, i) => (
-            <FadeIn key={service.title} delay={i * 0.06}>
-              <article>
-                <div className="mb-4 aspect-[4/3] overflow-hidden">
-                  <img
-                    src={service.image}
-                    alt={service.title}
-                    className="h-full w-full object-cover"
-                    loading="lazy"
-                  />
-                </div>
-                <div className="mb-3">
-                  <ServiceIcon iconKey={service.iconKey} />
-                </div>
-                <h3 className="mb-2 font-display text-lg font-semibold text-ink">
-                  {service.title}
-                </h3>
-                <p className="mb-4 text-sm leading-relaxed text-ink-muted">
-                  {service.description}
-                </p>
-                <Link to="/services" className="link-accent text-sm">
-                  {t('home.services.cta')} <ChevronRight size={14} className="ml-1" />
-                </Link>
-              </article>
-            </FadeIn>
-          ))}
-        </div>
+        <ServicesCarousel services={services} learnMoreLabel={t('home.services.learnMore')} />
       </Section>
 
       {/* Features */}

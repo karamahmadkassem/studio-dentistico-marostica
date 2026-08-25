@@ -25,6 +25,10 @@ export const translations: Record<Language, TranslationValue> = {
       menu: 'Menu',
       included: 'Cosa include',
       viewAllReviews: 'Tutte le recensioni',
+      contactUs: 'Contattaci',
+      fabBook: 'Prenota',
+      fabWhatsApp: 'WhatsApp',
+      fabCall: 'Chiama',
     },
     home: {
       hero: {
@@ -52,28 +56,13 @@ export const translations: Record<Language, TranslationValue> = {
       services: {
         title: 'I nostri servizi',
         subtitle: 'Trattamenti completi per ogni esigenza.',
-        general: {
-          title: 'Odontoiatria generale',
-          description: 'Prevenzione e cure di base per una salute orale duratura.',
-        },
-        implants: {
-          title: 'Implantologia',
-          description: 'Impianti di alta qualità per un risultato naturale e stabile.',
-        },
-        orthodontics: {
-          title: 'Ortodonzia',
-          description: 'Allineamento dentale con soluzioni tradizionali e invisibili.',
-        },
-        aesthetics: {
-          title: 'Estetica dentale',
-          description: 'Sbiancamento, faccette e interventi per un sorriso armonioso.',
-        },
         cta: 'Tutti i servizi',
+        learnMore: 'Scopri di più',
       },
       about: {
         title: 'Chi siamo',
         content:
-          'Nel nostro studio uniamo esperienza, tecnologia e ascolto per accompagnarti in ogni fase della cura.',
+          'Il Dott. Moustapha Mourtada unisce formazione universitaria, esperienza clinica e un approccio umano centrato su prevenzione e cura del paziente.',
         more: 'Scopri di più su di noi',
       },
       testimonials: {
@@ -98,95 +87,88 @@ export const translations: Record<Language, TranslationValue> = {
       },
       services: {
         included: 'Cosa include',
-        general: {
+        'general-dentistry': {
           title: 'Odontoiatria generale',
           description:
-            'Cure di base per mantenere la salute orale e prevenire problemi dentali.',
+            'Prevenzione, cure conservative e trattamenti per mantenere denti e gengive in salute.',
           details: [
             'Controlli periodici e prevenzione',
-            'Pulizia professionale e detartrasi',
             'Otturazioni estetiche in composito',
-            'Trattamenti di canali radicolari',
-            'Estrazioni semplici e complesse',
+            'Devitalizzazioni e endodonzia',
+            'Estrazioni semplici',
+            'Visite di urgenza',
           ],
         },
-        implants: {
-          title: 'Implantologia',
+        'dental-hygiene': {
+          title: 'Igiene dentale',
           description:
-            'Sostituzione di denti mancanti con impianti di alta qualità per un risultato naturale.',
+            'Profilassi professionale e programmi personalizzati per un sorriso pulito e sano.',
           details: [
-            'Impianti dentali in titanio',
-            'Riabilitazioni complete',
-            'All-on-4 e All-on-6',
-            'Rigenerazione ossea guidata',
-            'Rialzo del seno mascellare',
+            'Detartrasi e pulizia professionale',
+            'Lucidatura e rimozione delle macchie',
+            'Programmi di richiamo personalizzati',
+            'Educazione all’igiene orale',
+            'Prevenzione delle malattie gengivali',
           ],
         },
-        orthodontics: {
-          title: 'Ortodonzia',
+        'gum-treatment': {
+          title: 'Cura delle gengive',
           description:
-            'Trattamenti per allineare i denti e correggere problemi di occlusione.',
-          details: [
-            'Apparecchi fissi tradizionali',
-            'Apparecchi estetici in ceramica',
-            'Allineatori trasparenti',
-            'Ortodonzia invisibile',
-            'Trattamenti per bambini e adulti',
-          ],
-        },
-        aesthetics: {
-          title: 'Estetica dentale',
-          description: 'Procedure per migliorare l’aspetto del tuo sorriso con risultati naturali.',
-          details: [
-            'Sbiancamento dentale professionale',
-            'Faccette in ceramica',
-            'Corone estetiche',
-            'Ricostruzioni in composito',
-            'Digital Smile Design',
-          ],
-        },
-        prosthetics: {
-          title: 'Protesi dentarie',
-          description: 'Riabilitazioni protesiche personalizzate per funzionalità ed estetica.',
-          details: [
-            'Corone e ponti fissi',
-            'Protesi parziali removibili',
-            'Protesi totali',
-            'Protesi su impianti',
-            'Materiali di ultima generazione',
-          ],
-        },
-        periodontics: {
-          title: 'Parodontologia',
-          description: 'Terapie dedicate alla salute di gengive e parodonto.',
+            'Diagnosi e terapie per gengiviti e parodontite, con follow-up dedicato.',
           details: [
             'Diagnosi e trattamento delle gengiviti',
-            'Terapia per la parodontite',
+            'Terapia parodontale non chirurgica',
             'Levigatura radicolare',
             'Chirurgia parodontale',
             'Mantenimento parodontale',
           ],
         },
-        pediatric: {
-          title: 'Odontoiatria pediatrica',
-          description: 'Cure gentili e specializzate per i più piccoli.',
+        implants: {
+          title: 'Implantologia',
+          description:
+            'Impianti osteointegrati e riabilitazioni fisse per sostituire i denti mancanti.',
           details: [
-            'Controlli regolari per bambini',
-            'Sigillature dei solchi',
-            'Fluoroprofilassi',
-            'Trattamenti conservativi',
-            'Educazione all’igiene orale',
+            'Impianti dentali in titanio',
+            'Protesi fisse su impianti',
+            'Pianificazione digitale',
+            'Riabilitazioni complete',
+            'All-on-4 e soluzioni su misura',
           ],
         },
-        surgery: {
+        'cosmetic-dentistry': {
+          title: 'Odontoiatria estetica',
+          description:
+            'Sbiancamento, faccette e ricostruzioni per armonizzare e valorizzare il sorriso.',
+          details: [
+            'Sbiancamento professionale',
+            'Faccette estetiche in ceramica',
+            'Ricostruzioni estetiche',
+            'Armonizzazione del sorriso',
+            'Risultati naturali e duraturi',
+          ],
+        },
+        'oral-surgery': {
           title: 'Chirurgia orale',
-          description: 'Interventi chirurgici precisi per casi complessi.',
+          description:
+            'Interventi chirurgici mirati, inclusi denti del giudizio e procedure pre-protesiche.',
           details: [
             'Estrazione denti del giudizio',
+            'Estrazioni complesse',
             'Chirurgia pre-protesica',
-            'Biopsia dei tessuti orali',
             'Asportazione di cisti',
-            'Chirurgia ossea ricostruttiva',
+            'Procedure mininvasive',
+          ],
+        },
+        'snoring-sleep-apnea': {
+          title: 'Russamento e apnee notturne',
+          description:
+            'Valutazione e dispositivi personalizzati per migliorare il sonno e la respirazione notturna.',
+          details: [
+            'Valutazione del russamento',
+            'Dispositivi MAD personalizzati',
+            'Approccio multidisciplinare',
+            'Miglioramento della qualità del sonno',
+            'Follow-up e adattamento del dispositivo',
           ],
         },
       },
@@ -218,71 +200,30 @@ export const translations: Record<Language, TranslationValue> = {
     about: {
       hero: {
         title: 'Chi siamo',
-        subtitle: 'Storia e valori al servizio del tuo sorriso.',
+        subtitle: 'Professionalità, formazione e attenzione al paziente al servizio del tuo sorriso.',
       },
-      mission: {
-        title: 'La nostra missione',
-        p1: 'Forniamo cure odontoiatriche di alta qualità in un ambiente confortevole e accogliente, con un approccio personalizzato e tecnologie avanzate.',
-        p2: 'Crediamo nella prevenzione e nell’educazione del paziente: il benessere a lungo termine è al centro di ogni scelta.',
-      },
-      values: {
-        title: 'I nostri valori',
-        excellence: {
-          title: 'Eccellenza',
-          description: 'Qualità elevata in ogni fase del percorso di cura.',
-        },
-        integrity: {
-          title: 'Integrità',
-          description: 'Onestà e trasparenza nelle decisioni cliniche.',
-        },
-        innovation: {
-          title: 'Innovazione',
-          description: 'Tecnologie e metodi aggiornati per risultati migliori.',
-        },
-        empathy: {
-          title: 'Empatia',
-          description: 'Ascolto e comfort per ogni paziente.',
-        },
-      },
-      history: {
-        title: 'La nostra storia',
-        items: [
-          {
-            year: '2005',
-            title: 'Gli inizi',
-            text: 'Lo Studio Dentistico Marostica nasce con l’obiettivo di offrire cure di qualità alla comunità locale.',
-          },
-          {
-            year: '2010',
-            title: 'Espansione',
-            text: 'Ampliamento del team e introduzione di nuove specializzazioni e tecnologie.',
-          },
-          {
-            year: '2015',
-            title: 'Rinnovamento',
-            text: 'Restyling completo degli spazi e aggiornamento delle attrezzature.',
-          },
-          {
-            year: 'Oggi',
-            title: 'Punto di riferimento',
-            text: 'Uno studio riconosciuto per professionalità, innovazione e attenzione al paziente.',
-          },
+      doctor: {
+        name: 'Dr. Moustapha Mourtada',
+        role: 'Odontoiatria e Protesi Dentaria',
+        intro:
+          'Laureato in Odontoiatria e Protesi Dentaria e abilitato all’esercizio della professione presso l’Università degli Studi di Trieste, con iscrizione all’Ordine dei Medici Chirurghi e degli Odontoiatri prima di Trieste e poi di Vicenza.',
+        experience:
+          'Ho acquisito un’ampia esperienza in chirurgia, odontoiatria conservativa, endodonzia, protesi dentaria, prevenzione e diagnostica, presso la Clinica Odontostomatologica dell’Ospedale di Trieste e in diversi studi e strutture private con cui ho collaborato.',
+        trainingTitle: 'Formazione e aggiornamento',
+        trainingItems: [
+          'Master di II livello in Implanto-Protesi presso l’Università degli Studi di Siena',
+          'Corso di perfezionamento in odontoiatria restaurativa adesiva ed estetica nei settori anteriori e posteriori con il Dott. Veneziani Marco',
+          'Corso di perfezionamento in protesi dentale fissa con il Prof. Ezio Bruna',
+          'Partecipazione a convegni e congressi nazionali ed internazionali',
         ],
+        approach:
+          'Proveniente da una famiglia di medici ed odontoiatri, ho coltivato fin da piccolo la passione per l’odontoiatria e la chirurgia. Rivolgo particolare attenzione ai bambini — sono padre di tre meravigliose creature — e al primo approccio con il paziente, con forte attenzione alla prevenzione.',
+        languagesTitle: 'Lingue parlate',
+        languages: 'Italiano, inglese, francese e arabo',
       },
       team: {
         title: 'Il nostro team',
-      },
-      technology: {
-        title: 'Tecnologia all’avanguardia',
-        content:
-          'Investiamo in strumenti moderni per trattamenti precisi, efficaci e confortevoli.',
-        items: [
-          'Scanner intraorali digitali 3D',
-          'Radiografie digitali a bassa emissione',
-          'Sistemi CAD/CAM per restauri in giornata',
-          'Laser dentali minimamente invasivi',
-          'Soluzioni avanzate per il comfort del paziente',
-        ],
+        imageAlt: 'Dr. Moustapha Mourtada',
       },
     },
     contact: {
@@ -393,11 +334,6 @@ export const translations: Record<Language, TranslationValue> = {
         all: 'Tutte le recensioni',
       },
       helpful: 'Utile',
-      inviteOnly: {
-        title: 'Recensioni su invito',
-        message:
-          'Le recensioni pubblicate sul sito provengono da pazienti che hanno ricevuto un invito dopo la visita. Se hai completato un trattamento da noi, controlla la tua email per il link personale.',
-      },
       submit: {
         pageTitle: 'Lascia una recensione',
         title: 'La tua opinione conta',
@@ -596,6 +532,10 @@ export const translations: Record<Language, TranslationValue> = {
       menu: 'Menu',
       included: 'What’s included',
       viewAllReviews: 'All reviews',
+      contactUs: 'Contact us',
+      fabBook: 'Book',
+      fabWhatsApp: 'WhatsApp',
+      fabCall: 'Call',
     },
     home: {
       hero: {
@@ -623,28 +563,13 @@ export const translations: Record<Language, TranslationValue> = {
       services: {
         title: 'Our services',
         subtitle: 'Complete treatments for every need.',
-        general: {
-          title: 'General dentistry',
-          description: 'Prevention and essential care for lasting oral health.',
-        },
-        implants: {
-          title: 'Implantology',
-          description: 'High-quality implants for a natural, stable result.',
-        },
-        orthodontics: {
-          title: 'Orthodontics',
-          description: 'Alignment with traditional and invisible solutions.',
-        },
-        aesthetics: {
-          title: 'Dental aesthetics',
-          description: 'Whitening, veneers, and care for a harmonious smile.',
-        },
         cta: 'All services',
+        learnMore: 'Learn more',
       },
       about: {
         title: 'About us',
         content:
-          'We combine experience, technology, and attentive care at every step of your treatment.',
+          'Dr. Moustapha Mourtada combines university training, clinical experience, and a human approach focused on prevention and patient care.',
         more: 'Learn more about us',
       },
       testimonials: {
@@ -669,92 +594,88 @@ export const translations: Record<Language, TranslationValue> = {
       },
       services: {
         included: 'What’s included',
-        general: {
+        'general-dentistry': {
           title: 'General dentistry',
-          description: 'Essential care to maintain oral health and prevent problems.',
+          description:
+            'Prevention, restorative care, and treatments to keep teeth and gums healthy.',
           details: [
             'Regular check-ups and prevention',
-            'Professional cleaning and scaling',
             'Aesthetic composite fillings',
-            'Root canal treatments',
-            'Simple and complex extractions',
+            'Root canal therapy and endodontics',
+            'Simple extractions',
+            'Emergency visits',
           ],
         },
-        implants: {
-          title: 'Implantology',
-          description: 'Replacement of missing teeth with high-quality implants.',
+        'dental-hygiene': {
+          title: 'Dental hygiene',
+          description:
+            'Professional prophylaxis and personalised programmes for a clean, healthy smile.',
           details: [
-            'Titanium dental implants',
-            'Full rehabilitations',
-            'All-on-4 and All-on-6',
-            'Guided bone regeneration',
-            'Sinus lift',
+            'Scaling and professional cleaning',
+            'Polishing and stain removal',
+            'Personalised recall programmes',
+            'Oral hygiene education',
+            'Gum disease prevention',
           ],
         },
-        orthodontics: {
-          title: 'Orthodontics',
-          description: 'Treatments to align teeth and correct occlusion.',
-          details: [
-            'Traditional fixed braces',
-            'Aesthetic ceramic braces',
-            'Clear aligners',
-            'Invisible orthodontics',
-            'Treatments for children and adults',
-          ],
-        },
-        aesthetics: {
-          title: 'Dental aesthetics',
-          description: 'Procedures to enhance your smile with natural results.',
-          details: [
-            'Professional teeth whitening',
-            'Ceramic veneers',
-            'Aesthetic crowns',
-            'Composite reconstructions',
-            'Digital Smile Design',
-          ],
-        },
-        prosthetics: {
-          title: 'Dental prosthetics',
-          description: 'Custom prosthetic rehabilitations for function and aesthetics.',
-          details: [
-            'Fixed crowns and bridges',
-            'Removable partial dentures',
-            'Complete dentures',
-            'Implant-supported prostheses',
-            'Latest-generation materials',
-          ],
-        },
-        periodontics: {
-          title: 'Periodontics',
-          description: 'Therapies dedicated to gum and periodontal health.',
+        'gum-treatment': {
+          title: 'Gum treatment',
+          description:
+            'Diagnosis and therapy for gingivitis and periodontitis, with dedicated follow-up.',
           details: [
             'Diagnosis and treatment of gingivitis',
-            'Periodontitis therapy',
+            'Non-surgical periodontal therapy',
             'Root planing',
             'Periodontal surgery',
             'Periodontal maintenance',
           ],
         },
-        pediatric: {
-          title: 'Pediatric dentistry',
-          description: 'Gentle, specialized care for children.',
+        implants: {
+          title: 'Implants',
+          description:
+            'Osseointegrated implants and fixed rehabilitations to replace missing teeth.',
           details: [
-            'Regular check-ups for children',
-            'Fissure sealants',
-            'Fluoride prophylaxis',
-            'Conservative treatments',
-            'Oral hygiene education',
+            'Titanium dental implants',
+            'Fixed implant prosthetics',
+            'Digital planning',
+            'Full rehabilitations',
+            'All-on-4 and tailored solutions',
           ],
         },
-        surgery: {
-          title: 'Oral surgery',
-          description: 'Precise surgical procedures for complex cases.',
+        'cosmetic-dentistry': {
+          title: 'Cosmetic dentistry',
+          description:
+            'Whitening, veneers, and reconstructions to harmonise and enhance your smile.',
           details: [
-            'Wisdom teeth extraction',
+            'Professional teeth whitening',
+            'Aesthetic ceramic veneers',
+            'Cosmetic reconstructions',
+            'Smile harmonisation',
+            'Natural, lasting results',
+          ],
+        },
+        'oral-surgery': {
+          title: 'Oral surgery',
+          description:
+            'Targeted surgical procedures, including wisdom teeth and pre-prosthetic care.',
+          details: [
+            'Wisdom tooth extraction',
+            'Complex extractions',
             'Pre-prosthetic surgery',
-            'Oral tissue biopsy',
             'Cyst removal',
-            'Reconstructive bone surgery',
+            'Minimally invasive procedures',
+          ],
+        },
+        'snoring-sleep-apnea': {
+          title: 'Snoring & sleep apnea',
+          description:
+            'Assessment and custom devices to improve sleep and nighttime breathing.',
+          details: [
+            'Snoring assessment',
+            'Custom MAD devices',
+            'Multidisciplinary approach',
+            'Improved sleep quality',
+            'Device follow-up and adjustment',
           ],
         },
       },
@@ -786,71 +707,30 @@ export const translations: Record<Language, TranslationValue> = {
     about: {
       hero: {
         title: 'About us',
-        subtitle: 'Our story and values at the heart of your smile.',
+        subtitle: 'Professionalism, training, and patient care at the heart of your smile.',
       },
-      mission: {
-        title: 'Our mission',
-        p1: 'We provide high-quality dental care in a comfortable setting, with a personalized approach and advanced technology.',
-        p2: 'We believe in prevention and patient education: long-term wellbeing guides every decision.',
-      },
-      values: {
-        title: 'Our values',
-        excellence: {
-          title: 'Excellence',
-          description: 'High standards at every step of care.',
-        },
-        integrity: {
-          title: 'Integrity',
-          description: 'Honesty and transparency in clinical decisions.',
-        },
-        innovation: {
-          title: 'Innovation',
-          description: 'Updated methods and technology for better outcomes.',
-        },
-        empathy: {
-          title: 'Empathy',
-          description: 'Listening and comfort for every patient.',
-        },
-      },
-      history: {
-        title: 'Our history',
-        items: [
-          {
-            year: '2005',
-            title: 'The beginning',
-            text: 'Studio Dentistico Marostica was founded to bring quality care to the local community.',
-          },
-          {
-            year: '2010',
-            title: 'Expansion',
-            text: 'The team grew and new specializations and technologies were introduced.',
-          },
-          {
-            year: '2015',
-            title: 'Renewal',
-            text: 'A full redesign of the spaces and updated equipment.',
-          },
-          {
-            year: 'Today',
-            title: 'A trusted reference',
-            text: 'A practice known for professionalism, innovation, and patient care.',
-          },
+      doctor: {
+        name: 'Dr. Moustapha Mourtada',
+        role: 'Dentistry and Dental Prosthetics',
+        intro:
+          'Graduate in Dentistry and Dental Prosthetics, licensed to practice by the University of Trieste, and registered with the Order of Physicians and Dentists first in Trieste and then in Vicenza.',
+        experience:
+          'I have gained extensive experience in surgery, conservative dentistry, endodontics, dental prosthetics, prevention, and diagnostics at the Dental Clinic of Trieste Hospital and in various private practices and facilities where I have worked.',
+        trainingTitle: 'Training and continuing education',
+        trainingItems: [
+          'Second-level Master in Implant-Prosthetics at the University of Siena',
+          'Advanced course in adhesive and aesthetic restorative dentistry in anterior and posterior sectors with Dr. Marco Veneziani',
+          'Advanced course in fixed dental prosthetics with Prof. Ezio Bruna',
+          'Participation in national and international conferences and congresses',
         ],
+        approach:
+          'Coming from a family of physicians and dentists, I developed a passion for dentistry and surgery from an early age. I pay special attention to children — I am the father of three wonderful kids — and to the first patient visit, with a strong focus on prevention.',
+        languagesTitle: 'Languages spoken',
+        languages: 'Italian, English, French, and Arabic',
       },
       team: {
         title: 'Our team',
-      },
-      technology: {
-        title: 'Cutting-edge technology',
-        content:
-          'We invest in modern tools for precise, effective, and comfortable treatments.',
-        items: [
-          '3D intraoral digital scanners',
-          'Low-dose digital radiography',
-          'CAD/CAM systems for same-day restorations',
-          'Minimally invasive dental lasers',
-          'Advanced comfort solutions for patients',
-        ],
+        imageAlt: 'Dr. Moustapha Mourtada',
       },
     },
     contact: {
@@ -961,11 +841,6 @@ export const translations: Record<Language, TranslationValue> = {
         all: 'All reviews',
       },
       helpful: 'Helpful',
-      inviteOnly: {
-        title: 'Invite-only reviews',
-        message:
-          'Reviews on our website come from patients who received an invitation after their visit. If you completed treatment with us, check your email for your personal link.',
-      },
       submit: {
         pageTitle: 'Leave a review',
         title: 'Your opinion matters',

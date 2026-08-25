@@ -30,3 +30,9 @@ supabase/.temp/
 *.sw?
 
 .vercel
+
+# Stray asset files at repo root
+/*.png
+/*.jpg
+/*.jpeg
+/*.webp

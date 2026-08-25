@@ -1,5 +1,6 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
+import { ASSETS } from '../config/assets';
 import {
   Calendar,
   Layers,
@@ -30,7 +31,7 @@ const AdminSidebar: React.FC = () => {
   return (
     <aside className="admin-sidebar">
       <div className="admin-sidebar-brand">
-        <img src="/logo.png" alt="" className="admin-sidebar-logo" />
+        <img src={ASSETS.brand.logo} alt="" className="admin-sidebar-logo" />
         <span className="admin-sidebar-title">
           Admin <span className="accent">Panel</span>
         </span>

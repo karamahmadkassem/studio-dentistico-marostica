@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Navigate, useNavigate } from 'react-router-dom';
+import { ASSETS } from '../../config/assets';
 import { adminLogin } from '../../lib/api';
 import { useAdminSession } from '../../hooks/useAdminSession';
 import { isSupabaseConfigured } from '../../lib/supabase';
@@ -95,7 +96,7 @@ const AdminLoginPage: React.FC = () => {
       </div>
 
       <div className="admin-login-logo-panel">
-        <img src="/logo.png" alt="Studio Dentistico Marostica" className="admin-login-logo" />
+        <img src={ASSETS.brand.logo} alt="Studio Dentistico Marostica" className="admin-login-logo" />
       </div>
     </div>
   );

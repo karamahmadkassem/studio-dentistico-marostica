@@ -1,6 +1,7 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram } from 'lucide-react';
+import { ASSETS } from '../config/assets';
 import { useLanguage } from '../context/LanguageContext';
 import { useOpeningHours } from '../hooks/useOpeningHours';
 import OpeningHoursList from './OpeningHoursList';
@@ -25,7 +26,7 @@ const Footer: React.FC = () => {
         <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
           <div>
             <div className="mb-5 flex items-center gap-3">
-              <img src="/logo.png" alt="Studio Dentistico Marostica" className="site-logo" />
+              <img src={ASSETS.brand.logo} alt="Studio Dentistico Marostica" className="site-logo" />
             </div>
             <p className="brand-footer mb-3 text-sm md:text-base">
               Studio Dentistico <span className="accent">Marostica</span>
