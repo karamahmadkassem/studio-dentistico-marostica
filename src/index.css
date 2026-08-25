@@ -1135,4 +1135,35 @@
     height: auto;
     object-fit: contain;
   }
+
+  .reviews-carousel-track {
+    display: flex;
+    width: max-content;
+    gap: 1.5rem;
+    animation: reviews-marquee var(--reviews-carousel-duration, 80s) linear infinite;
+  }
+
+  .reviews-carousel:hover .reviews-carousel-track,
+  .reviews-carousel:focus-within .reviews-carousel-track {
+    animation-play-state: paused;
+  }
+
+  .reviews-carousel-card {
+    width: min(280px, 85vw);
+  }
+
+  @media (min-width: 768px) {
+    .reviews-carousel-card {
+      width: 320px;
+    }
+  }
+
+  @keyframes reviews-marquee {
+    0% {
+      transform: translateX(0);
+    }
+    100% {
+      transform: translateX(-50%);
+    }
+  }
 }

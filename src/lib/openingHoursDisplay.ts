@@ -56,12 +56,23 @@ export function isDayClosedFromHours(hours: OpeningHour[], date: Date): boolean 
   return row?.is_closed ?? true;
 }
 
-export function formatOpeningHoursLines(hours: OpeningHour[], lang: 'it' | 'en'): string[] {
+export interface OpeningHoursRow {
+  label: string;
+  hours: string;
+}
+
+export function parseOpeningHoursLine(line: string): OpeningHoursRow {
+  const idx = line.indexOf(': ');
+  if (idx === -1) return { label: line, hours: '' };
+  return { label: line.slice(0, idx), hours: line.slice(idx + 2) };
+}
+
+export function formatOpeningHoursRows(hours: OpeningHour[], lang: 'it' | 'en'): OpeningHoursRow[] {
   const dayNames = lang === 'it' ? DAY_NAMES_IT : DAY_NAMES_EN;
   const closedLabel = lang === 'it' ? 'Chiuso' : 'Closed';
   const normalized = normalizeOpeningHours(hours);
   const byDay = new Map(normalized.map((h) => [h.day_of_week, h]));
-  const lines: string[] = [];
+  const rows: OpeningHoursRow[] = [];
 
   let i = 0;
   while (i < DISPLAY_ORDER.length) {
@@ -88,16 +99,20 @@ export function formatOpeningHoursLines(hours: OpeningHour[], lang: 'it' | 'en')
     const rangeLabel = startDay === endDay ? startName : `${startName} – ${endName}`;
 
     if (key === 'closed') {
-      lines.push(`${rangeLabel}: ${closedLabel}`);
+      rows.push({ label: rangeLabel, hours: closedLabel });
     } else {
       const [open, close] = key.split('|');
-      lines.push(`${rangeLabel}: ${open} – ${close}`);
+      rows.push({ label: rangeLabel, hours: `${open} – ${close}` });
     }
 
     i = j;
   }
 
-  return lines;
+  return rows;
+}
+
+export function formatOpeningHoursLines(hours: OpeningHour[], lang: 'it' | 'en'): string[] {
+  return formatOpeningHoursRows(hours, lang).map(({ label, hours: time }) => `${label}: ${time}`);
 }
 
 export { toDbTime, defaultCloseForDay, DEFAULT_OPEN };

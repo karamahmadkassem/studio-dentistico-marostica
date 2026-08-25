@@ -23,6 +23,7 @@ Deno.serve(async (req) => {
       phone,
       email,
       serviceId,
+      serviceName: serviceNameInput,
       appointmentDate,
       appointmentTime,
       message,
@@ -44,8 +45,8 @@ Deno.serve(async (req) => {
     const supabase = getServiceClient();
     const normalizedTime = normalizeTime(appointmentTime);
 
-    let serviceName = '';
-    if (serviceId) {
+    let serviceName = serviceNameInput || '';
+    if (!serviceName && serviceId) {
       const { data: svc } = await supabase.from('services').select('title_it, title_en').eq('id', serviceId).maybeSingle();
       if (svc) serviceName = locale === 'en' ? svc.title_en : svc.title_it;
     }

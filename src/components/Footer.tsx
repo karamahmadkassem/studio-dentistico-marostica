@@ -3,10 +3,11 @@ import { Link } from 'react-router-dom';
 import { Phone, Mail, MapPin, Clock, Facebook, Instagram } from 'lucide-react';
 import { useLanguage } from '../context/LanguageContext';
 import { useOpeningHours } from '../hooks/useOpeningHours';
+import OpeningHoursList from './OpeningHoursList';
 
 const Footer: React.FC = () => {
   const { t } = useLanguage();
-  const { lines: openingHoursLines } = useOpeningHours();
+  const { rows: openingHoursRows } = useOpeningHours();
   const year = new Date().getFullYear();
 
   const links = [
@@ -110,9 +111,11 @@ const Footer: React.FC = () => {
               <li className="flex items-start gap-3">
                 <Clock size={18} className="mt-0.5 shrink-0 text-[#4AACE1]" />
                 <div>
-                  {openingHoursLines.map((line) => (
-                    <p key={line}>{line}</p>
-                  ))}
+                  <OpeningHoursList
+                    rows={openingHoursRows}
+                    labelClassName="text-white/80"
+                    hoursClassName="text-white/80"
+                  />
                 </div>
               </li>
             </ul>

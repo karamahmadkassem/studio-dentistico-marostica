@@ -1,7 +1,13 @@
 import { useEffect, useMemo, useState } from 'react';
 import { useLanguage } from '../context/LanguageContext';
 import { fetchOpeningHoursPublic } from '../lib/api';
-import { formatOpeningHoursLines, isDayClosedFromHours, normalizeOpeningHours } from '../lib/openingHoursDisplay';
+import {
+  formatOpeningHoursLines,
+  formatOpeningHoursRows,
+  isDayClosedFromHours,
+  normalizeOpeningHours,
+  parseOpeningHoursLine,
+} from '../lib/openingHoursDisplay';
 import type { OpeningHour } from '../types/database';
 
 export function useOpeningHours() {
@@ -16,18 +22,30 @@ export function useOpeningHours() {
 
   const lang = language === 'it' ? 'it' : 'en';
 
+  const fallbackLines = useMemo(
+    () => [
+      String(t('contact.info.hoursWeek')),
+      String(t('contact.info.hoursSat')),
+      String(t('contact.info.hoursSun')),
+    ],
+    [t],
+  );
+
   const lines = useMemo(() => {
     if (hours.length >= 7) {
       return formatOpeningHoursLines(normalizeOpeningHours(hours), lang);
     }
-    return [
-      String(t('contact.info.hoursWeek')),
-      String(t('contact.info.hoursSat')),
-      String(t('contact.info.hoursSun')),
-    ];
-  }, [hours, lang, t]);
+    return fallbackLines;
+  }, [hours, lang, fallbackLines]);
+
+  const rows = useMemo(() => {
+    if (hours.length >= 7) {
+      return formatOpeningHoursRows(normalizeOpeningHours(hours), lang);
+    }
+    return fallbackLines.map(parseOpeningHoursLine);
+  }, [hours, lang, fallbackLines]);
 
   const isDayClosed = (date: Date) => isDayClosedFromHours(hours, date);
 
-  return { hours, lines, isDayClosed };
+  return { hours, lines, rows, isDayClosed };
 }

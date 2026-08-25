@@ -66,6 +66,14 @@ const Header: React.FC = () => {
       isActive ? 'text-[#4AACE1]' : 'text-white/90 hover:text-[#4AACE1]'
     }`;
 
+  const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    if (location.pathname === '/') {
+      e.preventDefault();
+      setIsMenuOpen(false);
+      window.scrollTo({ top: 0, behavior: 'smooth' });
+    }
+  };
+
   return (
     <header
       className={`shell-header fixed inset-x-0 z-50${
@@ -74,7 +82,12 @@ const Header: React.FC = () => {
     >
       <nav className="container-page" aria-label="Main">
         <div className="flex h-20 items-center justify-between gap-4">
-          <Link to="/" className="flex min-w-0 items-center gap-3" aria-label={String(t('common.brand'))}>
+          <Link
+            to="/"
+            onClick={handleLogoClick}
+            className="flex min-w-0 items-center gap-3"
+            aria-label={String(t('common.brand'))}
+          >
             <img
               src="/logo.png"
               alt=""

@@ -10,6 +10,7 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
+import ReviewsCarousel from '../components/ReviewsCarousel';
 import ServiceIcon from '../components/ServiceIcon';
 import { fetchPublishedReviews, fetchPublishedServices } from '../lib/api';
 import { SERVICE_IMAGES, STATIC_REVIEWS } from '../config/staticFallback';
@@ -20,13 +21,13 @@ const HomePage: React.FC = () => {
   const { t, language } = useLanguage();
   usePageTitle(t('nav.home'));
   const [dbServices, setDbServices] = useState<Service[]>([]);
-  const [dbReviews, setDbReviews] = useState<{ name: string; body: string; rating: number }[]>([]);
+  const [dbReviews, setDbReviews] = useState<{ id: string; name: string; body: string; rating: number }[]>([]);
 
   useEffect(() => {
     fetchPublishedServices(language).then(setDbServices).catch(() => setDbServices([]));
     fetchPublishedReviews()
       .then((rows) =>
-        setDbReviews(rows.map((r) => ({ name: r.name, body: r.body, rating: r.rating }))),
+        setDbReviews(rows.map((r) => ({ id: r.id, name: r.name, body: r.body, rating: r.rating }))),
       )
       .catch(() => setDbReviews([]));
   }, [language]);
@@ -65,13 +66,15 @@ const HomePage: React.FC = () => {
 
   const testimonials = useMemo(() => {
     if (dbReviews.length > 0) {
-      return dbReviews.slice(0, 3).map((r) => ({
+      return dbReviews.map((r) => ({
+        id: r.id,
         name: r.name,
         text: r.body,
         rating: r.rating,
       }));
     }
-    return STATIC_REVIEWS.slice(0, 3).map((r) => ({
+    return STATIC_REVIEWS.map((r) => ({
+      id: r.id,
       name: r.name,
       text: r.body,
       rating: r.rating,
@@ -152,26 +155,26 @@ const HomePage: React.FC = () => {
         </div>
       </section>
 
-      {/* Features */}
+      {/* About */}
       <Section>
-        <FadeIn>
-          <div className="mb-12 max-w-2xl">
-            <h2 className="heading-section mb-3">{t('home.features.title')}</h2>
-            <p className="text-body">{t('home.features.subtitle')}</p>
-          </div>
-        </FadeIn>
-        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
-          {features.map((feature, i) => (
-            <FadeIn key={feature.title} delay={i * 0.08}>
-              <div className="border-t border-brand-cyan/30 pt-6">
-                <div className="mb-4">{feature.icon}</div>
-                <h3 className="mb-2 font-display text-xl font-semibold text-ink">
-                  {feature.title}
-                </h3>
-                <p className="text-ink-muted">{feature.description}</p>
-              </div>
-            </FadeIn>
-          ))}
+        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
+          <FadeIn>
+            <div className="aspect-[4/3] overflow-hidden">
+              <img
+                src="https://images.pexels.com/photos/3845126/pexels-photo-3845126.jpeg?auto=compress&cs=tinysrgb&w=1200"
+                alt={t('home.about.title')}
+                className="h-full w-full object-cover"
+                loading="lazy"
+              />
+            </div>
+          </FadeIn>
+          <FadeIn delay={0.1}>
+            <h2 className="heading-section mb-5">{t('home.about.title')}</h2>
+            <p className="text-body mb-8">{t('home.about.content')}</p>
+            <Link to="/about" className="btn-primary">
+              {t('home.about.more')}
+            </Link>
+          </FadeIn>
         </div>
       </Section>
 
@@ -213,26 +216,26 @@ const HomePage: React.FC = () => {
         </div>
       </Section>
 
-      {/* About */}
+      {/* Features */}
       <Section>
-        <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
-          <FadeIn>
-            <div className="aspect-[4/3] overflow-hidden">
-              <img
-                src="https://images.pexels.com/photos/3845126/pexels-photo-3845126.jpeg?auto=compress&cs=tinysrgb&w=1200"
-                alt={t('home.about.title')}
-                className="h-full w-full object-cover"
-                loading="lazy"
-              />
-            </div>
-          </FadeIn>
-          <FadeIn delay={0.1}>
-            <h2 className="heading-section mb-5">{t('home.about.title')}</h2>
-            <p className="text-body mb-8">{t('home.about.content')}</p>
-            <Link to="/about" className="btn-primary">
-              {t('home.about.more')}
-            </Link>
-          </FadeIn>
+        <FadeIn>
+          <div className="mb-12 max-w-2xl">
+            <h2 className="heading-section mb-3">{t('home.features.title')}</h2>
+            <p className="text-body">{t('home.features.subtitle')}</p>
+          </div>
+        </FadeIn>
+        <div className="grid grid-cols-1 gap-10 md:grid-cols-3">
+          {features.map((feature, i) => (
+            <FadeIn key={feature.title} delay={i * 0.08}>
+              <div className="border-t border-brand-cyan/30 pt-6">
+                <div className="mb-4">{feature.icon}</div>
+                <h3 className="mb-2 font-display text-xl font-semibold text-ink">
+                  {feature.title}
+                </h3>
+                <p className="text-ink-muted">{feature.description}</p>
+              </div>
+            </FadeIn>
+          ))}
         </div>
       </Section>
 
@@ -249,21 +252,7 @@ const HomePage: React.FC = () => {
             </Link>
           </div>
         </FadeIn>
-        <div className="grid grid-cols-1 gap-8 md:grid-cols-3">
-          {testimonials.map((item, i) => (
-            <FadeIn key={item.name} delay={i * 0.08}>
-              <blockquote className="border-l-2 border-brand-cyan pl-5">
-                <div className="mb-3 flex gap-0.5 text-brand-cyan" aria-label={`${item.rating} stars`}>
-                  {[...Array(item.rating)].map((_, idx) => (
-                    <span key={idx}>★</span>
-                  ))}
-                </div>
-                <p className="mb-4 text-ink-muted leading-relaxed">“{item.text}”</p>
-                <p className="font-semibold text-ink">{item.name}</p>
-              </blockquote>
-            </FadeIn>
-          ))}
-        </div>
+        <ReviewsCarousel reviews={testimonials} />
       </Section>
 
       {/* CTA */}

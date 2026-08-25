@@ -7,11 +7,13 @@ import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import RequiredMark from '../components/RequiredMark';
 import AppointmentCalendar from '../components/AppointmentCalendar';
-import { createBooking, fetchPublishedServices } from '../lib/api';
+import OpeningHoursList from '../components/OpeningHoursList';
+import { createBooking } from '../lib/api';
 import { useOpeningHours } from '../hooks/useOpeningHours';
 import { isSupabaseConfigured } from '../lib/supabase';
 import { formatDateKey } from '../config/appointmentSchedule';
-import type { Service } from '../types/database';
+import { BOOKING_SERVICE_KEYS, type BookingServiceKey } from '../config/bookingServices';
+import { scrollToElement } from '../lib/scrollToElement';
 import { usePageTitle } from '../hooks/usePageTitle';
 
 const ContactPage: React.FC = () => {
@@ -20,7 +22,6 @@ const ContactPage: React.FC = () => {
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
-  const [services, setServices] = useState<Service[]>([]);
   const [submitting, setSubmitting] = useState(false);
   const [submitted, setSubmitted] = useState(false);
   const [error, setError] = useState('');
@@ -28,11 +29,12 @@ const ContactPage: React.FC = () => {
   const faqItems = t('contact.faq.items') as { q: string; a: string }[];
   const mobileHref = String(t('footer.mobileHref'));
   const phoneHref = String(t('footer.phoneHref'));
-  const { lines: openingHoursLines } = useOpeningHours();
+  const { rows: openingHoursRows } = useOpeningHours();
 
-  useEffect(() => {
-    fetchPublishedServices(language).then(setServices).catch(() => setServices([]));
-  }, [language]);
+  const bookingServices = BOOKING_SERVICE_KEYS.map((key) => ({
+    key,
+    label: String(t(`contact.form.bookingServices.${key}`)),
+  }));
 
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -51,6 +53,8 @@ const ContactPage: React.FC = () => {
     }
     const form = e.currentTarget;
     const fd = new FormData(form);
+    const serviceKey = fd.get('service') as BookingServiceKey;
+    const serviceName = String(t(`contact.form.bookingServices.${serviceKey}`));
     setSubmitting(true);
     try {
       await createBooking({
@@ -58,7 +62,7 @@ const ContactPage: React.FC = () => {
         lastName: fd.get('lastName'),
         phone: fd.get('phone'),
         email: fd.get('email'),
-        serviceId: fd.get('service') || null,
+        serviceName,
         appointmentDate: formatDateKey(selectedDate),
         appointmentTime: selectedTime,
         message: fd.get('message') || '',
@@ -75,8 +79,15 @@ const ContactPage: React.FC = () => {
     }
   };
 
+  useEffect(() => {
+    if (!submitted) return;
+    requestAnimationFrame(() => {
+      scrollToElement('bookingPanelTitle', 96);
+    });
+  }, [submitted]);
+
   const scrollToForm = () => {
-    document.getElementById('contactForm')?.scrollIntoView({ behavior: 'smooth' });
+    scrollToElement('bookingPanelTitle', 96);
   };
 
   return (
@@ -106,19 +117,18 @@ const ContactPage: React.FC = () => {
                 <li className="flex gap-4">
                   <Phone size={22} className="mt-1 shrink-0 text-brand-cyan" />
                   <div>
-                    <h3 className="mb-1 font-semibold text-ink">{t('contact.info.mobile')}</h3>
-                    <a href={`tel:${mobileHref}`} className="text-ink-muted hover:text-brand-cyan">
-                      {t('footer.mobile')}
-                    </a>
-                  </div>
-                </li>
-                <li className="flex gap-4">
-                  <Phone size={22} className="mt-1 shrink-0 text-brand-cyan" />
-                  <div>
-                    <h3 className="mb-1 font-semibold text-ink">{t('contact.info.phone')}</h3>
-                    <a href={`tel:${phoneHref}`} className="text-ink-muted hover:text-brand-cyan">
-                      {t('footer.phone')}
-                    </a>
+                    <p>
+                      <span className="font-semibold text-ink">{t('contact.info.mobile')}: </span>
+                      <a href={`tel:${mobileHref}`} className="text-ink-muted hover:text-brand-cyan">
+                        {t('footer.mobile')}
+                      </a>
+                    </p>
+                    <p className="mt-1">
+                      <span className="font-semibold text-ink">{t('contact.info.phone')}: </span>
+                      <a href={`tel:${phoneHref}`} className="text-ink-muted hover:text-brand-cyan">
+                        {t('footer.phone')}
+                      </a>
+                    </p>
                   </div>
                 </li>
                 <li className="flex gap-4">
@@ -136,12 +146,8 @@ const ContactPage: React.FC = () => {
                 <li className="flex gap-4">
                   <Clock size={22} className="mt-1 shrink-0 text-brand-cyan" />
                   <div>
-                    <h3 className="mb-1 font-semibold text-ink">{t('contact.info.hours')}</h3>
-                    {openingHoursLines.map((line) => (
-                      <p key={line} className="text-ink-muted">
-                        {line}
-                      </p>
-                    ))}
+                    <h3 className="mb-2 font-semibold text-ink">{t('contact.info.hours')}</h3>
+                    <OpeningHoursList rows={openingHoursRows} />
                   </div>
                 </li>
               </ul>
@@ -166,7 +172,10 @@ const ContactPage: React.FC = () => {
             </div>
           </FadeIn>
 
-          <h2 className="heading-section booking-panel-title order-3 lg:col-start-2 lg:row-start-1">
+          <h2
+            id="bookingPanelTitle"
+            className="heading-section booking-panel-title order-3 lg:col-start-2 lg:row-start-1"
+          >
             {t('contact.form.title')}
           </h2>
 
@@ -229,9 +238,9 @@ const ContactPage: React.FC = () => {
                       <option value="" disabled>
                         {t('contact.form.servicePlaceholder')}
                       </option>
-                      {services.map((s) => (
-                        <option key={s.id} value={s.id}>
-                          {language === 'en' ? s.title_en : s.title_it}
+                      {bookingServices.map(({ key, label }) => (
+                        <option key={key} value={key}>
+                          {label}
                         </option>
                       ))}
                     </select>

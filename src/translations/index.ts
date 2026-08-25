@@ -38,7 +38,7 @@ export const translations: Record<Language, TranslationValue> = {
         subtitle: 'Un approccio chiaro, tecnologico e umano.',
         flexible: {
           title: 'Appuntamenti flessibili',
-          description: 'Orari pensati per te, anche serali e nel weekend.',
+          description: 'Orari pensati per te, anche serali.',
         },
         technology: {
           title: 'Tecnologia avanzata',
@@ -318,6 +318,11 @@ export const translations: Record<Language, TranslationValue> = {
         email: 'Email',
         service: 'Servizio di interesse',
         servicePlaceholder: 'Seleziona un servizio',
+        bookingServices: {
+          general: 'Odontoiatria generale',
+          urgency: 'Urgenza',
+          visit: 'Visita',
+        },
         message: 'Messaggio (facoltativo)',
         privacyBefore: 'Acconsento al trattamento dei miei dati personali in conformità con la',
         submit: 'Conferma prenotazione',
@@ -342,7 +347,7 @@ export const translations: Record<Language, TranslationValue> = {
           },
           {
             q: 'È possibile richiedere un preventivo?',
-            a: 'Sì. Nella prima visita riceverai un piano di trattamento dettagliato con preventivo. Puoi anche chiedere indicazioni indicative via telefono o email.',
+            a: 'Sì. Nella prima visita riceverai un piano di trattamento dettagliato con preventivo.',
           },
           {
             q: 'Cosa fare in caso di emergenza dentale?',
@@ -604,7 +609,7 @@ export const translations: Record<Language, TranslationValue> = {
         subtitle: 'Clear, modern, and human care.',
         flexible: {
           title: 'Flexible appointments',
-          description: 'Hours that fit your life, including evenings and weekends.',
+          description: 'Hours that fit your life, including evenings.',
         },
         technology: {
           title: 'Advanced technology',
@@ -881,6 +886,11 @@ export const translations: Record<Language, TranslationValue> = {
         email: 'Email',
         service: 'Service of interest',
         servicePlaceholder: 'Select a service',
+        bookingServices: {
+          general: 'General dentistry',
+          urgency: 'Emergency',
+          visit: 'Visit',
+        },
         message: 'Message (optional)',
         privacyBefore: 'I agree to the processing of my personal data in accordance with the',
         submit: 'Confirm booking',
@@ -905,7 +915,7 @@ export const translations: Record<Language, TranslationValue> = {
           },
           {
             q: 'Can I request a quote?',
-            a: 'Yes. During the first visit you will receive a detailed treatment plan with a quote. Indicative estimates are also available by phone or email.',
+            a: 'Yes. During the first visit you will receive a detailed treatment plan with a quote.',
           },
           {
             q: 'What should I do in a dental emergency?',
