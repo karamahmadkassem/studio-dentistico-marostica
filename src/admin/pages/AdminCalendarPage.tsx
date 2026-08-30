@@ -8,6 +8,8 @@ import {
   parseTimeToMinutes,
   formatMinutesToTime,
   formatDateKey,
+  getClinicTodayDate,
+  getClinicTodayKey,
 } from '../../config/appointmentSchedule';
 import { normalizeOpeningHours } from '../../lib/openingHoursDisplay';
 
@@ -44,7 +46,8 @@ function generateSlotsFromHours(hours: OpeningHour[], dayOfWeek: number): string
 const AdminCalendarPage: React.FC = () => {
   const { refreshToken } = useAdminNotifications();
   const [view, setView] = useState<ViewMode>('week');
-  const [cursor, setCursor] = useState(() => new Date());
+  const [cursor, setCursor] = useState(() => getClinicTodayDate());
+  const todayKey = getClinicTodayKey();
   const [appointments, setAppointments] = useState<Appointment[]>([]);
   const [hours, setHours] = useState<OpeningHour[]>([]);
   const [selected, setSelected] = useState<Appointment | null>(null);
@@ -207,7 +210,7 @@ const AdminCalendarPage: React.FC = () => {
         <button type="button" onClick={() => shift(-1)} className="admin-nav-btn" aria-label="Previous">
           <ChevronLeft size={20} />
         </button>
-        <button type="button" onClick={() => setCursor(new Date())} className="text-sm font-medium text-brand-cyan">
+        <button type="button" onClick={() => setCursor(getClinicTodayDate())} className="text-sm font-medium text-brand-cyan">
           Today
         </button>
         <button type="button" onClick={() => shift(1)} className="admin-nav-btn" aria-label="Next">
@@ -243,7 +246,12 @@ const AdminCalendarPage: React.FC = () => {
               const closed = row?.is_closed ?? true;
               const dayAppts = appointments.filter((a) => a.appointment_date === key);
               cells.push(
-                <div key={key} className={`admin-month-cell${closed ? ' admin-month-cell--closed' : ''}`}>
+                <div
+                  key={key}
+                  className={`admin-month-cell${closed ? ' admin-month-cell--closed' : ''}${
+                    key === todayKey ? ' admin-month-cell--today' : ''
+                  }`}
+                >
                   <span className="font-semibold">{day}</span>
                   {dayAppts.map((a) => (
                     <button
@@ -273,7 +281,12 @@ const AdminCalendarPage: React.FC = () => {
             const row = hours.find((h) => h.day_of_week === dow);
             const closed = row?.is_closed ?? true;
             return (
-              <div key={key} className={`admin-schedule-day-head${closed ? ' admin-schedule-day-head--closed' : ''}`}>
+              <div
+                key={key}
+                className={`admin-schedule-day-head${closed ? ' admin-schedule-day-head--closed' : ''}${
+                  key === todayKey ? ' admin-schedule-day-head--today' : ''
+                }`}
+              >
                 {DAY_NAMES[dow]} {d.getDate()}
               </div>
             );

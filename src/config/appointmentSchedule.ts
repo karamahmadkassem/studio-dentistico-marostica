@@ -40,6 +40,13 @@ export function getClinicTodayKey(now: Date = new Date()): string {
   return getClinicDateTimeParts(now).dateKey;
 }
 
+/** Calendar date for "today" in the clinic timezone (local Date at midnight). */
+export function getClinicTodayDate(now: Date = new Date()): Date {
+  const { dateKey } = getClinicDateTimeParts(now);
+  const [year, month, day] = dateKey.split('-').map(Number);
+  return new Date(year, month - 1, day);
+}
+
 export function startOfDay(date: Date): Date {
   return new Date(date.getFullYear(), date.getMonth(), date.getDate());
 }
