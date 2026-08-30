@@ -1,6 +1,6 @@
 import { handleOptions, jsonResponse, errorResponse } from '../_shared/cors.ts';
 import { getServiceClient } from '../_shared/supabase.ts';
-import { sendEmail, bookingPendingEmail } from '../_shared/brevo.ts';
+import { sendEmail, bookingPendingEmail, adminNewBookingEmail } from '../_shared/brevo.ts';
 import { getClinicTodayKey, isSlotInPast } from '../_shared/slots.ts';
 
 function normalizeTime(time: string): string {
@@ -86,10 +86,19 @@ Deno.serve(async (req) => {
 
     const adminEmail = Deno.env.get('ADMIN_NOTIFY_EMAIL');
     if (adminEmail) {
+      const adminMail = adminNewBookingEmail({
+        firstName,
+        lastName,
+        phone,
+        email,
+        appointmentDate,
+        appointmentTime,
+        serviceName: serviceName || undefined,
+      });
       await sendEmail({
         to: adminEmail,
-        subject: `Nuova prenotazione: ${firstName} ${lastName}`,
-        html: `<p>Nuova richiesta per ${appointmentDate} alle ${appointmentTime}.</p><p>Telefono: ${phone}</p><p>Email: ${email}</p>`,
+        subject: adminMail.subject,
+        html: adminMail.html,
       });
     }
 
