@@ -43,13 +43,6 @@
   --hero-sky-end: #EAF7FC;
   --hero-features-bg: #E8F6FC;
   --hero-scroll-distance: 56.25vh;
-  --hero-scroll-distance-mobile: 28.125svh;
-}
-
-@media (max-width: 767px) {
-  :root {
-    --hero-scroll-distance: var(--hero-scroll-distance-mobile);
-  }
 }
 
 @layer base {
