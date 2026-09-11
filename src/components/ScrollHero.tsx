@@ -42,20 +42,29 @@ const HeroContent: React.FC = () => {
 const HeroLayers: React.FC<{
   frameIndex: number;
   teethY?: MotionValue<string>;
+  overlayOpacity?: MotionValue<number>;
+  overlayZIndex?: MotionValue<number>;
   textZIndex?: MotionValue<number>;
   doctorZIndex?: MotionValue<number>;
   teethZIndex?: MotionValue<number>;
-}> = ({ frameIndex, teethY, textZIndex, doctorZIndex, teethZIndex }) => (
+}> = ({
+  frameIndex,
+  teethY,
+  overlayOpacity,
+  overlayZIndex,
+  textZIndex,
+  doctorZIndex,
+  teethZIndex,
+}) => (
   <>
     <div
       className="scroll-hero__bg absolute inset-0 bg-cover bg-center"
       style={{ backgroundImage: `url(${ASSETS.home.hero.background})` }}
       aria-hidden
     />
-    <div className="scroll-hero__gradient absolute inset-0" aria-hidden />
     <motion.div
       className="scroll-hero__doctor pointer-events-none absolute inset-x-0 bottom-0 flex h-full w-full items-end justify-center"
-      style={{ zIndex: doctorZIndex ?? 10 }}
+      style={{ zIndex: doctorZIndex ?? 5 }}
       aria-hidden
     >
       <img
@@ -69,7 +78,7 @@ const HeroLayers: React.FC<{
     {teethY ? (
       <motion.div
         className="scroll-hero__teeth pointer-events-none absolute inset-x-0 bottom-0 flex justify-center"
-        style={{ y: teethY, zIndex: teethZIndex ?? 15 }}
+        style={{ y: teethY, zIndex: teethZIndex ?? 6 }}
         aria-hidden
       >
         <img
@@ -81,7 +90,7 @@ const HeroLayers: React.FC<{
       </motion.div>
     ) : (
       <div
-        className="scroll-hero__teeth scroll-hero__teeth--static pointer-events-none absolute inset-x-0 bottom-0 z-[40] flex justify-center"
+        className="scroll-hero__teeth scroll-hero__teeth--static pointer-events-none absolute inset-x-0 bottom-0 z-[6] flex justify-center"
         aria-hidden
       >
         <img
@@ -92,6 +101,15 @@ const HeroLayers: React.FC<{
         />
       </div>
     )}
+
+    <motion.div
+      className="scroll-hero__gradient absolute inset-0"
+      style={{
+        opacity: overlayOpacity ?? 1,
+        zIndex: overlayZIndex ?? 42,
+      }}
+      aria-hidden
+    />
 
     <motion.div
       className="container-page scroll-hero__copy absolute inset-x-0 top-0 flex h-full w-full items-center pb-16 pt-28 md:pb-20 md:pt-32"
@@ -143,6 +161,8 @@ const ScrollHero: React.FC = () => {
     [0, 1],
     isMobile ? ['85%', '-1%'] : ['110%', '11%'],
   );
+  const overlayOpacity = useTransform(scrollYProgress, [0, 0.06, 0.2], [1, 0.35, 0]);
+  const overlayZIndex = useTransform(scrollYProgress, [0, 0.07, 0.1], [42, 42, 8]);
   const textZIndex = useTransform(scrollYProgress, [0, 0.08, 1], [50, 12, 8]);
   const doctorZIndex = useTransform(scrollYProgress, [0, 0.08, 1], [5, 35, 40]);
   const teethZIndex = useTransform(scrollYProgress, [0, 0.08, 1], [5, 45, 50]);
@@ -168,6 +188,8 @@ const ScrollHero: React.FC = () => {
         <HeroLayers
           frameIndex={frameIndex}
           teethY={teethY}
+          overlayOpacity={overlayOpacity}
+          overlayZIndex={overlayZIndex}
           textZIndex={textZIndex}
           doctorZIndex={doctorZIndex}
           teethZIndex={teethZIndex}

@@ -103,87 +103,19 @@
   /* Reliable shell surfaces (do not depend on Tailwind JIT for critical chrome) */
   .shell-header {
     top: 0;
-    background-color: transparent !important;
+    background-color: var(--brand-navy) !important;
     color: #ffffff !important;
-    box-shadow: none;
-    padding: 0;
-    transition: padding 0.35s ease;
+    box-shadow: 0 4px 24px rgba(3, 13, 29, 0.18);
+    transition:
+      top 0.35s ease,
+      background-color 0.3s ease,
+      box-shadow 0.3s ease;
   }
 
   .shell-header.shell-header--over-hero {
-    padding: 0.75rem 0.625rem;
-  }
-
-  @media (min-width: 640px) {
-    .shell-header.shell-header--over-hero {
-      padding: 0.875rem 1.5rem;
-    }
-  }
-
-  @media (min-width: 1024px) {
-    .shell-header.shell-header--over-hero {
-      padding: 0.875rem 2rem;
-    }
-  }
-
-  .shell-header__float {
-    overflow: visible;
-    width: 100%;
-    max-width: 100%;
-    margin: 0;
-    border: 1px solid transparent;
-    border-radius: 0;
-    background-color: var(--brand-navy);
-    box-shadow: 0 4px 24px rgba(3, 13, 29, 0.18);
-    transition:
-      max-width 0.35s ease,
-      margin 0.35s ease,
-      border-radius 0.35s ease,
-      background-color 0.35s ease,
-      border-color 0.35s ease,
-      box-shadow 0.35s ease,
-      backdrop-filter 0.35s ease;
-  }
-
-  .shell-header.shell-header--over-hero .shell-header__float {
-    max-width: 72rem;
-    margin-left: auto;
-    margin-right: auto;
-    overflow: hidden;
-    border-color: rgb(0 194 255 / 0.22);
-    border-radius: 0.75rem;
-    background: linear-gradient(
-      180deg,
-      rgb(0 3 64 / 0.58) 0%,
-      rgb(0 3 64 / 0.72) 45%,
-      rgb(0 3 64 / 0.82) 100%
-    );
-    backdrop-filter: blur(12px) saturate(140%);
-    -webkit-backdrop-filter: blur(12px) saturate(140%);
-    box-shadow:
-      0 8px 32px rgb(3 13 29 / 0.24),
-      inset 0 1px 0 rgb(255 255 255 / 0.08);
-  }
-
-  .shell-header:not(.shell-header--over-hero) .shell-header__float {
-    border-radius: 0;
-    border-color: transparent;
-    background-color: var(--brand-navy) !important;
-    backdrop-filter: none;
-    -webkit-backdrop-filter: none;
-    box-shadow: 0 4px 24px rgba(3, 13, 29, 0.18);
-  }
-
-  .shell-header .brand-header {
-    color: #ffffff !important;
-  }
-
-  .shell-header .brand-header .accent {
-    color: var(--brand-cyan) !important;
-  }
-
-  .shell-header .shell-header__menu-btn {
-    color: #ffffff !important;
+    top: calc(var(--header-height) * 0.2);
+    background-color: transparent !important;
+    box-shadow: none;
   }
 
   .shell-footer {
@@ -587,13 +519,13 @@
   }
 
   .scroll-hero__gradient {
+    pointer-events: none;
     background: linear-gradient(
       105deg,
-      rgba(255, 255, 255, 0.46) 0%,
-      rgba(212, 239, 248, 0.38) 28%,
-      rgba(212, 239, 248, 0.18) 52%,
-      rgba(234, 247, 252, 0.08) 72%,
-      transparent 100%
+      rgba(3, 13, 29, 0.96) 0%,
+      rgba(0, 3, 64, 0.88) 42%,
+      rgba(3, 13, 29, 0.45) 70%,
+      rgba(3, 13, 29, 0.25) 100%
     );
   }
 
