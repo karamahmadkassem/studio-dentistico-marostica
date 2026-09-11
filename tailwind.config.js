@@ -11,6 +11,11 @@ export default {
           'cyan-soft': '#E8F6FC',
           'cyan-hover': '#3A9AD0',
         },
+        hero: {
+          sky: '#D4EFF8',
+          'sky-end': '#EAF7FC',
+          features: '#E8F6FC',
+        },
         surface: '#FFFFFF',
         'surface-muted': '#F4F7FA',
         ink: '#0F172A',

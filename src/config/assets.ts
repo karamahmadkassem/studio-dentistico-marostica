@@ -5,7 +5,14 @@ export const ASSETS = {
     favicon: '/images/brand/favicon.png',
   },
   home: {
-    jumbotron: '/images/home/jumbotron.webp',
+    hero: {
+      background: '/images/home/hero/background.jpg',
+      teeth: '/images/home/hero/teeth.png',
+      frames: Array.from(
+        { length: 16 },
+        (_, i) => `/images/home/hero/frame-${String(i + 1).padStart(2, '0')}.webp`,
+      ),
+    },
   },
   about: {
     hero: '/images/about/about-us.jpg',

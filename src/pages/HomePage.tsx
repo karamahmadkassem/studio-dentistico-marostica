@@ -1,6 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { motion } from 'framer-motion';
 import {
   ChevronRight,
   CalendarCheck,
@@ -10,6 +9,7 @@ import {
 import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
+import ScrollHero from '../components/ScrollHero';
 import ReviewsCarousel from '../components/ReviewsCarousel';
 import ServicesCarousel from '../components/ServicesCarousel';
 import { fetchPublishedReviews, fetchPublishedServices } from '../lib/api';
@@ -76,61 +76,10 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
-      {/* Hero */}
-      <section
-        id="home-hero"
-        className="relative flex min-h-[100svh] items-end overflow-hidden md:items-center"
-        style={{ backgroundColor: 'var(--brand-deep)', color: '#ffffff' }}
-      >
-        <div
-          className="absolute inset-0 bg-cover bg-center"
-          style={{
-            backgroundImage: `url(${ASSETS.home.jumbotron})`,
-          }}
-          aria-hidden
-        />
-        <div
-          className="absolute inset-0"
-          style={{
-            background:
-              'linear-gradient(105deg, rgba(3,13,29,0.96) 0%, rgba(0,3,64,0.88) 42%, rgba(3,13,29,0.45) 70%, rgba(3,13,29,0.25) 100%)',
-          }}
-          aria-hidden
-        />
-
-        <div className="container-page relative z-10 w-full pb-20 pt-28 md:pb-28 md:pt-32">
-          <motion.div
-            className="max-w-2xl"
-            initial={{ opacity: 0, y: 24 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.55 }}
-          >
-            <h1 className="brand-title mb-5 text-3xl md:text-5xl">
-              Studio Dentistico <span className="accent">Marostica</span>
-            </h1>
-            <p className="mb-3 font-display text-xl font-semibold text-white md:text-2xl">
-              {t('home.hero.title')}
-            </p>
-            <p className="text-on-dark mb-8 max-w-xl text-base md:text-lg">
-              {t('home.hero.subtitle')}
-            </p>
-            <div className="flex flex-col gap-3 sm:flex-row">
-              <Link to="/contact" className="btn-primary">
-                {t('home.hero.cta')} <ChevronRight size={18} />
-              </Link>
-              <Link
-                to="/services"
-                className="inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md border-2 border-white/80 bg-transparent px-6 py-3 font-semibold text-white transition-colors hover:bg-white hover:text-[#000340]"
-              >
-                {t('home.hero.secondary')}
-              </Link>
-            </div>
-          </motion.div>
-        </div>
-      </section>
+      <ScrollHero />
 
       {/* About */}
-      <Section>
+      <Section className="home-about-section relative z-20">
         <div className="grid grid-cols-1 items-center gap-12 md:grid-cols-2">
           <FadeIn>
             <div className="aspect-[4/3] overflow-hidden">

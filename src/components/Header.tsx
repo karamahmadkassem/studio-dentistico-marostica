@@ -36,10 +36,9 @@ const Header: React.FC = () => {
         return;
       }
 
-      const headerHeight =
-        parseFloat(getComputedStyle(document.documentElement).getPropertyValue('--header-height')) || 80;
-      const heroTopOffset = headerHeight * 0.2;
-      setOverHero(hero.getBoundingClientRect().bottom > headerHeight + heroTopOffset);
+      const headerEl = document.querySelector('.shell-header');
+      const headerHeight = headerEl?.getBoundingClientRect().height ?? 80;
+      setOverHero(hero.getBoundingClientRect().bottom > headerHeight);
     };
 
     update();
@@ -75,18 +74,20 @@ const Header: React.FC = () => {
     }
   };
 
+  const isFloatingNav = overHero && !isMenuOpen;
+
   return (
     <header
-      className={`shell-header fixed inset-x-0 z-50${
-        overHero && !isMenuOpen ? ' shell-header--over-hero' : ''
+      className={`shell-header fixed inset-x-0 z-[100]${
+        isFloatingNav ? ' shell-header--over-hero' : ''
       }`}
     >
-      <nav className="container-page" aria-label="Main">
-        <div className="flex h-20 items-center justify-between gap-4">
+      <nav className="shell-header__float" aria-label="Main">
+        <div className="container-page flex h-20 items-center justify-between gap-4">
           <Link
             to="/"
             onClick={handleLogoClick}
-            className="flex min-w-0 items-center gap-3"
+            className="flex min-w-0 flex-1 items-center gap-2 sm:gap-3"
             aria-label={String(t('common.brand'))}
           >
             <img
@@ -119,7 +120,7 @@ const Header: React.FC = () => {
 
           <button
             type="button"
-            className="inline-flex h-11 w-11 items-center justify-center rounded-md text-white md:hidden"
+            className="shell-header__menu-btn inline-flex h-11 w-11 shrink-0 items-center justify-center rounded-md text-white md:hidden"
             onClick={() => setIsMenuOpen((open) => !open)}
             aria-expanded={isMenuOpen}
             aria-controls="mobile-menu"
@@ -130,7 +131,7 @@ const Header: React.FC = () => {
         </div>
 
         {isMenuOpen && (
-          <div id="mobile-menu" className="border-t border-white/15 pb-6 pt-4 md:hidden">
+          <div id="mobile-menu" className="container-page border-t border-white/15 pb-6 pt-4 md:hidden">
             <div className="flex flex-col gap-1">
               {navItems.map((item) => (
                 <NavLink
