@@ -5,12 +5,12 @@ export const ASSETS = {
     favicon: '/images/brand/favicon.png',
   },
   home: {
-    jumbotron: '/images/home/jumbotron.png',
+    jumbotron: '/images/home/jumbotron.webp',
   },
   about: {
-    hero: '/images/about/about-us.png',
+    hero: '/images/about/about-us.jpg',
   },
   team: {
-    drMoustaphaMortada: '/images/team/dr-moustapha-mortada.png',
+    drMoustaphaMortada: '/images/team/dr-moustapha-mortada.jpg',
   },
 } as const;
