@@ -42,7 +42,7 @@
   --hero-sky-start: #D4EFF8;
   --hero-sky-end: #EAF7FC;
   --hero-features-bg: #E8F6FC;
-  --hero-scroll-distance: 75vh;
+  --hero-scroll-distance: 56.25vh;
 }
 
 @layer base {
@@ -586,6 +586,7 @@
 
   .scroll-hero__teeth {
     overflow: visible;
+    will-change: transform;
   }
 
   .scroll-hero__teeth-img {
@@ -600,9 +601,14 @@
   .scroll-hero__doctor {
     width: 100%;
     overflow: visible;
+    contain: layout style;
   }
 
   .scroll-hero__doctor-img {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
     display: block;
     width: 100vw;
     max-width: none;
@@ -610,14 +616,20 @@
     margin-left: 0;
     object-fit: contain;
     object-position: bottom center;
-    transform: scale(1.65);
+    transform: scale(1.65) translateZ(0);
     transform-origin: bottom center;
+    will-change: opacity;
+    backface-visibility: hidden;
+  }
+
+  .scroll-hero__doctor-img--static {
+    position: relative;
   }
 
   @media (max-width: 767px) {
     .scroll-hero__doctor-img {
       width: 100vw;
-      transform: scale(2.13) translateY(0);
+      transform: scale(2.13) translateY(0) translateZ(0);
       transform-origin: bottom center;
     }
 
@@ -631,7 +643,7 @@
       width: 99vw;
       min-height: 94.5svh;
       margin-left: calc(50% - 49.5vw);
-      transform: none;
+      transform: translateZ(0);
     }
 
     .scroll-hero__teeth-img {

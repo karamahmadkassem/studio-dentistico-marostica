@@ -1,8 +1,7 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { memo, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   motion,
-  useMotionValueEvent,
   useScroll,
   useTransform,
   type MotionValue,
@@ -12,8 +11,10 @@ import { ASSETS } from '../config/assets';
 import { useLanguage } from '../context/LanguageContext';
 
 const FRAMES = ASSETS.home.hero.frames;
+const SCROLL_FRAMES = FRAMES.slice(1);
+const SCROLL_FRAME_LAST_INDEX = SCROLL_FRAMES.length - 1;
 
-const HeroContent: React.FC = () => {
+const HeroContent = memo(function HeroContent() {
   const { t } = useLanguage();
 
   return (
@@ -37,10 +38,46 @@ const HeroContent: React.FC = () => {
       </div>
     </div>
   );
+});
+
+const getActiveFrameIndex = (value: number) =>
+  Math.min(
+    SCROLL_FRAME_LAST_INDEX,
+    Math.max(0, Math.round(value * SCROLL_FRAME_LAST_INDEX)),
+  );
+
+const DoctorFrame: React.FC<{
+  src: string;
+  index: number;
+  progress: MotionValue<number>;
+}> = ({ src, index, progress }) => {
+  const opacity = useTransform(progress, (value) =>
+    getActiveFrameIndex(value) === index ? 1 : 0,
+  );
+  const visibility = useTransform(progress, (value) =>
+    getActiveFrameIndex(value) === index ? 'visible' : 'hidden',
+  );
+  const zIndex = useTransform(progress, (value) =>
+    getActiveFrameIndex(value) === index ? 2 : 1,
+  );
+
+  return (
+    <motion.img
+      src={src}
+      alt=""
+      className="scroll-hero__doctor-img"
+      style={{ opacity, visibility, zIndex }}
+      draggable={false}
+      decoding="async"
+      loading="eager"
+      aria-hidden
+    />
+  );
 };
 
 const HeroLayers: React.FC<{
-  frameIndex: number;
+  scrollYProgress?: MotionValue<number>;
+  staticFrameIndex?: number;
   teethY?: MotionValue<string>;
   overlayOpacity?: MotionValue<number>;
   overlayZIndex?: MotionValue<number>;
@@ -48,7 +85,8 @@ const HeroLayers: React.FC<{
   doctorZIndex?: MotionValue<number>;
   teethZIndex?: MotionValue<number>;
 }> = ({
-  frameIndex,
+  scrollYProgress,
+  staticFrameIndex = 1,
   teethY,
   overlayOpacity,
   overlayZIndex,
@@ -63,16 +101,22 @@ const HeroLayers: React.FC<{
       aria-hidden
     />
     <motion.div
-      className="scroll-hero__doctor pointer-events-none absolute inset-x-0 bottom-0 flex h-full w-full items-end justify-center"
+      className="scroll-hero__doctor pointer-events-none absolute inset-x-0 bottom-0 h-full w-full"
       style={{ zIndex: doctorZIndex ?? 5 }}
       aria-hidden
     >
-      <img
-        src={FRAMES[frameIndex]}
-        alt=""
-        className="scroll-hero__doctor-img"
-        draggable={false}
-      />
+      {scrollYProgress
+        ? SCROLL_FRAMES.map((src, index) => (
+            <DoctorFrame key={src} src={src} index={index} progress={scrollYProgress} />
+          ))
+        : (
+          <img
+            src={FRAMES[staticFrameIndex]}
+            alt=""
+            className="scroll-hero__doctor-img scroll-hero__doctor-img--static"
+            draggable={false}
+          />
+        )}
     </motion.div>
 
     {teethY ? (
@@ -122,7 +166,6 @@ const HeroLayers: React.FC<{
 
 const ScrollHero: React.FC = () => {
   const trackRef = useRef<HTMLDivElement>(null);
-  const [frameIndex, setFrameIndex] = useState(1);
   const [reducedMotion, setReducedMotion] = useState(false);
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches,
@@ -145,10 +188,24 @@ const ScrollHero: React.FC = () => {
   }, []);
 
   useEffect(() => {
-    FRAMES.forEach((src) => {
-      const img = new Image();
-      img.src = src;
-    });
+    void Promise.all(
+      SCROLL_FRAMES.map(
+        (src) =>
+          new Promise<void>((resolve) => {
+            const img = new Image();
+            img.decoding = 'async';
+            img.onload = () => {
+              if (typeof img.decode === 'function') {
+                img.decode().then(resolve).catch(resolve);
+                return;
+              }
+              resolve();
+            };
+            img.onerror = () => resolve();
+            img.src = src;
+          }),
+      ),
+    );
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -167,14 +224,10 @@ const ScrollHero: React.FC = () => {
   const doctorZIndex = useTransform(scrollYProgress, [0, 0.08, 1], [5, 35, 40]);
   const teethZIndex = useTransform(scrollYProgress, [0, 0.08, 1], [5, 45, 50]);
 
-  useMotionValueEvent(scrollYProgress, 'change', (latest) => {
-    setFrameIndex(Math.min(15, 1 + Math.round(latest * 14)));
-  });
-
   if (reducedMotion) {
     return (
       <section id="home-hero" className="scroll-hero scroll-hero--static">
-        <HeroLayers frameIndex={1} />
+        <HeroLayers staticFrameIndex={1} />
       </section>
     );
   }
@@ -186,7 +239,7 @@ const ScrollHero: React.FC = () => {
         className="scroll-hero sticky top-0 z-40 h-[100svh]"
       >
         <HeroLayers
-          frameIndex={frameIndex}
+          scrollYProgress={scrollYProgress}
           teethY={teethY}
           overlayOpacity={overlayOpacity}
           overlayZIndex={overlayZIndex}
