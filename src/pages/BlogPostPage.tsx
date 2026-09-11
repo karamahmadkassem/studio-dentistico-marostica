@@ -6,6 +6,7 @@ import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import { fetchBlogPostBySlug } from '../lib/api';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { ASSETS } from '../config/assets';
 
 const BlogPostPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
@@ -49,7 +50,7 @@ const BlogPostPage: React.FC = () => {
                 ? dbPost.blog_categories.name_it
                 : dbPost.blog_categories.name_en
               : '',
-            image: dbPost.image_url ?? '',
+            image: dbPost.image_url ?? ASSETS.about.hero,
           });
         } else if (!cancelled) {
           setPost(null);

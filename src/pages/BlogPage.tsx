@@ -7,6 +7,7 @@ import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import { fetchPublishedBlogPosts, subscribeNewsletter } from '../lib/api';
 import { usePageTitle } from '../hooks/usePageTitle';
+import { ASSETS } from '../config/assets';
 
 interface DisplayPost {
   slug: string;
@@ -49,7 +50,7 @@ const BlogPage: React.FC = () => {
                 ? p.blog_categories.name_it
                 : p.blog_categories.name_en
               : '',
-            image: p.image_url ?? '',
+            image: p.image_url ?? ASSETS.about.hero,
           })),
         );
       })
@@ -90,11 +91,7 @@ const BlogPage: React.FC = () => {
 
   return (
     <div>
-      <PageHero
-        title={t('blog.hero.title')}
-        subtitle={t('blog.hero.subtitle')}
-        image="https://images.pexels.com/photos/4270367/pexels-photo-4270367.jpeg?auto=compress&cs=tinysrgb&w=1600"
-      />
+      <PageHero title={t('blog.hero.title')} subtitle={t('blog.hero.subtitle')} />
 
       <Section muted>
         <div className="mb-10 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">

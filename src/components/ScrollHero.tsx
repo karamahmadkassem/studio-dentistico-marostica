@@ -11,7 +11,7 @@ import { ASSETS } from '../config/assets';
 import { useLanguage } from '../context/LanguageContext';
 
 const FRAMES = ASSETS.home.hero.frames;
-const SCROLL_FRAMES = FRAMES.slice(1);
+const SCROLL_FRAMES = FRAMES;
 const SCROLL_FRAME_LAST_INDEX = SCROLL_FRAMES.length - 1;
 
 const HeroContent = memo(function HeroContent() {
@@ -86,7 +86,7 @@ const HeroLayers: React.FC<{
   teethZIndex?: MotionValue<number>;
 }> = ({
   scrollYProgress,
-  staticFrameIndex = 1,
+  staticFrameIndex = 0,
   teethY,
   overlayOpacity,
   overlayZIndex,
@@ -227,7 +227,7 @@ const ScrollHero: React.FC = () => {
   if (reducedMotion) {
     return (
       <section id="home-hero" className="scroll-hero scroll-hero--static">
-        <HeroLayers staticFrameIndex={1} />
+        <HeroLayers staticFrameIndex={0} />
       </section>
     );
   }

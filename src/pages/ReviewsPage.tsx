@@ -97,11 +97,7 @@ const ReviewsPage: React.FC = () => {
 
   return (
     <div>
-      <PageHero
-        title={t('reviews.hero.title')}
-        subtitle={t('reviews.hero.subtitle')}
-        image="https://images.pexels.com/photos/3844581/pexels-photo-3844581.jpeg?auto=compress&cs=tinysrgb&w=1600"
-      />
+      <PageHero title={t('reviews.hero.title')} subtitle={t('reviews.hero.subtitle')} />
 
       <Section>
         <div className="flex flex-col items-start justify-between gap-8 md:flex-row md:items-center">

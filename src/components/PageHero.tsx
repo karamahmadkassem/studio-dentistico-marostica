@@ -1,5 +1,6 @@
 import React from 'react';
 import { motion } from 'framer-motion';
+import { ASSETS } from '../config/assets';
 
 interface PageHeroProps {
   title: string;
@@ -11,7 +12,7 @@ interface PageHeroProps {
 const PageHero: React.FC<PageHeroProps> = ({
   title,
   subtitle,
-  image = 'https://images.pexels.com/photos/3845736/pexels-photo-3845736.jpeg?auto=compress&cs=tinysrgb&w=1600',
+  image = ASSETS.home.hero.background,
   compact = false,
 }) => {
   return (

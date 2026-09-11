@@ -33,11 +33,7 @@ const ServicesPage: React.FC = () => {
 
   return (
     <div>
-      <PageHero
-        title={t('services.hero.title')}
-        subtitle={t('services.hero.subtitle')}
-        image="https://images.pexels.com/photos/3845736/pexels-photo-3845736.jpeg?auto=compress&cs=tinysrgb&w=1600"
-      />
+      <PageHero title={t('services.hero.title')} subtitle={t('services.hero.subtitle')} />
 
       <Section>
         <FadeIn>

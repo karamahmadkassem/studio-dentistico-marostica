@@ -9,8 +9,8 @@ export const ASSETS = {
       background: '/images/home/hero/background.jpg',
       teeth: '/images/home/hero/teeth.png',
       frames: Array.from(
-        { length: 16 },
-        (_, i) => `/images/home/hero/frame-${String(i + 1).padStart(2, '0')}.webp`,
+        { length: 15 },
+        (_, i) => `/images/home/hero/frame-${String(i + 2).padStart(2, '0')}.webp`,
       ),
     },
   },

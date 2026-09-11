@@ -92,11 +92,7 @@ const ContactPage: React.FC = () => {
 
   return (
     <div>
-      <PageHero
-        title={t('contact.hero.title')}
-        subtitle={t('contact.hero.subtitle')}
-        image="https://images.pexels.com/photos/3846009/pexels-photo-3846009.jpeg?auto=compress&cs=tinysrgb&w=1600"
-      />
+      <PageHero title={t('contact.hero.title')} subtitle={t('contact.hero.subtitle')} />
 
       <Section>
         <div className="grid grid-cols-1 gap-y-8 lg:grid-cols-2 lg:grid-rows-[auto_1fr] lg:gap-x-16 lg:gap-y-8">

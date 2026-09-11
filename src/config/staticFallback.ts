@@ -58,13 +58,3 @@ export const STATIC_REVIEWS = [
     created_at: '2025-01-18T10:00:00Z',
   },
 ];
-
-export const SERVICE_IMAGES = [
-  'https://images.pexels.com/photos/3845736/pexels-photo-3845736.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/3779706/pexels-photo-3779706.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/3845625/pexels-photo-3845625.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/3762453/pexels-photo-3762453.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/3845126/pexels-photo-3845126.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/4269696/pexels-photo-4269696.jpeg?auto=compress&cs=tinysrgb&w=800',
-  'https://images.pexels.com/photos/6502300/pexels-photo-6502300.jpeg?auto=compress&cs=tinysrgb&w=800',
-];
