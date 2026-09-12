@@ -618,7 +618,6 @@
     object-position: bottom center;
     transform: scale(1.65) translateZ(0);
     transform-origin: bottom center;
-    will-change: opacity;
     backface-visibility: hidden;
   }
 

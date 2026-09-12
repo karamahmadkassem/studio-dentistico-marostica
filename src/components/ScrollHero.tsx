@@ -11,8 +11,7 @@ import { ASSETS } from '../config/assets';
 import { useLanguage } from '../context/LanguageContext';
 
 const FRAMES = ASSETS.home.hero.frames;
-const SCROLL_FRAMES = FRAMES;
-const SCROLL_FRAME_LAST_INDEX = SCROLL_FRAMES.length - 1;
+const FRAME_LAST_INDEX = FRAMES.length - 1;
 
 const HeroContent = memo(function HeroContent() {
   const { t } = useLanguage();
@@ -41,10 +40,7 @@ const HeroContent = memo(function HeroContent() {
 });
 
 const getActiveFrameIndex = (value: number) =>
-  Math.min(
-    SCROLL_FRAME_LAST_INDEX,
-    Math.max(0, Math.round(value * SCROLL_FRAME_LAST_INDEX)),
-  );
+  Math.min(FRAME_LAST_INDEX, Math.max(0, Math.round(value * FRAME_LAST_INDEX)));
 
 const DoctorFrame: React.FC<{
   src: string;
@@ -77,7 +73,6 @@ const DoctorFrame: React.FC<{
 
 const HeroLayers: React.FC<{
   scrollYProgress?: MotionValue<number>;
-  staticFrameIndex?: number;
   teethY?: MotionValue<string>;
   overlayOpacity?: MotionValue<number>;
   overlayZIndex?: MotionValue<number>;
@@ -86,7 +81,6 @@ const HeroLayers: React.FC<{
   teethZIndex?: MotionValue<number>;
 }> = ({
   scrollYProgress,
-  staticFrameIndex = 0,
   teethY,
   overlayOpacity,
   overlayZIndex,
@@ -105,18 +99,18 @@ const HeroLayers: React.FC<{
       style={{ zIndex: doctorZIndex ?? 5 }}
       aria-hidden
     >
-      {scrollYProgress
-        ? SCROLL_FRAMES.map((src, index) => (
-            <DoctorFrame key={src} src={src} index={index} progress={scrollYProgress} />
-          ))
-        : (
-          <img
-            src={FRAMES[staticFrameIndex]}
-            alt=""
-            className="scroll-hero__doctor-img scroll-hero__doctor-img--static"
-            draggable={false}
-          />
-        )}
+      {scrollYProgress ? (
+        FRAMES.map((src, index) => (
+          <DoctorFrame key={src} src={src} index={index} progress={scrollYProgress} />
+        ))
+      ) : (
+        <img
+          src={FRAMES[0]}
+          alt=""
+          className="scroll-hero__doctor-img scroll-hero__doctor-img--static"
+          draggable={false}
+        />
+      )}
     </motion.div>
 
     {teethY ? (
@@ -189,7 +183,7 @@ const ScrollHero: React.FC = () => {
 
   useEffect(() => {
     void Promise.all(
-      SCROLL_FRAMES.map(
+      FRAMES.map(
         (src) =>
           new Promise<void>((resolve) => {
             const img = new Image();
@@ -227,7 +221,7 @@ const ScrollHero: React.FC = () => {
   if (reducedMotion) {
     return (
       <section id="home-hero" className="scroll-hero scroll-hero--static">
-        <HeroLayers staticFrameIndex={0} />
+        <HeroLayers />
       </section>
     );
   }
