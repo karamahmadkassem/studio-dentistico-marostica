@@ -37,6 +37,15 @@ export const translations: Record<Language, TranslationValue> = {
         cta: 'Prenota una visita',
         secondary: 'I nostri servizi',
       },
+      splash: {
+        loading: 'Prepariamo il tuo sorriso…',
+        quotes: [
+          'Un sorriso sano comincia da una buona prevenzione.',
+          'Prendersi cura del sorriso significa prendersi cura di sé.',
+          'La fiducia in un sorriso inizia da una visita in studio.',
+          'Ogni sorriso merita attenzione, tecnologia e umanità.',
+        ],
+      },
       features: {
         title: 'Perché sceglierci',
         subtitle: 'Un approccio chiaro, tecnologico e umano.',
@@ -567,6 +576,15 @@ export const translations: Record<Language, TranslationValue> = {
         subtitle: 'Exceptional dental care in Marostica, in a modern and welcoming environment.',
         cta: 'Book a visit',
         secondary: 'Our services',
+      },
+      splash: {
+        loading: 'Getting your smile ready…',
+        quotes: [
+          'A healthy smile starts with good prevention.',
+          'Caring for your smile means caring for yourself.',
+          'Confidence in your smile begins with a visit to the studio.',
+          'Every smile deserves attention, technology, and a human touch.',
+        ],
       },
       features: {
         title: 'Why choose us',

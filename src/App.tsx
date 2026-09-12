@@ -15,6 +15,7 @@ import ReviewSubmitPage from './pages/ReviewSubmitPage';
 import PrivacyPolicyPage from './pages/PrivacyPolicyPage';
 import TermsPage from './pages/TermsPage';
 import AppointmentButton from './components/AppointmentButton';
+import HeroBootGate from './components/HeroBootGate';
 import ScrollToTop from './components/ScrollToTop';
 import AdminRoutes from './admin/AdminRoutes';
 
@@ -77,7 +78,11 @@ const AppRouter: React.FC = () => {
     );
   }
 
-  return <PublicShell />;
+  return (
+    <HeroBootGate>
+      <PublicShell />
+    </HeroBootGate>
+  );
 };
 
 const App: React.FC = () => {

@@ -2,16 +2,20 @@ import React, { memo, useEffect, useRef, useState } from 'react';
 import { Link } from 'react-router-dom';
 import {
   motion,
+  useMotionValueEvent,
   useScroll,
   useTransform,
   type MotionValue,
 } from 'framer-motion';
 import { ChevronRight } from 'lucide-react';
 import { ASSETS } from '../config/assets';
+import {
+  getHeroAnimationFrames,
+  getHeroFrameSourceSize,
+  getHeroFrameSources,
+  type HeroFrameSource,
+} from '../lib/heroAssets';
 import { useLanguage } from '../context/LanguageContext';
-
-const FRAMES = ASSETS.home.hero.frames;
-const FRAME_LAST_INDEX = FRAMES.length - 1;
 
 const HeroContent = memo(function HeroContent() {
   const { t } = useLanguage();
@@ -39,39 +43,116 @@ const HeroContent = memo(function HeroContent() {
   );
 });
 
-const getActiveFrameIndex = (value: number) =>
-  Math.min(FRAME_LAST_INDEX, Math.max(0, Math.round(value * FRAME_LAST_INDEX)));
+const getActiveFrameIndex = (value: number, frameCount: number) => {
+  const lastIndex = frameCount - 1;
+  return Math.min(lastIndex, Math.max(0, Math.round(value * lastIndex)));
+};
 
-const DoctorFrame: React.FC<{
-  src: string;
-  index: number;
+const isMobileHeroCanvas = () =>
+  typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches;
+
+const drawHeroFrame = (
+  canvas: HTMLCanvasElement,
+  source: HeroFrameSource,
+) => {
+  const ctx = canvas.getContext('2d', { alpha: true });
+  if (!ctx) return;
+
+  // Layout size — CSS transform handles mobile zoom separately (matches original <img>).
+  const width = canvas.offsetWidth;
+  const height = canvas.offsetHeight;
+  if (width <= 0 || height <= 0) return;
+
+  const dpr = Math.min(window.devicePixelRatio || 1, 2);
+  const pixelWidth = Math.round(width * dpr);
+  const pixelHeight = Math.round(height * dpr);
+
+  if (canvas.width !== pixelWidth || canvas.height !== pixelHeight) {
+    canvas.width = pixelWidth;
+    canvas.height = pixelHeight;
+  }
+
+  ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  ctx.clearRect(0, 0, width, height);
+
+  const { width: sourceWidth, height: sourceHeight } = getHeroFrameSourceSize(source);
+  if (sourceWidth <= 0 || sourceHeight <= 0) return;
+
+  const scale = isMobileHeroCanvas()
+    ? Math.min(width / sourceWidth, height / sourceHeight)
+    : Math.max(width / sourceWidth, height / sourceHeight);
+  const drawWidth = sourceWidth * scale;
+  const drawHeight = sourceHeight * scale;
+  const drawX = (width - drawWidth) / 2;
+  const drawY = height - drawHeight;
+
+  ctx.drawImage(source, drawX, drawY, drawWidth, drawHeight);
+};
+
+const DoctorAnimation: React.FC<{
+  sources: readonly HeroFrameSource[];
   progress: MotionValue<number>;
-}> = ({ src, index, progress }) => {
-  const opacity = useTransform(progress, (value) =>
-    getActiveFrameIndex(value) === index ? 1 : 0,
-  );
-  const visibility = useTransform(progress, (value) =>
-    getActiveFrameIndex(value) === index ? 'visible' : 'hidden',
-  );
-  const zIndex = useTransform(progress, (value) =>
-    getActiveFrameIndex(value) === index ? 2 : 1,
-  );
+}> = ({ sources, progress }) => {
+  const canvasRef = useRef<HTMLCanvasElement>(null);
+  const lastIndexRef = useRef(0);
+  const pendingIndexRef = useRef(0);
+  const rafRef = useRef<number | null>(null);
+
+  const paintFrame = (index: number) => {
+    const canvas = canvasRef.current;
+    const source = sources[index];
+    if (!canvas || !source) return;
+    drawHeroFrame(canvas, source);
+  };
+
+  useEffect(() => {
+    paintFrame(0);
+
+    const canvas = canvasRef.current;
+    if (!canvas) return undefined;
+
+    const observer = new ResizeObserver(() => {
+      paintFrame(lastIndexRef.current);
+    });
+    observer.observe(canvas);
+
+    const mobileMq = window.matchMedia('(max-width: 767px)');
+    const onViewportChange = () => paintFrame(lastIndexRef.current);
+    mobileMq.addEventListener('change', onViewportChange);
+
+    return () => {
+      observer.disconnect();
+      mobileMq.removeEventListener('change', onViewportChange);
+    };
+  }, [sources]);
+
+  useMotionValueEvent(progress, 'change', (value) => {
+    const index = getActiveFrameIndex(value, sources.length);
+    pendingIndexRef.current = index;
+
+    if (rafRef.current !== null) return;
+
+    rafRef.current = window.requestAnimationFrame(() => {
+      rafRef.current = null;
+      const nextIndex = pendingIndexRef.current;
+      if (nextIndex === lastIndexRef.current) return;
+      lastIndexRef.current = nextIndex;
+      paintFrame(nextIndex);
+    });
+  });
 
   return (
-    <motion.img
-      src={src}
-      alt=""
-      className="scroll-hero__doctor-img"
-      style={{ opacity, visibility, zIndex }}
-      draggable={false}
-      decoding="async"
-      loading="eager"
+    <canvas
+      ref={canvasRef}
+      className="scroll-hero__doctor-img scroll-hero__doctor-img--canvas"
       aria-hidden
     />
   );
 };
 
 const HeroLayers: React.FC<{
+  frames: readonly string[];
+  sources: readonly HeroFrameSource[];
   scrollYProgress?: MotionValue<number>;
   teethY?: MotionValue<string>;
   overlayOpacity?: MotionValue<number>;
@@ -80,6 +161,8 @@ const HeroLayers: React.FC<{
   doctorZIndex?: MotionValue<number>;
   teethZIndex?: MotionValue<number>;
 }> = ({
+  frames,
+  sources,
   scrollYProgress,
   teethY,
   overlayOpacity,
@@ -99,13 +182,11 @@ const HeroLayers: React.FC<{
       style={{ zIndex: doctorZIndex ?? 5 }}
       aria-hidden
     >
-      {scrollYProgress ? (
-        FRAMES.map((src, index) => (
-          <DoctorFrame key={src} src={src} index={index} progress={scrollYProgress} />
-        ))
+      {scrollYProgress && sources.length > 0 ? (
+        <DoctorAnimation sources={sources} progress={scrollYProgress} />
       ) : (
         <img
-          src={FRAMES[0]}
+          src={frames[0]}
           alt=""
           className="scroll-hero__doctor-img scroll-hero__doctor-img--static"
           draggable={false}
@@ -164,6 +245,8 @@ const ScrollHero: React.FC = () => {
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches,
   );
+  const frames = getHeroAnimationFrames();
+  const sources = getHeroFrameSources();
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -179,27 +262,6 @@ const ScrollHero: React.FC = () => {
     const handler = (event: MediaQueryListEvent) => setIsMobile(event.matches);
     mq.addEventListener('change', handler);
     return () => mq.removeEventListener('change', handler);
-  }, []);
-
-  useEffect(() => {
-    void Promise.all(
-      FRAMES.map(
-        (src) =>
-          new Promise<void>((resolve) => {
-            const img = new Image();
-            img.decoding = 'async';
-            img.onload = () => {
-              if (typeof img.decode === 'function') {
-                img.decode().then(resolve).catch(resolve);
-                return;
-              }
-              resolve();
-            };
-            img.onerror = () => resolve();
-            img.src = src;
-          }),
-      ),
-    );
   }, []);
 
   const { scrollYProgress } = useScroll({
@@ -221,7 +283,7 @@ const ScrollHero: React.FC = () => {
   if (reducedMotion) {
     return (
       <section id="home-hero" className="scroll-hero scroll-hero--static">
-        <HeroLayers />
+        <HeroLayers frames={frames} sources={sources} />
       </section>
     );
   }
@@ -233,6 +295,8 @@ const ScrollHero: React.FC = () => {
         className="scroll-hero sticky top-0 z-40 h-[100svh]"
       >
         <HeroLayers
+          frames={frames}
+          sources={sources}
           scrollYProgress={scrollYProgress}
           teethY={teethY}
           overlayOpacity={overlayOpacity}
