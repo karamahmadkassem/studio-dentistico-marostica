@@ -11,7 +11,4 @@ export default defineConfig({
     outDir: 'dist',
     sourcemap: true,
   },
-  optimizeDeps: {
-    exclude: ['lucide-react'],
-  },
 });

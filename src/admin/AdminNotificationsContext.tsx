@@ -7,7 +7,8 @@ import React, {
   useState,
 } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Bell, X } from 'lucide-react';
+import { Bell, X } from '@phosphor-icons/react';
+import { ADMIN_ICON_WEIGHT } from '../components/ui/Icon';
 import { adminApi } from '../lib/api';
 import { formatDateKey } from '../config/appointmentSchedule';
 import type { Appointment } from '../types/database';
@@ -134,7 +135,7 @@ export const AdminNotificationsProvider: React.FC<{ children: React.ReactNode }>
           {notifications.map((notification) => (
             <div key={notification.id} className="admin-toast">
               <div className="admin-toast-icon" aria-hidden>
-                <Bell size={18} />
+                <Bell size={18} weight={ADMIN_ICON_WEIGHT} />
               </div>
               <div className="admin-toast-body">
                 <p className="admin-toast-title">{notification.title}</p>
@@ -156,7 +157,7 @@ export const AdminNotificationsProvider: React.FC<{ children: React.ReactNode }>
                 aria-label="Dismiss notification"
                 onClick={() => dismissNotification(notification.id)}
               >
-                <X size={16} />
+                <X size={16} weight={ADMIN_ICON_WEIGHT} />
               </button>
             </div>
           ))}

@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useSearchParams } from 'react-router-dom';
-import { Star, Send, CheckCircle2 } from 'lucide-react';
+import { CheckCircle, PaperPlaneTilt, Star } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
@@ -77,7 +78,7 @@ const ReviewSubmitPage: React.FC = () => {
       <Section>
         <FadeIn>
           <div className="mx-auto max-w-lg rounded-md border border-brand-cyan/30 bg-brand-cyan-soft p-8 text-center">
-            <CheckCircle2 className="mx-auto mb-4 h-12 w-12 text-brand-cyan" />
+            <CheckCircle size={48} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mx-auto mb-4 text-brand-cyan" />
             <h1 className="heading-section mb-3">{t('reviews.submit.successTitle')}</h1>
             <p className="text-body mb-6">{t('reviews.submit.successMessage')}</p>
             <Link to="/reviews" className="btn-primary inline-flex">
@@ -137,10 +138,10 @@ const ReviewSubmitPage: React.FC = () => {
                   aria-label={`${value} stars`}
                 >
                   <Star
-                    className={`h-8 w-8 transition-colors ${
-                      value <= (hoverRating || rating)
-                        ? 'fill-current text-brand-cyan'
-                        : 'text-ink-soft'
+                    size={32}
+                    weight={value <= (hoverRating || rating) ? 'fill' : 'regular'}
+                    className={`transition-colors ${
+                      value <= (hoverRating || rating) ? 'text-brand-cyan' : 'text-ink-soft'
                     }`}
                   />
                 </button>
@@ -181,7 +182,7 @@ const ReviewSubmitPage: React.FC = () => {
                 ? 'Invio in corso…'
                 : 'Sending…'
               : t('reviews.form.submit')}{' '}
-            <Send size={16} />
+            <PaperPlaneTilt size={16} weight={PUBLIC_ICON_WEIGHT} />
           </button>
         </form>
       </FadeIn>

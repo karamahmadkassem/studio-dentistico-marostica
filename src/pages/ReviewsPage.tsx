@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Star } from 'lucide-react';
+import { Star } from '@phosphor-icons/react';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import Section from '../components/Section';
@@ -111,7 +111,7 @@ const ReviewsPage: React.FC = () => {
             <div className="rounded-md bg-brand-cyan-soft px-8 py-6 text-center">
               <div className="mb-2 flex justify-center gap-1 text-brand-cyan">
                 {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="h-6 w-6 fill-current" />
+                  <Star key={i} size={24} weight="fill" className="text-brand-cyan" />
                 ))}
               </div>
               <p className="font-display text-3xl font-bold text-ink">{avg} / 5</p>
@@ -155,9 +155,9 @@ const ReviewsPage: React.FC = () => {
                     {[...Array(5)].map((_, idx) => (
                       <Star
                         key={idx}
-                        className={`h-4 w-4 ${
-                          idx < review.rating ? 'fill-current text-brand-cyan' : 'text-ink-soft'
-                        }`}
+                        size={16}
+                        weight={idx < review.rating ? 'fill' : 'regular'}
+                        className={idx < review.rating ? 'text-brand-cyan' : 'text-ink-soft'}
                       />
                     ))}
                   </div>

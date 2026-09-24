@@ -1,6 +1,15 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Clock, Send, ChevronDown, CheckCircle2 } from 'lucide-react';
+import {
+  CaretDown,
+  CheckCircle,
+  Clock,
+  Envelope,
+  MapPin,
+  PaperPlaneTilt,
+  Phone,
+} from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import Section from '../components/Section';
@@ -104,7 +113,7 @@ const ContactPage: React.FC = () => {
             <div className="space-y-6">
               <ul className="space-y-6">
                 <li className="flex gap-4">
-                  <MapPin size={22} className="mt-1 shrink-0 text-brand-cyan" />
+                  <MapPin size={22} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-1 shrink-0 text-brand-cyan" />
                   <div>
                     <h3 className="mb-1 font-semibold text-ink">{t('contact.info.address')}</h3>
                     <p className="text-ink-muted">{t('footer.address')}</p>
@@ -128,7 +137,7 @@ const ContactPage: React.FC = () => {
                   </div>
                 </li>
                 <li className="flex gap-4">
-                  <Mail size={22} className="mt-1 shrink-0 text-brand-cyan" />
+                  <Envelope size={22} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-1 shrink-0 text-brand-cyan" />
                   <div>
                     <h3 className="mb-1 font-semibold text-ink">{t('contact.info.email')}</h3>
                     <a
@@ -140,7 +149,7 @@ const ContactPage: React.FC = () => {
                   </div>
                 </li>
                 <li className="flex gap-4">
-                  <Clock size={22} className="mt-1 shrink-0 text-brand-cyan" />
+                  <Clock size={22} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-1 shrink-0 text-brand-cyan" />
                   <div>
                     <h3 className="mb-2 font-semibold text-ink">{t('contact.info.hours')}</h3>
                     <OpeningHoursList rows={openingHoursRows} />
@@ -182,7 +191,7 @@ const ContactPage: React.FC = () => {
             >
               {submitted ? (
                 <div className="py-6 text-center">
-                  <CheckCircle2 size={48} className="mx-auto mb-4 text-brand-cyan" />
+                  <CheckCircle size={48} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mx-auto mb-4 text-brand-cyan" />
                   <h3 className="heading-section mb-3 text-xl">{t('contact.form.successTitle')}</h3>
                   <p className="text-ink-muted leading-relaxed">{t('contact.form.successMessage')}</p>
                   <button
@@ -277,7 +286,7 @@ const ContactPage: React.FC = () => {
                   </label>
                   <button type="submit" className="btn-primary" disabled={submitting}>
                     {submitting ? t('contact.form.submitting') : t('contact.form.submit')}{' '}
-                    <Send size={16} />
+                    <PaperPlaneTilt size={16} weight={PUBLIC_ICON_WEIGHT} />
                   </button>
                 </form>
               )}
@@ -304,8 +313,9 @@ const ContactPage: React.FC = () => {
                       aria-expanded={open}
                     >
                       <span className="font-semibold text-ink">{item.q}</span>
-                      <ChevronDown
+                      <CaretDown
                         size={20}
+                        weight={PUBLIC_ICON_WEIGHT}
                         className={`shrink-0 text-brand-cyan transition-transform ${
                           open ? 'rotate-180' : ''
                         }`}

@@ -1,11 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import {
-  ChevronRight,
-  CalendarCheck,
-  Sparkles,
-  Users,
-} from 'lucide-react';
+import { CalendarCheck, CaretRight, Sparkle, Users } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
@@ -58,17 +54,17 @@ const HomePage: React.FC = () => {
 
   const features = [
     {
-      icon: <CalendarCheck size={28} className="text-brand-cyan" />,
+      icon: <CalendarCheck size={28} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand text-brand-cyan" />,
       title: t('home.features.flexible.title'),
       description: t('home.features.flexible.description'),
     },
     {
-      icon: <Sparkles size={28} className="text-brand-cyan" />,
+      icon: <Sparkle size={28} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand text-brand-cyan" />,
       title: t('home.features.technology.title'),
       description: t('home.features.technology.description'),
     },
     {
-      icon: <Users size={28} className="text-brand-cyan" />,
+      icon: <Users size={28} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand text-brand-cyan" />,
       title: t('home.features.team.title'),
       description: t('home.features.team.description'),
     },
@@ -110,7 +106,7 @@ const HomePage: React.FC = () => {
               <p className="text-body">{t('home.services.subtitle')}</p>
             </div>
             <Link to="/services" className="link-accent shrink-0">
-              {t('home.services.cta')} <ChevronRight size={16} className="ml-1" />
+              {t('home.services.cta')} <CaretRight size={16} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
             </Link>
           </div>
         </FadeIn>
@@ -149,7 +145,7 @@ const HomePage: React.FC = () => {
               <p className="text-body">{t('home.testimonials.subtitle')}</p>
             </div>
             <Link to="/reviews" className="link-accent shrink-0">
-              {t('common.viewAllReviews')} <ChevronRight size={16} className="ml-1" />
+              {t('common.viewAllReviews')} <CaretRight size={16} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
             </Link>
           </div>
         </FadeIn>

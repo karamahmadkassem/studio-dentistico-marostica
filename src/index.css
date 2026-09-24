@@ -72,6 +72,14 @@
 }
 
 @layer components {
+  .icon-duotone-brand {
+    --phosphor-duotone-opacity: 0.35;
+  }
+
+  .icon-duotone-brand svg [opacity] {
+    opacity: var(--phosphor-duotone-opacity, 0.35);
+  }
+
   .container-page {
     width: 100%;
     max-width: 72rem;

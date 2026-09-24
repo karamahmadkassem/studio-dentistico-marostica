@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Calendar, User, ChevronRight } from 'lucide-react';
+import { Calendar, CaretRight, User } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import Section from '../components/Section';
@@ -153,14 +154,14 @@ const BlogPage: React.FC = () => {
                   <p className="mb-5 leading-relaxed text-ink-muted">{featured.excerpt}</p>
                   <div className="mb-5 flex flex-wrap items-center gap-4 text-sm text-ink-soft">
                     <span className="inline-flex items-center gap-1">
-                      <Calendar size={14} /> {featured.date}
+                      <Calendar size={14} weight={PUBLIC_ICON_WEIGHT} /> {featured.date}
                     </span>
                     <span className="inline-flex items-center gap-1">
-                      <User size={14} /> {featured.author}
+                      <User size={14} weight={PUBLIC_ICON_WEIGHT} /> {featured.author}
                     </span>
                   </div>
                   <Link to={`/blog/${featured.slug}`} className="link-accent">
-                    {t('common.readMore')} <ChevronRight size={14} className="ml-1" />
+                    {t('common.readMore')} <CaretRight size={14} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
                   </Link>
                 </div>
               </article>
@@ -184,14 +185,14 @@ const BlogPage: React.FC = () => {
                       <p className="mb-4 flex-1 text-sm leading-relaxed text-ink-muted">{post.excerpt}</p>
                       <div className="mb-3 flex flex-wrap gap-3 text-xs text-ink-soft">
                         <span className="inline-flex items-center gap-1">
-                          <Calendar size={12} /> {post.date}
+                          <Calendar size={12} weight={PUBLIC_ICON_WEIGHT} /> {post.date}
                         </span>
                         <span className="inline-flex items-center gap-1">
-                          <User size={12} /> {post.author}
+                          <User size={12} weight={PUBLIC_ICON_WEIGHT} /> {post.author}
                         </span>
                       </div>
                       <Link to={`/blog/${post.slug}`} className="link-accent text-sm">
-                        {t('common.readMore')} <ChevronRight size={14} className="ml-1" />
+                        {t('common.readMore')} <CaretRight size={14} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
                       </Link>
                     </div>
                   </article>

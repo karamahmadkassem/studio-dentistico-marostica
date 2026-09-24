@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, NavLink, useLocation } from 'react-router-dom';
-import { Globe, Menu, X } from 'lucide-react';
+import { Globe, List, X } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
 import { ASSETS } from '../config/assets';
 import { useLanguage } from '../context/LanguageContext';
 
@@ -111,7 +112,7 @@ const Header: React.FC = () => {
               className="inline-flex min-h-[40px] items-center gap-2 rounded-md bg-white px-3 py-2 text-sm font-semibold text-[#000340] transition-colors hover:bg-[#E8F6FC]"
               aria-label="Toggle language"
             >
-              <Globe size={18} />
+              <Globe size={18} weight={PUBLIC_ICON_WEIGHT} />
               <span>{language === 'en' ? 'IT' : 'EN'}</span>
             </button>
           </div>
@@ -124,7 +125,7 @@ const Header: React.FC = () => {
             aria-controls="mobile-menu"
             aria-label={isMenuOpen ? 'Close menu' : 'Open menu'}
           >
-            {isMenuOpen ? <X size={24} /> : <Menu size={24} />}
+            {isMenuOpen ? <X size={24} weight={PUBLIC_ICON_WEIGHT} /> : <List size={24} weight={PUBLIC_ICON_WEIGHT} />}
           </button>
         </div>
 
@@ -150,7 +151,7 @@ const Header: React.FC = () => {
                 onClick={toggleLanguage}
                 className="mt-2 inline-flex min-h-[44px] items-center justify-center gap-2 rounded-md bg-white px-4 py-3 font-semibold text-[#000340]"
               >
-                <Globe size={18} />
+                <Globe size={18} weight={PUBLIC_ICON_WEIGHT} />
                 {language === 'en' ? 'IT' : 'EN'}
               </button>
             </div>

@@ -1,5 +1,6 @@
 import React, { useCallback, useEffect, useMemo, useState } from 'react';
-import { ChevronLeft, ChevronRight, X } from 'lucide-react';
+import { CaretLeft, CaretRight, X } from '@phosphor-icons/react';
+import { ADMIN_ICON_WEIGHT } from '../../components/ui/Icon';
 import { adminApi } from '../../lib/api';
 import type { Appointment, OpeningHour } from '../../types/database';
 import { useAdminNotifications } from '../AdminNotificationsContext';
@@ -208,13 +209,13 @@ const AdminCalendarPage: React.FC = () => {
 
       <div className="mb-4 flex items-center justify-between">
         <button type="button" onClick={() => shift(-1)} className="admin-nav-btn" aria-label="Previous">
-          <ChevronLeft size={20} />
+          <CaretLeft size={20} weight={ADMIN_ICON_WEIGHT} />
         </button>
         <button type="button" onClick={() => setCursor(getClinicTodayDate())} className="text-sm font-medium text-brand-cyan">
           Today
         </button>
         <button type="button" onClick={() => shift(1)} className="admin-nav-btn" aria-label="Next">
-          <ChevronRight size={20} />
+          <CaretRight size={20} weight={ADMIN_ICON_WEIGHT} />
         </button>
       </div>
 
@@ -328,7 +329,7 @@ const AdminCalendarPage: React.FC = () => {
             <div className="flex items-start justify-between">
               <h2 className="heading-section text-lg">Appointment</h2>
               <button type="button" onClick={() => setSelected(null)} aria-label="Close">
-                <X size={20} />
+                <X size={20} weight={ADMIN_ICON_WEIGHT} />
               </button>
             </div>
             <dl className="mt-4 space-y-2 text-sm">

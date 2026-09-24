@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
-import { Calendar, User, ChevronLeft } from 'lucide-react';
+import { Calendar, CaretLeft, User } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
@@ -82,7 +83,7 @@ const BlogPostPage: React.FC = () => {
             {language === 'it' ? 'Articolo non trovato' : 'Article not found'}
           </h1>
           <Link to="/blog" className="link-accent inline-flex items-center gap-1">
-            <ChevronLeft size={16} /> {language === 'it' ? 'Torna al blog' : 'Back to blog'}
+            <CaretLeft size={16} weight={PUBLIC_ICON_WEIGHT} /> {language === 'it' ? 'Torna al blog' : 'Back to blog'}
           </Link>
         </div>
       </Section>
@@ -94,7 +95,7 @@ const BlogPostPage: React.FC = () => {
       <Section>
         <FadeIn>
           <Link to="/blog" className="link-accent mb-8 inline-flex items-center gap-1 text-sm">
-            <ChevronLeft size={16} /> {language === 'it' ? 'Torna al blog' : 'Back to blog'}
+            <CaretLeft size={16} weight={PUBLIC_ICON_WEIGHT} /> {language === 'it' ? 'Torna al blog' : 'Back to blog'}
           </Link>
           {post.image && (
             <div className="mb-8 aspect-[21/9] overflow-hidden">
@@ -105,10 +106,10 @@ const BlogPostPage: React.FC = () => {
           <h1 className="heading-section mb-4">{post.title}</h1>
           <div className="mb-8 flex flex-wrap items-center gap-4 text-sm text-ink-soft">
             <span className="inline-flex items-center gap-1">
-              <Calendar size={14} /> {post.date}
+              <Calendar size={14} weight={PUBLIC_ICON_WEIGHT} /> {post.date}
             </span>
             <span className="inline-flex items-center gap-1">
-              <User size={14} /> {post.author}
+              <User size={14} weight={PUBLIC_ICON_WEIGHT} /> {post.author}
             </span>
           </div>
           <p className="mb-8 text-lg leading-relaxed text-ink-muted">{post.excerpt}</p>

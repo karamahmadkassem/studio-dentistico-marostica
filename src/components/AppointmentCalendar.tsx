@@ -1,5 +1,6 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { ChevronLeft, ChevronRight } from 'lucide-react';
+import { CaretLeft, CaretRight } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 import RequiredMark from './RequiredMark';
 import { fetchAvailability, fetchOpeningHoursPublic } from '../lib/api';
@@ -153,7 +154,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
             className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-ink-soft/30 text-ink transition-colors hover:border-brand-cyan hover:text-brand-cyan"
             aria-label={String(t('contact.form.calendarPrev'))}
           >
-            <ChevronLeft size={18} />
+            <CaretLeft size={18} weight={PUBLIC_ICON_WEIGHT} />
           </button>
           <p className="font-display text-base font-semibold capitalize text-ink md:text-lg">
             {monthLabel}
@@ -164,7 +165,7 @@ const AppointmentCalendar: React.FC<AppointmentCalendarProps> = ({
             className="inline-flex h-9 w-9 items-center justify-center rounded-md border border-ink-soft/30 text-ink transition-colors hover:border-brand-cyan hover:text-brand-cyan"
             aria-label={String(t('contact.form.calendarNext'))}
           >
-            <ChevronRight size={18} />
+            <CaretRight size={18} weight={PUBLIC_ICON_WEIGHT} />
           </button>
         </div>
 

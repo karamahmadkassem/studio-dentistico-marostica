@@ -1,6 +1,7 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Reorder, useDragControls } from 'framer-motion';
-import { GripVertical, Plus, Trash2 } from 'lucide-react';
+import { DotsSixVertical, Plus, Trash } from '@phosphor-icons/react';
+import { ADMIN_ICON_WEIGHT, PUBLIC_ICON_WEIGHT } from '../../components/ui/Icon';
 import { adminApi } from '../../lib/api';
 import { DEFAULT_SERVICE_ICON, SERVICE_ICONS } from '../../config/serviceIcons';
 import { generateUniqueSlug } from '../../lib/slugify';
@@ -55,7 +56,7 @@ const DetailListEditor: React.FC<DetailListProps> = ({ label, items, onChange })
       <div className="mb-2 flex items-center justify-between gap-2">
         <p className="label-field mb-0">{label}</p>
         <button type="button" className="admin-icon-btn" onClick={() => onChange([...list, ''])}>
-          <Plus size={16} />
+          <Plus size={16} weight={ADMIN_ICON_WEIGHT} />
         </button>
       </div>
       <div className="space-y-2">
@@ -78,7 +79,7 @@ const DetailListEditor: React.FC<DetailListProps> = ({ label, items, onChange })
                 onClick={() => onChange(list.filter((_, i) => i !== index))}
                 aria-label="Remove item"
               >
-                <Trash2 size={16} />
+                <Trash size={16} weight={ADMIN_ICON_WEIGHT} />
               </button>
             )}
           </div>
@@ -112,7 +113,7 @@ const ServiceRow: React.FC<ServiceRowProps> = ({ service, onEdit, onRemove }) =>
           onPointerDown={(e) => dragControls.start(e)}
           aria-label={`Drag to reorder ${service.title_en}`}
         >
-          <GripVertical size={18} />
+          <DotsSixVertical size={18} weight={ADMIN_ICON_WEIGHT} />
         </button>
         <div className="min-w-0">
           <p className="font-semibold text-ink">{service.title_en}</p>
@@ -124,7 +125,7 @@ const ServiceRow: React.FC<ServiceRowProps> = ({ service, onEdit, onRemove }) =>
           Edit
         </button>
         <button type="button" className="admin-icon-btn text-red-600" onClick={() => onRemove(service.id)}>
-          <Trash2 size={16} />
+          <Trash size={16} weight={ADMIN_ICON_WEIGHT} />
         </button>
       </div>
     </Reorder.Item>
@@ -219,7 +220,7 @@ const AdminServicesPage: React.FC = () => {
           </p>
         </div>
         <button type="button" className="btn-primary" onClick={() => setEditing(emptyService())}>
-          <Plus size={16} /> Add service
+          <Plus size={16} weight={ADMIN_ICON_WEIGHT} /> Add service
         </button>
       </div>
 
@@ -266,7 +267,7 @@ const AdminServicesPage: React.FC = () => {
                         aria-pressed={selected}
                         title={label}
                       >
-                        <Icon size={22} className="text-brand-cyan" />
+                        <Icon size={22} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand text-brand-cyan" />
                         <span>{label}</span>
                       </button>
                     );

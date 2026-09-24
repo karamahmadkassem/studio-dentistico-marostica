@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Trash2, Send } from 'lucide-react';
+import { PaperPlaneTilt, Plus, Trash } from '@phosphor-icons/react';
+import { ADMIN_ICON_WEIGHT } from '../../components/ui/Icon';
 import { adminApi } from '../../lib/api';
 import { generateUniqueSlug } from '../../lib/slugify';
 import type { BlogPost, BlogCategory } from '../../types/database';
@@ -78,7 +79,7 @@ const AdminBlogPage: React.FC = () => {
       <div className="admin-page-header">
         <h1 className="admin-page-title">Blog</h1>
         <button type="button" className="btn-primary" onClick={() => setEditing(newPost())}>
-          <Plus size={16} /> New post
+          <Plus size={16} weight={ADMIN_ICON_WEIGHT} /> New post
         </button>
       </div>
 
@@ -98,7 +99,7 @@ const AdminBlogPage: React.FC = () => {
           {categories.map((c) => (
             <span key={c.id} className="inline-flex items-center gap-2 rounded-md bg-surface-muted px-3 py-1 text-sm">
               {c.name_en}
-              <button type="button" className="text-red-600" onClick={() => adminApi.deleteBlogCategory(c.id).then(load)}><Trash2 size={14} /></button>
+              <button type="button" className="text-red-600" onClick={() => adminApi.deleteBlogCategory(c.id).then(load)}><Trash size={14} weight={ADMIN_ICON_WEIGHT} /></button>
             </span>
           ))}
         </div>
@@ -120,9 +121,9 @@ const AdminBlogPage: React.FC = () => {
               <div className="flex gap-2">
                 <button type="button" className="admin-icon-btn" onClick={() => setEditing(p)}>Edit</button>
                 {!p.published && (
-                  <button type="button" className="btn-primary text-sm" onClick={() => publish(p.id)}><Send size={14} /> Publish</button>
+                  <button type="button" className="btn-primary text-sm" onClick={() => publish(p.id)}><PaperPlaneTilt size={14} weight={ADMIN_ICON_WEIGHT} /> Publish</button>
                 )}
-                <button type="button" className="admin-icon-btn text-red-600" onClick={() => adminApi.deleteBlogPost(p.id).then(load)}><Trash2 size={16} /></button>
+                <button type="button" className="admin-icon-btn text-red-600" onClick={() => adminApi.deleteBlogPost(p.id).then(load)}><Trash size={16} weight={ADMIN_ICON_WEIGHT} /></button>
               </div>
             </div>
           ))}

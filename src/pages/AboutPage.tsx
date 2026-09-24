@@ -1,5 +1,6 @@
 import React from 'react';
-import { Check } from 'lucide-react';
+import { Check } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { ASSETS } from '../config/assets';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
@@ -42,7 +43,7 @@ const AboutPage: React.FC = () => {
               {Array.isArray(trainingItems) &&
                 trainingItems.map((item) => (
                   <li key={item} className="flex items-start gap-2 text-ink-muted">
-                    <Check size={18} className="mt-0.5 shrink-0 text-brand-cyan" />
+                    <Check size={18} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-0.5 shrink-0 text-brand-cyan" />
                     <span>{item}</span>
                   </li>
                 ))}

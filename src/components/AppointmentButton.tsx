@@ -1,7 +1,8 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import { Calendar, Phone } from 'lucide-react';
+import { Calendar, Phone } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 
 const WhatsAppIcon: React.FC<{ size?: number }> = ({ size = 22 }) => (
@@ -55,7 +56,7 @@ const AppointmentButton: React.FC = () => {
       id: 'call',
       render: (
         <a href={`tel:${phoneHref}`} className="contact-fab-action" aria-label={String(t('common.fabCall'))}>
-          <Phone size={22} />
+          <Phone size={22} weight={PUBLIC_ICON_WEIGHT} />
         </a>
       ),
     },
@@ -82,7 +83,7 @@ const AppointmentButton: React.FC = () => {
           aria-label={String(t('common.fabBook'))}
           onClick={() => setOpen(false)}
         >
-          <Calendar size={22} />
+          <Calendar size={22} weight={PUBLIC_ICON_WEIGHT} />
         </Link>
       ),
     },
@@ -117,7 +118,7 @@ const AppointmentButton: React.FC = () => {
         aria-expanded={open}
         aria-label={String(t('common.contactUs'))}
       >
-        <Phone size={22} className="shrink-0" aria-hidden />
+        <Phone size={22} weight={PUBLIC_ICON_WEIGHT} className="shrink-0" aria-hidden />
         <span className="hidden font-semibold sm:inline">{t('common.contactUs')}</span>
       </button>
     </div>

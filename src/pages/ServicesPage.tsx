@@ -1,6 +1,7 @@
 import React, { useEffect, useMemo, useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Check } from 'lucide-react';
+import { Check } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import Section from '../components/Section';
@@ -64,7 +65,7 @@ const ServicesPage: React.FC = () => {
                 <ul className="space-y-2">
                   {service.details.map((detail) => (
                     <li key={detail} className="flex items-start gap-2 text-ink-muted">
-                      <Check size={16} className="mt-1 shrink-0 text-brand-cyan" />
+                      <Check size={16} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-1 shrink-0 text-brand-cyan" />
                       <span>{detail}</span>
                     </li>
                   ))}

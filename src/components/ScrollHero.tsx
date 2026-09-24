@@ -7,7 +7,8 @@ import {
   useTransform,
   type MotionValue,
 } from 'framer-motion';
-import { ChevronRight } from 'lucide-react';
+import { CaretRight } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
 import { ASSETS } from '../config/assets';
 import {
   ensureHeroPreloaded,
@@ -35,7 +36,7 @@ const HeroContent = memo(function HeroContent() {
       </p>
       <div className="flex flex-col gap-3 sm:flex-row">
         <Link to="/contact" className="btn-primary">
-          {t('home.hero.cta')} <ChevronRight size={18} />
+          {t('home.hero.cta')} <CaretRight size={18} weight={PUBLIC_ICON_WEIGHT} />
         </Link>
         <Link to="/services" className="scroll-hero__btn-ghost">
           {t('home.hero.secondary')}

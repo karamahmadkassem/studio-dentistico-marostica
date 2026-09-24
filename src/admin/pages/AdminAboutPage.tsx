@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
-import { Plus, Trash2 } from 'lucide-react';
+import { Plus, Trash } from '@phosphor-icons/react';
+import { ADMIN_ICON_WEIGHT } from '../../components/ui/Icon';
 import { adminApi } from '../../lib/api';
 import type { AboutSection } from '../../types/database';
 
@@ -359,7 +360,7 @@ const AdminAboutPage: React.FC = () => {
                     ])
                   }
                 >
-                  <Plus size={16} /> Add entry
+                  <Plus size={16} weight={ADMIN_ICON_WEIGHT} /> Add entry
                 </button>
               </div>
               {history.map((item, index) => (
@@ -372,7 +373,7 @@ const AdminAboutPage: React.FC = () => {
                         onClick={() => setHistory((prev) => prev.filter((_, i) => i !== index))}
                         aria-label="Remove entry"
                       >
-                        <Trash2 size={16} />
+                        <Trash size={16} weight={ADMIN_ICON_WEIGHT} />
                       </button>
                     </div>
                   )}
@@ -438,7 +439,7 @@ const AdminAboutPage: React.FC = () => {
                           className="admin-icon-btn"
                           onClick={() => updateTechItems(lang, [...items, ''])}
                         >
-                          <Plus size={16} />
+                          <Plus size={16} weight={ADMIN_ICON_WEIGHT} />
                         </button>
                       </div>
                       <div className="space-y-2">
@@ -461,7 +462,7 @@ const AdminAboutPage: React.FC = () => {
                                 onClick={() => updateTechItems(lang, items.filter((_, i) => i !== index))}
                                 aria-label="Remove item"
                               >
-                                <Trash2 size={16} />
+                                <Trash size={16} weight={ADMIN_ICON_WEIGHT} />
                               </button>
                             )}
                           </div>

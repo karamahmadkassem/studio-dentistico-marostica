@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { ChevronRight } from 'lucide-react';
+import { CaretRight } from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
 import ServiceIcon from './ServiceIcon';
 import type { DisplayService } from '../config/servicesCatalog';
 
@@ -63,7 +64,7 @@ const ServiceFlipCard: React.FC<ServiceFlipCardProps> = ({ service, learnMoreLab
               onPointerDown={(e) => e.stopPropagation()}
               onClick={(e) => e.stopPropagation()}
             >
-              {learnMoreLabel} <ChevronRight size={16} className="ml-1" />
+              {learnMoreLabel} <CaretRight size={16} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
             </Link>
           </div>
         </div>

@@ -1,6 +1,14 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { Phone, Mail, MapPin, Clock, Facebook, Instagram } from 'lucide-react';
+import {
+  Clock,
+  Envelope,
+  FacebookLogo,
+  InstagramLogo,
+  MapPin,
+  Phone,
+} from '@phosphor-icons/react';
+import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
 import { ASSETS } from '../config/assets';
 import { useLanguage } from '../context/LanguageContext';
 import { useOpeningHours } from '../hooks/useOpeningHours';
@@ -42,7 +50,7 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <Facebook size={18} />
+                <FacebookLogo size={18} weight={PUBLIC_ICON_WEIGHT} />
               </a>
               <a
                 href="https://www.instagram.com/studiodentisticomarostica?igsh=cDE2MnlzaHo0eWhs"
@@ -51,7 +59,7 @@ const Footer: React.FC = () => {
                 target="_blank"
                 rel="noreferrer"
               >
-                <Instagram size={18} />
+                <InstagramLogo size={18} weight={PUBLIC_ICON_WEIGHT} />
               </a>
             </div>
           </div>
@@ -80,11 +88,11 @@ const Footer: React.FC = () => {
             </h3>
             <ul className="space-y-3 text-white/80">
               <li className="flex items-start gap-3">
-                <MapPin size={18} className="mt-0.5 shrink-0 text-[#4AACE1]" />
+                <MapPin size={18} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-0.5 shrink-0 text-[#4AACE1]" />
                 <span>{String(t('footer.address'))}</span>
               </li>
               <li className="flex items-start gap-3">
-                <Phone size={18} className="mt-0.5 shrink-0 text-[#4AACE1]" />
+                <Phone size={18} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-0.5 shrink-0 text-[#4AACE1]" />
                 <div>
                   <p>
                     <span className="text-white/60">{String(t('contact.info.mobile'))}: </span>
@@ -101,7 +109,7 @@ const Footer: React.FC = () => {
                 </div>
               </li>
               <li className="flex items-center gap-3">
-                <Mail size={18} className="shrink-0 text-[#4AACE1]" />
+                <Envelope size={18} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand shrink-0 text-[#4AACE1]" />
                 <a
                   href="mailto:info@studiodentisticomarostica.it"
                   className="break-all hover:text-[#4AACE1]"
@@ -110,7 +118,7 @@ const Footer: React.FC = () => {
                 </a>
               </li>
               <li className="flex items-start gap-3">
-                <Clock size={18} className="mt-0.5 shrink-0 text-[#4AACE1]" />
+                <Clock size={18} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-0.5 shrink-0 text-[#4AACE1]" />
                 <div>
                   <OpeningHoursList
                     rows={openingHoursRows}
