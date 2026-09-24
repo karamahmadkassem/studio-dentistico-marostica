@@ -10,9 +10,11 @@ import {
 import { ChevronRight } from 'lucide-react';
 import { ASSETS } from '../config/assets';
 import {
+  ensureHeroPreloaded,
   getHeroAnimationFrames,
   getHeroFrameSourceSize,
   getHeroFrameSources,
+  subscribeHeroFrameSources,
   type HeroFrameSource,
 } from '../lib/heroAssets';
 import { useLanguage } from '../context/LanguageContext';
@@ -245,8 +247,26 @@ const ScrollHero: React.FC = () => {
   const [isMobile, setIsMobile] = useState(
     () => typeof window !== 'undefined' && window.matchMedia('(max-width: 767px)').matches,
   );
+  const [sources, setSources] = useState<readonly HeroFrameSource[]>(() => getHeroFrameSources());
   const frames = getHeroAnimationFrames();
-  const sources = getHeroFrameSources();
+
+  useEffect(() => {
+    const syncSources = () => {
+      const next = getHeroFrameSources();
+      if (next.length > 0) {
+        setSources(next);
+      }
+    };
+
+    syncSources();
+    const unsubscribe = subscribeHeroFrameSources(syncSources);
+
+    if (getHeroFrameSources().length === 0) {
+      void ensureHeroPreloaded().then(syncSources);
+    }
+
+    return unsubscribe;
+  }, []);
 
   useEffect(() => {
     const mq = window.matchMedia('(prefers-reduced-motion: reduce)');
@@ -268,6 +288,29 @@ const ScrollHero: React.FC = () => {
     target: trackRef,
     offset: ['start start', 'end end'],
   });
+
+  useEffect(() => {
+    if (reducedMotion || sources.length === 0) return undefined;
+
+    const refreshScrollMeasurements = () => {
+      window.dispatchEvent(new Event('resize'));
+    };
+
+    let cancelled = false;
+    const refreshAfterLayout = () => {
+      if (cancelled) return;
+      requestAnimationFrame(() => {
+        requestAnimationFrame(refreshScrollMeasurements);
+      });
+    };
+
+    void document.fonts?.ready.then(refreshAfterLayout);
+    refreshAfterLayout();
+
+    return () => {
+      cancelled = true;
+    };
+  }, [reducedMotion, sources.length]);
 
   const teethY = useTransform(
     scrollYProgress,

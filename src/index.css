@@ -786,7 +786,8 @@
   }
 
   .scroll-hero__doctor-img--static {
-    position: relative;
+    position: absolute;
+    bottom: 0;
   }
 
   .scroll-hero__doctor-img--canvas {

@@ -4,15 +4,17 @@ import HeroBootLogo from './HeroBootLogo';
 import HeroSplashScreen from './HeroSplashScreen';
 import {
   ensureHeroPreloaded,
+  hasHeroFrameSources,
   isHeroPreloadComplete,
   isHeroSessionWarmed,
   markHeroSessionWarmed,
   releaseHeroBootOverlay,
   subscribeHeroPreloadProgress,
   shouldWaitForHeroPreload,
+  waitForBrandFonts,
 } from '../lib/heroAssets';
 
-const HERO_LOAD_TIMEOUT_MS = 20000;
+const HERO_HARD_REVEAL_MS = 45000;
 const HERO_SPLASH_MIN_MS = 600;
 /** Soft reloads from cache usually finish faster — skip splash unless load exceeds this. */
 const SPLASH_DELAY_MS = 400;
@@ -75,17 +77,20 @@ const HeroBootGate: React.FC<HeroBootGateProps> = ({ children }) => {
           setShowSplash(true);
         }, SPLASH_DELAY_MS);
 
-    const finishLoading = () => {
+    const finishLoading = (options?: { force?: boolean }) => {
       if (cancelled || finished) return;
-      finished = true;
+      if (!options?.force && !hasHeroFrameSources()) return;
 
       if (delayedSplashId !== undefined) {
         window.clearTimeout(delayedSplashId);
       }
 
+      finished = true;
       markHeroSessionWarmed();
 
-      const revealSite = () => {
+      const revealSite = async () => {
+        if (cancelled) return;
+        await waitForBrandFonts();
         if (cancelled) return;
         releaseHeroBootOverlay();
         setBootReady(true);
@@ -94,7 +99,7 @@ const HeroBootGate: React.FC<HeroBootGateProps> = ({ children }) => {
       const usedSplash = splashVisibleRef.current;
 
       if (!usedSplash) {
-        revealSite();
+        void revealSite();
         return;
       }
 
@@ -104,23 +109,27 @@ const HeroBootGate: React.FC<HeroBootGateProps> = ({ children }) => {
 
       const elapsed = Date.now() - startedAt;
       const remaining = Math.max(0, HERO_SPLASH_MIN_MS - elapsed);
-      window.setTimeout(revealSite, remaining + 400);
+      window.setTimeout(() => {
+        void revealSite();
+      }, remaining + 400);
     };
 
-    const timeoutId = window.setTimeout(finishLoading, HERO_LOAD_TIMEOUT_MS);
+    const hardRevealId = window.setTimeout(() => {
+      finishLoading({ force: true });
+    }, HERO_HARD_REVEAL_MS);
 
     const unsubscribeProgress = subscribeHeroPreloadProgress((loaded, total) => {
       if (!cancelled) setLoadProgress(total > 0 ? loaded / total : 0);
     });
 
     ensureHeroPreloaded()
-      .then(finishLoading)
-      .catch(finishLoading);
+      .then(() => finishLoading())
+      .catch(() => finishLoading({ force: true }));
 
     return () => {
       cancelled = true;
       unsubscribeProgress();
-      window.clearTimeout(timeoutId);
+      window.clearTimeout(hardRevealId);
       if (delayedSplashId !== undefined) {
         window.clearTimeout(delayedSplashId);
       }

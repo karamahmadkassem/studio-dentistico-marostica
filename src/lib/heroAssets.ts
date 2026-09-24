@@ -11,6 +11,25 @@ let preloadPromise: Promise<void> | null = null;
 let frameSources: HeroFrameSource[] = [];
 let preloadProgress = { loaded: 0, total: 0 };
 const preloadProgressListeners = new Set<(loaded: number, total: number) => void>();
+const frameSourceListeners = new Set<() => void>();
+
+function notifyFrameSourcesReady() {
+  frameSourceListeners.forEach((listener) => listener());
+}
+
+export function subscribeHeroFrameSources(listener: () => void): () => void {
+  frameSourceListeners.add(listener);
+  if (frameSources.length > 0) {
+    listener();
+  }
+  return () => {
+    frameSourceListeners.delete(listener);
+  };
+}
+
+export function hasHeroFrameSources(): boolean {
+  return frameSources.length > 0;
+}
 
 function notifyPreloadProgress(loaded: number, total: number) {
   preloadProgress = { loaded, total };
@@ -86,6 +105,18 @@ export function releaseHeroBootOverlay(): void {
   document.documentElement.classList.add('hero-boot-ready');
   document.getElementById('hero-splash-static')?.remove(); // legacy fallback
   document.body.style.overflow = '';
+}
+
+/** Wait for web + local fonts so the first paint uses the brand typefaces. */
+export async function waitForBrandFonts(timeoutMs = 3000): Promise<void> {
+  if (typeof document === 'undefined' || !document.fonts?.ready) return;
+
+  await Promise.race([
+    document.fonts.ready,
+    new Promise<void>((resolve) => {
+      window.setTimeout(resolve, timeoutMs);
+    }),
+  ]);
 }
 
 export function isMobileHeroViewport(): boolean {
@@ -223,10 +254,22 @@ export async function preloadHeroAssets(
   notifyPreloadProgress(0, total);
   onProgress?.(0, total);
 
+  const syncFrameSources = () => {
+    const next = frames
+      .map((src) => sourceMap.get(src))
+      .filter((source): source is HeroFrameSource => source != null);
+
+    if (next.length > frameSources.length) {
+      frameSources = next;
+      notifyFrameSourcesReady();
+    }
+  };
+
   const loadOne = async (src: string) => {
     try {
       const source = await loadFrameSource(src);
       sourceMap.set(src, source);
+      syncFrameSources();
     } catch {
       // Keep going — a missing frame shouldn't block the hero.
     } finally {
@@ -247,9 +290,7 @@ export async function preloadHeroAssets(
 
   await Promise.all(workers);
 
-  frameSources = frames
-    .map((src) => sourceMap.get(src))
-    .filter((source): source is HeroFrameSource => source != null);
+  syncFrameSources();
 
   if (frameSources.length === 0) {
     throw new Error('No hero animation frames could be loaded.');
@@ -264,6 +305,7 @@ export async function preloadHeroStatic(
   const firstFrame = getHeroAnimationFrames()[0];
   if (firstFrame) {
     frameSources = [await loadFrameSource(firstFrame)];
+    notifyFrameSourcesReady();
   }
 }
 

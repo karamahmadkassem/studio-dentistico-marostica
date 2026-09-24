@@ -19,10 +19,11 @@ import HeroBootGate from './components/HeroBootGate';
 import ScrollToTop from './components/ScrollToTop';
 import AdminRoutes from './admin/AdminRoutes';
 
+// Opacity-only transitions: transforms on ancestors break sticky + scroll-linked hero.
 const pageTransition = {
-  initial: { opacity: 0, y: 12 },
-  animate: { opacity: 1, y: 0 },
-  exit: { opacity: 0, y: -8 },
+  initial: { opacity: 0 },
+  animate: { opacity: 1 },
+  exit: { opacity: 0 },
 };
 
 const AnimatedPublicRoutes = () => {
