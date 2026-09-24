@@ -36,3 +36,8 @@ supabase/.temp/
 /*.jpg
 /*.jpeg
 /*.webp
+/*.mp4
+
+# Python
+__pycache__/
+*.pyc
