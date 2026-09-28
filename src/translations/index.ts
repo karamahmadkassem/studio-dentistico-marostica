@@ -71,7 +71,7 @@ export const translations: Record<Language, TranslationValue> = {
       about: {
         title: 'Chi siamo',
         content:
-          'Il Dott. Moustapha Mourtada unisce formazione universitaria, esperienza clinica e un approccio umano centrato su prevenzione e cura del paziente.',
+          'Il Dott. Mourtada unisce formazione universitaria, esperienza clinica e un approccio umano centrato su prevenzione e cura del paziente.',
         more: 'Scopri di più su di noi',
       },
       testimonials: {
@@ -236,7 +236,7 @@ export const translations: Record<Language, TranslationValue> = {
         subtitle: 'Professionalità, formazione e attenzione al paziente al servizio del tuo sorriso.',
       },
       doctor: {
-        name: 'Dr. Moustapha Mourtada',
+        name: 'Dr. Mourtada',
         role: 'Odontoiatria e Protesi Dentaria',
         intro:
           'Laureato in Odontoiatria e Protesi Dentaria e abilitato all’esercizio della professione presso l’Università degli Studi di Trieste, con iscrizione all’Ordine dei Medici Chirurghi e degli Odontoiatri prima di Trieste e poi di Vicenza.',
@@ -256,7 +256,7 @@ export const translations: Record<Language, TranslationValue> = {
       },
       team: {
         title: 'Il nostro team',
-        imageAlt: 'Dr. Moustapha Mourtada',
+        imageAlt: 'Dr. Mourtada',
       },
     },
     contact: {
@@ -611,7 +611,7 @@ export const translations: Record<Language, TranslationValue> = {
       about: {
         title: 'About us',
         content:
-          'Dr. Moustapha Mourtada combines university training, clinical experience, and a human approach focused on prevention and patient care.',
+          'Dr. Mourtada combines university training, clinical experience, and a human approach focused on prevention and patient care.',
         more: 'Learn more about us',
       },
       testimonials: {
@@ -776,7 +776,7 @@ export const translations: Record<Language, TranslationValue> = {
         subtitle: 'Professionalism, training, and patient care at the heart of your smile.',
       },
       doctor: {
-        name: 'Dr. Moustapha Mourtada',
+        name: 'Dr. Mourtada',
         role: 'Dentistry and Dental Prosthetics',
         intro:
           'Graduate in Dentistry and Dental Prosthetics, licensed to practice by the University of Trieste, and registered with the Order of Physicians and Dentists first in Trieste and then in Vicenza.',
@@ -796,7 +796,7 @@ export const translations: Record<Language, TranslationValue> = {
       },
       team: {
         title: 'Our team',
-        imageAlt: 'Dr. Moustapha Mourtada',
+        imageAlt: 'Dr. Mourtada',
       },
     },
     contact: {
