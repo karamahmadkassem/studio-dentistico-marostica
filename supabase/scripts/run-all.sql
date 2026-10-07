@@ -179,11 +179,10 @@ CREATE POLICY opening_hours_public_read ON opening_hours FOR SELECT USING (true)
 
 -- Storage bucket for blog images (run via dashboard or separate migration)
 -- INSERT INTO storage.buckets (id, name, public) VALUES ('blog-images', 'blog-images', true);
--- Seed admin user (password: changeme — CHANGE IMMEDIATELY after first login)
--- bcrypt hash for 'changeme' cost 12
+-- Seed admin user (username: marostica)
 INSERT INTO admin_users (username, password_hash) VALUES (
-  'admin',
-  '$2b$12$8UxKFjUurxNQLeFtXiCAMObldgY1714zJjsTOJSvymh6sGfu5rKWm'
+  'marostica',
+  '$2b$12$SeM6QcM9ue59ct/ZJc71QemabdnlgkU/m7A5idvVcx2jCYYAJ2k12'
 ) ON CONFLICT (username) DO NOTHING;
 
 INSERT INTO services (slug, icon_key, title_it, title_en, description_it, description_en, details_it, details_en, sort_order, published) VALUES
