@@ -69,27 +69,6 @@
         filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.45));
       }
 
-      #hero-splash-static .hero-splash__quote {
-        margin: 0;
-        font-family: Manrope, system-ui, sans-serif;
-        font-size: clamp(1.05rem, 3.5vw, 1.25rem);
-        font-weight: 500;
-        font-style: normal;
-        line-height: 1.55;
-        color: rgba(255, 255, 255, 0.92);
-      }
-
-      #hero-splash-static .hero-splash__loading {
-        margin: 0;
-        font-family: Manrope, system-ui, sans-serif;
-        font-size: 0.875rem;
-        font-weight: 600;
-        font-style: normal;
-        letter-spacing: 0.04em;
-        text-transform: uppercase;
-        color: rgba(255, 255, 255, 0.55);
-      }
-
       #hero-splash-static .hero-splash__progress-track {
         position: absolute;
         left: 0;
@@ -106,17 +85,13 @@
         background: linear-gradient(90deg, #1a6fa8, #4aace1, #a8e4ff, #4aace1, #1a6fa8);
         background-size: 220% 100%;
       }
-
-      html.hero-boot-minimal #hero-splash-static .hero-splash__quote,
-      html.hero-boot-minimal #hero-splash-static .hero-splash__loading {
-        display: none;
-      }
     </style>
     <script>
       (function () {
         var path = window.location.pathname;
+        var isHome = path === '/' || path === '/en' || path === '/en/';
         var warmed = sessionStorage.getItem('sdm-hero-warmed') === '1';
-        if (path !== '/') {
+        if (!isHome) {
           document.documentElement.className = 'hero-boot-ready';
         } else if (warmed) {
           document.documentElement.className = 'hero-boot-loading hero-boot-minimal';
@@ -125,34 +100,11 @@
         }
       })();
     </script>
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Manrope:wght@400;500;600;700;800&family=Outfit:wght@500;600;700;800&display=swap" rel="stylesheet" />
-    <meta name="description" content="Studio Dentistico Marostica - Cure dentali di alta qualità a Marostica. Prenota una visita oggi stesso." />
-    <script type="application/ld+json">
-      {
-        "@context": "https://schema.org",
-        "@type": "Dentist",
-        "name": "Studio Dentistico Marostica",
-        "url": "https://www.studiodentisticomarostica.com",
-        "telephone": ["+393518228984", "+39042473061"],
-        "email": "info@studiodentisticomarostica.it",
-        "address": {
-          "@type": "PostalAddress",
-          "streetAddress": "Via XXIV Maggio 39",
-          "addressLocality": "Marostica",
-          "addressRegion": "VI",
-          "addressCountry": "IT"
-        }
-      }
-    </script>
   </head>
   <body>
     <div id="hero-splash-static" aria-hidden="true">
       <div class="hero-splash__content">
         <img class="hero-splash__logo" src="/images/brand/logo.png" alt="" width="220" height="80" />
-        <p class="hero-splash__quote">A healthy smile starts with good prevention.</p>
-        <p class="hero-splash__loading">Getting your smile ready…</p>
       </div>
       <div class="hero-splash__progress-track" aria-hidden="true">
         <div class="hero-splash__progress-bar"></div>

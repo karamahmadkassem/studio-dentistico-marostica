@@ -1,5 +1,5 @@
 import React, { memo, useEffect, useRef, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { LocalizedLink } from '../i18n/LocalizedLink';
 import {
   motion,
   useMotionValueEvent,
@@ -28,19 +28,19 @@ const HeroContent = memo(function HeroContent() {
       <h1 className="scroll-hero__title mb-5 text-3xl md:text-5xl">
         Studio Dentistico <span className="accent">Marostica</span>
       </h1>
-      <p className="scroll-hero__tagline mb-3 font-display text-xl font-semibold md:text-2xl">
+      <h2 className="scroll-hero__tagline mb-3 font-display text-xl font-semibold md:text-2xl">
         {t('home.hero.title')}
-      </p>
+      </h2>
       <p className="scroll-hero__subtitle mb-8 max-w-xl text-base md:text-lg">
         {t('home.hero.subtitle')}
       </p>
       <div className="flex flex-col gap-3 sm:flex-row">
-        <Link to="/contact" className="btn-primary">
+        <LocalizedLink to="/contact" className="btn-primary">
           {t('home.hero.cta')} <CaretRight size={18} weight={PUBLIC_ICON_WEIGHT} />
-        </Link>
-        <Link to="/services" className="scroll-hero__btn-ghost">
+        </LocalizedLink>
+        <LocalizedLink to="/services" className="scroll-hero__btn-ghost">
           {t('home.hero.secondary')}
-        </Link>
+        </LocalizedLink>
       </div>
     </div>
   );
@@ -191,6 +191,9 @@ const HeroLayers: React.FC<{
         <img
           src={frames[0]}
           alt=""
+          width={1920}
+          height={1080}
+          fetchpriority="high"
           className="scroll-hero__doctor-img scroll-hero__doctor-img--static"
           draggable={false}
         />

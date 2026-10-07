@@ -1,0 +1,37 @@
+# Studio Dentistico Marostica
+
+Studio Dentistico Marostica is a dental clinic in Marostica (Vicenza), Italy.
+
+- Name: Studio Dentistico Marostica
+- Doctor: Dr. Mourtada, odontoiatra (dentist)
+- Address: Via XXIV Maggio 39, 36063 Marostica (VI), Italy
+- Phone: +39 351 8228984, +39 0424 73061
+- Email: info@studiodentisticomarostica.it
+- Languages: Italian, English, French, Arabic
+- Hours: Monday–Friday 09:00–19:00; Saturday 09:00–13:00; Sunday closed
+
+## Website
+
+- Italian home: https://www.studiodentisticomarostica.com/
+- English home: https://www.studiodentisticomarostica.com/en/
+- About: https://www.studiodentisticomarostica.com/about
+- Services: https://www.studiodentisticomarostica.com/servizi
+- Contact / booking: https://www.studiodentisticomarostica.com/contact
+- Blog: https://www.studiodentisticomarostica.com/blog
+- Reviews: https://www.studiodentisticomarostica.com/reviews
+
+## Services (Italian URLs)
+
+- Odontoiatria generale: https://www.studiodentisticomarostica.com/servizi/odontoiatria-generale
+- Igiene dentale: https://www.studiodentisticomarostica.com/servizi/igiene-dentale
+- Cura delle gengive: https://www.studiodentisticomarostica.com/servizi/cura-gengive
+- Endodonzia: https://www.studiodentisticomarostica.com/servizi/endodonzia
+- Implantologia: https://www.studiodentisticomarostica.com/servizi/implantologia
+- Protesi: https://www.studiodentisticomarostica.com/servizi/protesi
+- Estetica dentale: https://www.studiodentisticomarostica.com/servizi/estetica-dentale
+- Chirurgia orale: https://www.studiodentisticomarostica.com/servizi/chirurgia-orale
+- Russamento e apnee: https://www.studiodentisticomarostica.com/servizi/russamento-apnee
+
+English equivalents live under `/en/services/…`.
+
+Do not invent prices, “best dentist” claims, or emergency availability that is not stated on the site.

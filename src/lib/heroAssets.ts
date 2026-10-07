@@ -1,4 +1,5 @@
 import { ASSETS } from '../config/assets';
+import { isHomePath } from '../i18n/paths';
 
 const ALL_FRAMES = ASSETS.home.hero.frames;
 const DECODE_TIMEOUT_MS = 4000;
@@ -67,7 +68,7 @@ export function markHeroSessionWarmed(): void {
 }
 
 export function shouldWaitForHeroPreload(pathname: string): boolean {
-  if (pathname !== '/') return false;
+  if (!isHomePath(pathname)) return false;
   if (preloadComplete) return false;
 
   if (typeof window !== 'undefined') {
@@ -248,7 +249,6 @@ export async function preloadHeroAssets(
   const sourceMap = new Map<string, HeroFrameSource>();
   let loaded = 0;
   const total = urls.length;
-  let nextIndex = 0;
 
   preloadProgress = { loaded: 0, total };
   notifyPreloadProgress(0, total);
@@ -279,18 +279,39 @@ export async function preloadHeroAssets(
     }
   };
 
-  const workerCount = Math.min(isMobileHeroViewport() ? 4 : 6, urls.length);
-  const workers = Array.from({ length: workerCount }, async () => {
-    while (nextIndex < urls.length) {
-      const index = nextIndex;
-      nextIndex += 1;
-      await loadOne(urls[index]);
-    }
-  });
-
-  await Promise.all(workers);
-
+  const critical = getHeroCriticalAssets();
+  for (const src of critical) {
+    await loadOne(src);
+  }
   syncFrameSources();
+
+  const remaining = urls.filter((src) => !critical.includes(src));
+  const loadRemaining = async () => {
+    const workerCount = Math.min(isMobileHeroViewport() ? 4 : 6, remaining.length || 1);
+    let restIndex = 0;
+    const workers = Array.from({ length: workerCount }, async () => {
+      while (restIndex < remaining.length) {
+        const index = restIndex;
+        restIndex += 1;
+        await loadOne(remaining[index]);
+      }
+    });
+    await Promise.all(workers);
+    syncFrameSources();
+  };
+
+  if (typeof window !== 'undefined' && 'requestIdleCallback' in window) {
+    await new Promise<void>((resolve) => {
+      window.requestIdleCallback(
+        () => {
+          void loadRemaining().finally(resolve);
+        },
+        { timeout: 2500 },
+      );
+    });
+  } else {
+    await loadRemaining();
+  }
 
   if (frameSources.length === 0) {
     throw new Error('No hero animation frames could be loaded.');

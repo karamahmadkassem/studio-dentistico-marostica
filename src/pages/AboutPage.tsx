@@ -6,16 +6,40 @@ import { useLanguage } from '../context/LanguageContext';
 import PageHero from '../components/PageHero';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
-import { usePageTitle } from '../hooks/usePageTitle';
+import Seo from '../seo/Seo';
+import {
+  breadcrumbSchema,
+  dentistSchema,
+  graph,
+  physicianSchema,
+  websiteSchema,
+  withAggregateRating,
+} from '../seo/schema';
+import { useLocalizedPath } from '../i18n/LocalizedLink';
 
 const AboutPage: React.FC = () => {
-  const { t } = useLanguage();
-  usePageTitle(t('nav.about'));
+  const { t, language } = useLanguage();
+  const localize = useLocalizedPath();
+  const credentials = t('about.doctor.credentials') as string[];
 
   const trainingItems = t('about.doctor.trainingItems') as string[];
 
   return (
     <div>
+      <Seo
+        title={String(t('seo.about.title'))}
+        description={String(t('seo.about.description'))}
+        path={localize('/about')}
+        jsonLd={graph([
+          withAggregateRating(dentistSchema(language)),
+          physicianSchema(),
+          websiteSchema(language),
+          breadcrumbSchema([
+            { name: String(t('nav.home')), path: language === 'en' ? '/en' : '/' },
+            { name: String(t('nav.about')), path: localize('/about') },
+          ]),
+        ])}
+      />
       <PageHero
         title={t('about.hero.title')}
         subtitle={t('about.hero.subtitle')}
@@ -31,6 +55,18 @@ const AboutPage: React.FC = () => {
             </p>
             <p className="text-body mb-4">{t('about.doctor.intro')}</p>
             <p className="text-body">{t('about.doctor.experience')}</p>
+            <h3 className="mb-3 mt-8 font-display text-lg font-semibold text-ink">
+              {t('about.doctor.credentialsTitle')}
+            </h3>
+            <ul className="space-y-2">
+              {Array.isArray(credentials) &&
+                credentials.map((item) => (
+                  <li key={item} className="flex items-start gap-2 text-ink-muted">
+                    <Check size={18} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-0.5 shrink-0 text-brand-cyan" />
+                    <span>{item}</span>
+                  </li>
+                ))}
+            </ul>
           </div>
         </FadeIn>
       </Section>
@@ -73,8 +109,14 @@ const AboutPage: React.FC = () => {
             <div className="mb-6 h-56 w-56 overflow-hidden rounded-full ring-4 ring-brand-cyan/25">
               <img
                 src={ASSETS.team.drMoustaphaMortada}
-                alt={String(t('about.team.imageAlt'))}
+                alt={
+                  language === 'it'
+                    ? 'Dr. Mourtada, odontoiatra dello Studio Dentistico Marostica'
+                    : 'Dr. Mourtada, dentist at Studio Dentistico Marostica'
+                }
                 className="h-full w-full object-cover"
+                width={224}
+                height={224}
                 loading="lazy"
               />
             </div>
@@ -82,6 +124,7 @@ const AboutPage: React.FC = () => {
               {t('about.doctor.name')}
             </h3>
             <p className="text-ink-muted">{t('about.doctor.role')}</p>
+            <p className="mt-4 text-sm text-ink-soft">{t('about.doctor.reviewedBy')}</p>
           </div>
         </FadeIn>
       </Section>

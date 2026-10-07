@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useParams } from 'react-router-dom';
+import { useParams } from 'react-router-dom';
+import { LocalizedLink, useLocalizedPath } from '../i18n/LocalizedLink';
 import { Calendar, CaretLeft, User } from '@phosphor-icons/react';
 import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import { fetchBlogPostBySlug } from '../lib/api';
-import { usePageTitle } from '../hooks/usePageTitle';
+import Seo from '../seo/Seo';
+import { articleSchema, breadcrumbSchema, dentistSchema, graph, physicianSchema, websiteSchema } from '../seo/schema';
 import { ASSETS } from '../config/assets';
 
 const BlogPostPage: React.FC = () => {
   const { slug } = useParams<{ slug: string }>();
   const { language, t } = useLanguage();
+  const localize = useLocalizedPath();
   const [loading, setLoading] = useState(true);
   const [post, setPost] = useState<{
     title: string;
@@ -23,7 +26,6 @@ const BlogPostPage: React.FC = () => {
     image: string;
   } | null>(null);
 
-  usePageTitle(post?.title ?? String(t('nav.blog')));
 
   useEffect(() => {
     let cancelled = false;
@@ -82,21 +84,46 @@ const BlogPostPage: React.FC = () => {
           <h1 className="heading-section mb-4">
             {language === 'it' ? 'Articolo non trovato' : 'Article not found'}
           </h1>
-          <Link to="/blog" className="link-accent inline-flex items-center gap-1">
+          <LocalizedLink to="/blog" className="link-accent inline-flex items-center gap-1">
             <CaretLeft size={16} weight={PUBLIC_ICON_WEIGHT} /> {language === 'it' ? 'Torna al blog' : 'Back to blog'}
-          </Link>
+          </LocalizedLink>
         </div>
       </Section>
     );
   }
 
+  const postPath = localize(`/blog/${slug ?? ''}`);
+
   return (
     <div>
+      <Seo
+        title={post.title}
+        description={post.excerpt}
+        path={postPath}
+        image={post.image}
+        jsonLd={graph([
+          dentistSchema(language),
+          physicianSchema(),
+          websiteSchema(language),
+          breadcrumbSchema([
+            { name: String(t('nav.home')), path: language === 'en' ? '/en' : '/' },
+            { name: String(t('nav.blog')), path: localize('/blog') },
+            { name: post.title, path: postPath },
+          ]),
+          articleSchema({
+            title: post.title,
+            description: post.excerpt,
+            path: postPath,
+            image: post.image,
+            author: post.author,
+          }),
+        ])}
+      />
       <Section>
         <FadeIn>
-          <Link to="/blog" className="link-accent mb-8 inline-flex items-center gap-1 text-sm">
+          <LocalizedLink to="/blog" className="link-accent mb-8 inline-flex items-center gap-1 text-sm">
             <CaretLeft size={16} weight={PUBLIC_ICON_WEIGHT} /> {language === 'it' ? 'Torna al blog' : 'Back to blog'}
-          </Link>
+          </LocalizedLink>
           {post.image && (
             <div className="mb-8 aspect-[21/9] overflow-hidden">
               <img src={post.image} alt={post.title} className="h-full w-full object-cover" />
@@ -114,6 +141,10 @@ const BlogPostPage: React.FC = () => {
           </div>
           <p className="mb-8 text-lg leading-relaxed text-ink-muted">{post.excerpt}</p>
           <div className="prose-blog whitespace-pre-wrap leading-relaxed text-ink-muted">{post.body}</div>
+          <p className="mt-8 text-sm text-ink-soft">
+            {t('about.doctor.reviewedBy')}
+            {post.date ? ` · ${post.date}` : ''}
+          </p>
         </FadeIn>
       </Section>
     </div>

@@ -16,8 +16,8 @@ import {
 
 const HERO_HARD_REVEAL_MS = 45000;
 const HERO_SPLASH_MIN_MS = 600;
-/** Soft reloads from cache usually finish faster — skip splash unless load exceeds this. */
 const SPLASH_DELAY_MS = 400;
+const isBrowser = typeof window !== 'undefined';
 
 type HeroBootGateProps = {
   children: React.ReactNode;
@@ -25,10 +25,10 @@ type HeroBootGateProps = {
 
 const HeroBootGate: React.FC<HeroBootGateProps> = ({ children }) => {
   const { pathname } = useLocation();
-  const needsPreload = shouldWaitForHeroPreload(pathname);
+  const needsPreload = isBrowser && shouldWaitForHeroPreload(pathname);
   const splashVisibleRef = useRef(false);
 
-  const [bootReady, setBootReady] = useState(() => !needsPreload);
+  const [overlay, setOverlay] = useState(() => needsPreload && !isHeroSessionWarmed());
   const [showSplash, setShowSplash] = useState(
     () => needsPreload && !isHeroSessionWarmed(),
   );
@@ -44,7 +44,7 @@ const HeroBootGate: React.FC<HeroBootGateProps> = ({ children }) => {
   useEffect(() => {
     if (!needsPreload) {
       releaseHeroBootOverlay();
-      setBootReady(true);
+      setOverlay(false);
       setShowSplash(false);
       setSplashExiting(false);
       return undefined;
@@ -53,7 +53,7 @@ const HeroBootGate: React.FC<HeroBootGateProps> = ({ children }) => {
     const firstVisit = !isHeroSessionWarmed();
     splashVisibleRef.current = firstVisit;
     setShowSplash(firstVisit);
-    setBootReady(false);
+    setOverlay(true);
     setSplashExiting(false);
     setLoadProgress(0);
 
@@ -93,7 +93,7 @@ const HeroBootGate: React.FC<HeroBootGateProps> = ({ children }) => {
         await waitForBrandFonts();
         if (cancelled) return;
         releaseHeroBootOverlay();
-        setBootReady(true);
+        setOverlay(false);
       };
 
       const usedSplash = splashVisibleRef.current;
@@ -136,14 +136,17 @@ const HeroBootGate: React.FC<HeroBootGateProps> = ({ children }) => {
     };
   }, [needsPreload, pathname]);
 
-  if (!bootReady) {
-    if (showSplash) {
-      return <HeroSplashScreen progress={loadProgress} exiting={splashExiting} />;
-    }
-    return <HeroBootLogo progress={loadProgress} exiting={splashExiting} />;
-  }
-
-  return <>{children}</>;
+  return (
+    <>
+      {children}
+      {overlay && showSplash ? (
+        <HeroSplashScreen progress={loadProgress} exiting={splashExiting} />
+      ) : null}
+      {overlay && !showSplash ? (
+        <HeroBootLogo progress={loadProgress} exiting={splashExiting} />
+      ) : null}
+    </>
+  );
 };
 
 export default HeroBootGate;

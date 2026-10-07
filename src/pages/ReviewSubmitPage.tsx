@@ -1,5 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { Link, useSearchParams } from 'react-router-dom';
+import { useSearchParams } from 'react-router-dom';
+import { LocalizedLink, useLocalizedPath } from '../i18n/LocalizedLink';
+import Seo from '../seo/Seo';
 import { CheckCircle, PaperPlaneTilt, Star } from '@phosphor-icons/react';
 import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
@@ -8,13 +10,14 @@ import FadeIn from '../components/FadeIn';
 import RequiredMark from '../components/RequiredMark';
 import { fetchPublishedServices, submitReview } from '../lib/api';
 import type { Service } from '../types/database';
-import { usePageTitle } from '../hooks/usePageTitle';
+import { CLINIC } from '../config/clinic';
+import { trackEvent } from '../lib/analytics';
 
 const ReviewSubmitPage: React.FC = () => {
   const { t, language } = useLanguage();
   const [searchParams] = useSearchParams();
   const token = searchParams.get('token');
-  usePageTitle(String(t('reviews.submit.pageTitle')));
+  const localize = useLocalizedPath();
 
   const [rating, setRating] = useState(0);
   const [hoverRating, setHoverRating] = useState(0);
@@ -59,38 +62,64 @@ const ReviewSubmitPage: React.FC = () => {
     }
   };
 
+  const seo = (
+    <Seo
+      title={String(t('reviews.submit.pageTitle'))}
+      description={String(t('reviews.submit.subtitle'))}
+      path={localize('/reviews/submit')}
+      noindex
+    />
+  );
+
   if (!token) {
     return (
+      <>
+      {seo}
       <Section>
         <div className="mx-auto max-w-lg text-center">
           <h1 className="heading-section mb-4">{t('reviews.submit.invalidTitle')}</h1>
           <p className="text-body mb-6">{t('reviews.submit.invalidMessage')}</p>
-          <Link to="/reviews" className="link-accent">
+          <LocalizedLink to="/reviews" className="link-accent">
             {t('reviews.submit.backToReviews')}
-          </Link>
+          </LocalizedLink>
         </div>
       </Section>
+      </>
     );
   }
 
   if (submitted) {
     return (
+      <>
+      {seo}
       <Section>
         <FadeIn>
           <div className="mx-auto max-w-lg rounded-md border border-brand-cyan/30 bg-brand-cyan-soft p-8 text-center">
             <CheckCircle size={48} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mx-auto mb-4 text-brand-cyan" />
             <h1 className="heading-section mb-3">{t('reviews.submit.successTitle')}</h1>
             <p className="text-body mb-6">{t('reviews.submit.successMessage')}</p>
-            <Link to="/reviews" className="btn-primary inline-flex">
+            <a
+              href={CLINIC.googleReviewUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="link-accent mb-6 inline-flex"
+              onClick={() => trackEvent('google_review_click')}
+            >
+              {t('contact.info.googleReview')}
+            </a>
+            <LocalizedLink to="/reviews" className="btn-primary inline-flex">
               {t('reviews.submit.backToReviews')}
-            </Link>
+            </LocalizedLink>
           </div>
         </FadeIn>
       </Section>
+      </>
     );
   }
 
   return (
+    <>
+    {seo}
     <Section>
       <FadeIn>
         <div className="mx-auto mb-8 max-w-2xl text-center">
@@ -187,6 +216,7 @@ const ReviewSubmitPage: React.FC = () => {
         </form>
       </FadeIn>
     </Section>
+    </>
   );
 };
 

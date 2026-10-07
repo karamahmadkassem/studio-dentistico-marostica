@@ -3,6 +3,16 @@ import { getServiceClient } from '../_shared/supabase.ts';
 import { verifySession } from '../_shared/auth.ts';
 import { sendEmail, reviewInviteEmail, blogNewsletterEmail, appointmentCancellationEmail } from '../_shared/brevo.ts';
 
+async function triggerSiteRebuild() {
+  const hook = Deno.env.get('VERCEL_DEPLOY_HOOK_URL');
+  if (!hook) return;
+  try {
+    await fetch(hook, { method: 'POST' });
+  } catch (error) {
+    console.error('Vercel deploy hook failed', error);
+  }
+}
+
 async function requireAdmin(req: Request) {
   const adminId = await verifySession(req.headers.get('Authorization'));
   if (!adminId) return null;
@@ -140,6 +150,7 @@ Deno.serve(async (req) => {
           });
         }
         const { data } = await supabase.from('opening_hours').select('*').order('day_of_week');
+        await triggerSiteRebuild();
         return jsonResponse(data);
       }
     }
@@ -154,6 +165,7 @@ Deno.serve(async (req) => {
         const body = await req.json();
         const { data, error } = await supabase.from('services').insert(body).select().single();
         if (error) throw error;
+        await triggerSiteRebuild();
         return jsonResponse(data, 201);
       }
     }
@@ -171,10 +183,12 @@ Deno.serve(async (req) => {
         const body = await req.json();
         const { data, error } = await supabase.from('services').update({ ...body, updated_at: new Date().toISOString() }).eq('id', id).select().single();
         if (error) throw error;
+        await triggerSiteRebuild();
         return jsonResponse(data);
       }
       if (req.method === 'DELETE') {
         await supabase.from('services').delete().eq('id', id);
+        await triggerSiteRebuild();
         return jsonResponse({ ok: true });
       }
     }
@@ -193,6 +207,7 @@ Deno.serve(async (req) => {
           .select()
           .single();
         if (error) throw error;
+        await triggerSiteRebuild();
         return jsonResponse(data);
       }
     }
@@ -255,12 +270,14 @@ Deno.serve(async (req) => {
             console.error('Newsletter send failed for', s.email, e);
           }
         }
+        await triggerSiteRebuild();
         return jsonResponse({ ok: true, post, emailsSent: subs?.length ?? 0 });
       }
       if (req.method === 'PATCH') {
         const body = await req.json();
         const { data, error } = await supabase.from('blog_posts').update({ ...body, updated_at: new Date().toISOString() }).eq('id', id).select().single();
         if (error) throw error;
+        await triggerSiteRebuild();
         return jsonResponse(data);
       }
       if (req.method === 'DELETE') {
@@ -290,6 +307,7 @@ Deno.serve(async (req) => {
       const body = await req.json();
       const { data, error } = await supabase.from('reviews').update({ ...body, updated_at: new Date().toISOString() }).eq('id', id).select().single();
       if (error) throw error;
+      await triggerSiteRebuild();
       return jsonResponse(data);
     }
 

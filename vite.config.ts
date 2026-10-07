@@ -1,7 +1,6 @@
 import { defineConfig } from 'vite';
 import react from '@vitejs/plugin-react';
 
-// https://vitejs.dev/config/
 export default defineConfig({
   plugins: [react()],
   server: {
@@ -10,5 +9,18 @@ export default defineConfig({
   build: {
     outDir: 'dist',
     sourcemap: true,
+  },
+  ssgOptions: {
+    script: 'async',
+    formatting: 'minify',
+    dirStyle: 'nested',
+    includedRoutes(paths: string[]) {
+      return paths.filter(
+        (path) =>
+          !path.includes('*') &&
+          !path.includes('admin') &&
+          !path.includes('reviews/submit'),
+      );
+    },
   },
 });

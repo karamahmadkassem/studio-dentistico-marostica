@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { LocalizedLink } from '../i18n/LocalizedLink';
 import { Check } from '@phosphor-icons/react';
 import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
@@ -10,11 +10,20 @@ import ServiceIcon from '../components/ServiceIcon';
 import { fetchPublishedServices } from '../lib/api';
 import { mergeDbAndTranslationServices } from '../lib/serviceDisplay';
 import type { Service } from '../types/database';
-import { usePageTitle } from '../hooks/usePageTitle';
+import Seo from '../seo/Seo';
+import {
+  breadcrumbSchema,
+  dentistSchema,
+  graph,
+  physicianSchema,
+  websiteSchema,
+  withAggregateRating,
+} from '../seo/schema';
+import { useLocalizedPath } from '../i18n/LocalizedLink';
 
 const ServicesPage: React.FC = () => {
   const { t, language } = useLanguage();
-  usePageTitle(t('nav.services'));
+  const localize = useLocalizedPath();
   const [dbServices, setDbServices] = useState<Service[]>([]);
 
   useEffect(() => {
@@ -34,6 +43,20 @@ const ServicesPage: React.FC = () => {
 
   return (
     <div>
+      <Seo
+        title={String(t('seo.services.title'))}
+        description={String(t('seo.services.description'))}
+        path={localize('/services')}
+        jsonLd={graph([
+          withAggregateRating(dentistSchema(language)),
+          physicianSchema(),
+          websiteSchema(language),
+          breadcrumbSchema([
+            { name: String(t('nav.home')), path: language === 'en' ? '/en' : '/' },
+            { name: String(t('nav.services')), path: localize('/services') },
+          ]),
+        ])}
+      />
       <PageHero title={t('services.hero.title')} subtitle={t('services.hero.subtitle')} />
 
       <Section>
@@ -55,7 +78,9 @@ const ServicesPage: React.FC = () => {
                     <ServiceIcon iconKey={service.iconKey} size={22} />
                   </div>
                   <h3 className="font-display text-xl font-semibold text-ink md:text-2xl">
-                    {service.title}
+                    <LocalizedLink to={`/services/${service.slug}`} className="hover:text-brand-cyan">
+                      {service.title}
+                    </LocalizedLink>
                   </h3>
                 </div>
                 <p className="mb-5 leading-relaxed text-ink-muted">{service.description}</p>
@@ -112,9 +137,9 @@ const ServicesPage: React.FC = () => {
               <a href={`tel:${String(t('footer.mobileHref'))}`} className="btn-white">
                 {t('services.cta.call')}
               </a>
-              <Link to="/contact" className="btn-primary">
+              <LocalizedLink to="/contact" className="btn-primary">
                 {t('services.cta.book')}
-              </Link>
+              </LocalizedLink>
             </div>
           </FadeIn>
         </div>

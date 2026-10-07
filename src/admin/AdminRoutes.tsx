@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Routes, Route, Navigate } from 'react-router-dom';
 import AdminProtectedRoute from './AdminProtectedRoute';
 import AdminLayout from './AdminLayout';
@@ -9,7 +9,18 @@ import AdminAboutPage from './pages/AdminAboutPage';
 import AdminBlogPage from './pages/AdminBlogPage';
 import AdminReviewsPage from './pages/AdminReviewsPage';
 
-const AdminRoutes: React.FC = () => (
+const AdminRoutes: React.FC = () => {
+  useEffect(() => {
+    let robots = document.querySelector('meta[name="robots"]');
+    if (!robots) {
+      robots = document.createElement('meta');
+      robots.setAttribute('name', 'robots');
+      document.head.appendChild(robots);
+    }
+    robots.setAttribute('content', 'noindex, nofollow');
+  }, []);
+
+  return (
   <Routes>
     <Route path="login" element={<AdminLoginPage />} />
     <Route
@@ -27,6 +38,7 @@ const AdminRoutes: React.FC = () => (
       <Route path="reviews" element={<AdminReviewsPage />} />
     </Route>
   </Routes>
-);
+  );
+};
 
 export default AdminRoutes;

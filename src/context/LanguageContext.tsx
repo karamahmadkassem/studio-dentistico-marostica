@@ -1,5 +1,7 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode, useCallback } from 'react';
+import React, { createContext, useContext, useEffect, useCallback, ReactNode } from 'react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { Language, getTranslation } from '../translations';
+import { alternatePath, languageFromPath } from '../i18n/paths';
 
 interface LanguageContextType {
   language: Language;
@@ -10,35 +12,37 @@ interface LanguageContextType {
 
 const LanguageContext = createContext<LanguageContextType | undefined>(undefined);
 
-const STORAGE_KEY = 'sdm-language';
-
 interface LanguageProviderProps {
   children: ReactNode;
 }
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const [language, setLanguageState] = useState<Language>(() => {
-    if (typeof window === 'undefined') return 'it';
-    const stored = localStorage.getItem(STORAGE_KEY);
-    return stored === 'en' || stored === 'it' ? stored : 'it';
-  });
+  const location = useLocation();
+  const navigate = useNavigate();
+  const language = languageFromPath(location.pathname);
 
   useEffect(() => {
-    localStorage.setItem(STORAGE_KEY, language);
+    if (typeof document === 'undefined') return;
     document.documentElement.lang = language;
   }, [language]);
 
-  const setLanguage = useCallback((lang: Language) => {
-    setLanguageState(lang);
-  }, []);
+  const setLanguage = useCallback(
+    (lang: Language) => {
+      const next = alternatePath(`${location.pathname}${location.search}`, lang);
+      if (next !== `${location.pathname}${location.search}`) {
+        navigate(next);
+      }
+    },
+    [location.pathname, location.search, navigate],
+  );
 
   const toggleLanguage = useCallback(() => {
-    setLanguageState((prev) => (prev === 'en' ? 'it' : 'en'));
-  }, []);
+    setLanguage(language === 'en' ? 'it' : 'en');
+  }, [language, setLanguage]);
 
   const t = useCallback(
     <T = string>(key: string): T => getTranslation(language, key) as T,
-    [language]
+    [language],
   );
 
   return (

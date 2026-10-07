@@ -1,5 +1,7 @@
 import React, { useState, useEffect } from 'react';
-import { Link, NavLink, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { LocalizedLink, LocalizedNavLink } from '../i18n/LocalizedLink';
+import { isHomePath } from '../i18n/paths';
 import { Globe, List, X } from '@phosphor-icons/react';
 import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
 import { ASSETS } from '../config/assets';
@@ -9,7 +11,7 @@ const Header: React.FC = () => {
   const { language, toggleLanguage, t } = useLanguage();
   const location = useLocation();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [overHero, setOverHero] = useState(() => location.pathname === '/');
+  const [overHero, setOverHero] = useState(() => isHomePath(location.pathname));
 
   useEffect(() => {
     setIsMenuOpen(false);
@@ -23,7 +25,7 @@ const Header: React.FC = () => {
   }, [isMenuOpen]);
 
   useEffect(() => {
-    if (location.pathname !== '/') {
+    if (!isHomePath(location.pathname)) {
       setOverHero(false);
       return;
     }
@@ -68,7 +70,7 @@ const Header: React.FC = () => {
     }`;
 
   const handleLogoClick = (e: React.MouseEvent<HTMLAnchorElement>) => {
-    if (location.pathname === '/') {
+    if (isHomePath(location.pathname)) {
       e.preventDefault();
       setIsMenuOpen(false);
       window.scrollTo({ top: 0, behavior: 'smooth' });
@@ -81,9 +83,9 @@ const Header: React.FC = () => {
         overHero && !isMenuOpen ? ' shell-header--over-hero' : ''
       }`}
     >
-      <nav className="container-page" aria-label="Main">
+      <nav className="container-page" aria-label={language === 'it' ? 'Navigazione principale' : 'Main navigation'}>
         <div className="flex h-20 items-center justify-between gap-4">
-          <Link
+          <LocalizedLink
             to="/"
             onClick={handleLogoClick}
             className="flex min-w-0 items-center gap-2 sm:gap-3"
@@ -98,13 +100,13 @@ const Header: React.FC = () => {
               Studio Dentistico{' '}
               <span className="accent">Marostica</span>
             </span>
-          </Link>
+          </LocalizedLink>
 
           <div className="hidden items-center gap-6 md:flex">
             {navItems.map((item) => (
-              <NavLink key={item.to} to={item.to} end={item.to === '/'} className={linkClass}>
+              <LocalizedNavLink key={item.to} to={item.to} end={item.to === '/'} className={linkClass}>
                 {String(item.label)}
-              </NavLink>
+              </LocalizedNavLink>
             ))}
             <button
               type="button"
@@ -133,7 +135,7 @@ const Header: React.FC = () => {
           <div id="mobile-menu" className="border-t border-white/15 pb-6 pt-4 md:hidden">
             <div className="flex flex-col gap-1">
               {navItems.map((item) => (
-                <NavLink
+                <LocalizedNavLink
                   key={item.to}
                   to={item.to}
                   end={item.to === '/'}
@@ -144,7 +146,7 @@ const Header: React.FC = () => {
                   }
                 >
                   {String(item.label)}
-                </NavLink>
+                </LocalizedNavLink>
               ))}
               <button
                 type="button"

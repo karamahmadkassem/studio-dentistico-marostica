@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { LocalizedLink } from '../i18n/LocalizedLink';
 import { CaretRight } from '@phosphor-icons/react';
 import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
 import ServiceIcon from './ServiceIcon';
@@ -36,10 +36,11 @@ const ServiceFlipCard: React.FC<ServiceFlipCardProps> = ({ service, learnMoreLab
         >
           <img
             src={service.imageUrl}
-            alt=""
+            alt={service.title}
             className="service-flip-card-image"
             loading="lazy"
-            aria-hidden
+            width={640}
+            height={420}
           />
           <div className="service-flip-card-overlay" aria-hidden />
           <div className="service-flip-card-front-content">
@@ -58,14 +59,14 @@ const ServiceFlipCard: React.FC<ServiceFlipCardProps> = ({ service, learnMoreLab
           <div className="service-flip-card-overlay service-flip-card-overlay--back" aria-hidden />
           <div className="service-flip-card-back-content">
             <p className="service-flip-card-description">{service.description}</p>
-            <Link
-              to="/services"
+            <LocalizedLink
+              to={`/services/${service.slug}`}
               className="service-flip-card-learn-more"
               onPointerDown={(e) => e.stopPropagation()}
               onClick={(e) => e.stopPropagation()}
             >
               {learnMoreLabel} <CaretRight size={16} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
-            </Link>
+            </LocalizedLink>
           </div>
         </div>
       </div>

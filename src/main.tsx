@@ -1,10 +1,12 @@
-import React from 'react';
-import ReactDOM from 'react-dom/client';
-import App from './App';
+import { ViteReactSSG } from 'vite-react-ssg';
+import { routes } from './App';
+import '@fontsource/manrope/400.css';
+import '@fontsource/manrope/500.css';
+import '@fontsource/manrope/600.css';
+import '@fontsource/manrope/700.css';
+import '@fontsource/outfit/500.css';
+import '@fontsource/outfit/600.css';
+import '@fontsource/outfit/700.css';
 import './index.css';
 
-ReactDOM.createRoot(document.getElementById('root')!).render(
-  <React.StrictMode>
-    <App />
-  </React.StrictMode>
-);
+export const createRoot = ViteReactSSG({ routes });

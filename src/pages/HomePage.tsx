@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { LocalizedLink } from '../i18n/LocalizedLink';
 import { CalendarCheck, CaretRight, Sparkle, Users } from '@phosphor-icons/react';
 import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
@@ -13,11 +13,24 @@ import { mergeDbAndTranslationServices } from '../lib/serviceDisplay';
 import { ASSETS } from '../config/assets';
 import { STATIC_REVIEWS } from '../config/staticFallback';
 import type { Service } from '../types/database';
-import { usePageTitle } from '../hooks/usePageTitle';
+import Seo from '../seo/Seo';
+import {
+  breadcrumbSchema,
+  dentistSchema,
+  graph,
+  physicianSchema,
+  websiteSchema,
+  withAggregateRating,
+} from '../seo/schema';
 
 const HomePage: React.FC = () => {
   const { t, language } = useLanguage();
-  usePageTitle(t('nav.home'));
+  const jsonLd = graph([
+    withAggregateRating(dentistSchema(language)),
+    physicianSchema(),
+    websiteSchema(language),
+    breadcrumbSchema([{ name: String(t('nav.home')), path: language === 'en' ? '/en' : '/' }]),
+  ]);
   const [dbServices, setDbServices] = useState<Service[]>([]);
   const [dbReviews, setDbReviews] = useState<{ id: string; name: string; body: string; rating: number }[]>([]);
 
@@ -72,6 +85,12 @@ const HomePage: React.FC = () => {
 
   return (
     <div>
+      <Seo
+        title={String(t('seo.home.title'))}
+        description={String(t('seo.home.description'))}
+        path={language === 'en' ? '/en' : '/'}
+        jsonLd={jsonLd}
+      />
       <ScrollHero />
 
       {/* About */}
@@ -81,8 +100,14 @@ const HomePage: React.FC = () => {
             <div className="aspect-[4/3] overflow-hidden">
               <img
                 src={ASSETS.about.hero}
-                alt={t('home.about.title')}
+                alt={
+                  language === 'it'
+                    ? 'Studio Dentistico Marostica: visita odontoiatrica in studio a Marostica'
+                    : 'Studio Dentistico Marostica: dental visit at the clinic in Marostica'
+                }
                 className="h-full w-full object-cover"
+                width={800}
+                height={600}
                 loading="lazy"
               />
             </div>
@@ -90,9 +115,9 @@ const HomePage: React.FC = () => {
           <FadeIn delay={0.1}>
             <h2 className="heading-section mb-5">{t('home.about.title')}</h2>
             <p className="text-body mb-8">{t('home.about.content')}</p>
-            <Link to="/about" className="btn-primary">
+            <LocalizedLink to="/about" className="btn-primary">
               {t('home.about.more')}
-            </Link>
+            </LocalizedLink>
           </FadeIn>
         </div>
       </Section>
@@ -105,9 +130,9 @@ const HomePage: React.FC = () => {
               <h2 className="heading-section mb-3">{t('home.services.title')}</h2>
               <p className="text-body">{t('home.services.subtitle')}</p>
             </div>
-            <Link to="/services" className="link-accent shrink-0">
+            <LocalizedLink to="/services" className="link-accent shrink-0">
               {t('home.services.cta')} <CaretRight size={16} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
-            </Link>
+            </LocalizedLink>
           </div>
         </FadeIn>
         <ServicesCarousel services={services} learnMoreLabel={t('home.services.learnMore')} />
@@ -144,9 +169,9 @@ const HomePage: React.FC = () => {
               <h2 className="heading-section mb-3">{t('home.testimonials.title')}</h2>
               <p className="text-body">{t('home.testimonials.subtitle')}</p>
             </div>
-            <Link to="/reviews" className="link-accent shrink-0">
+            <LocalizedLink to="/reviews" className="link-accent shrink-0">
               {t('common.viewAllReviews')} <CaretRight size={16} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
-            </Link>
+            </LocalizedLink>
           </div>
         </FadeIn>
         <ReviewsCarousel reviews={testimonials} />
@@ -162,9 +187,9 @@ const HomePage: React.FC = () => {
             <p className="text-on-dark-muted mx-auto mb-8 max-w-2xl text-lg">
               {t('home.cta.subtitle')}
             </p>
-            <Link to="/contact" className="btn-primary">
+            <LocalizedLink to="/contact" className="btn-primary">
               {t('home.cta.button')}
-            </Link>
+            </LocalizedLink>
           </FadeIn>
         </div>
       </section>

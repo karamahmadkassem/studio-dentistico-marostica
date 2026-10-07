@@ -1,51 +1,122 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">
   <url>
     <loc>https://www.studiodentisticomarostica.com/</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>1.0</priority>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/" />
   </url>
   <url>
     <loc>https://www.studiodentisticomarostica.com/about</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/about" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/about" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/about" />
   </url>
   <url>
-    <loc>https://www.studiodentisticomarostica.com/services</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <loc>https://www.studiodentisticomarostica.com/servizi</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi" />
   </url>
   <url>
     <loc>https://www.studiodentisticomarostica.com/blog</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.8</priority>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/blog" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/blog" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/blog" />
   </url>
   <url>
     <loc>https://www.studiodentisticomarostica.com/contact</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>monthly</changefreq>
-    <priority>0.9</priority>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/contact" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/contact" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/contact" />
   </url>
   <url>
     <loc>https://www.studiodentisticomarostica.com/reviews</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>weekly</changefreq>
-    <priority>0.7</priority>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/reviews" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/reviews" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/reviews" />
   </url>
   <url>
     <loc>https://www.studiodentisticomarostica.com/privacy</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/privacy" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/privacy" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/privacy" />
   </url>
   <url>
     <loc>https://www.studiodentisticomarostica.com/terms</loc>
-    <lastmod>2026-08-22</lastmod>
-    <changefreq>yearly</changefreq>
-    <priority>0.3</priority>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/terms" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/terms" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/terms" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/odontoiatria-generale</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/odontoiatria-generale" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/general-dentistry" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/odontoiatria-generale" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/igiene-dentale</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/igiene-dentale" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/dental-hygiene" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/igiene-dentale" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/cura-gengive</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/cura-gengive" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/gum-treatment" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/cura-gengive" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/endodonzia</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/endodonzia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/root-canal" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/endodonzia" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/implantologia</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/implantologia" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/dental-implants" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/implantologia" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/protesi</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/protesi" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/dental-prosthetics" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/protesi" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/estetica-dentale</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/estetica-dentale" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/cosmetic-dentistry" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/estetica-dentale" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/chirurgia-orale</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/chirurgia-orale" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/oral-surgery" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/chirurgia-orale" />
+  </url>
+  <url>
+    <loc>https://www.studiodentisticomarostica.com/servizi/russamento-apnee</loc>
+    <lastmod>2026-10-07</lastmod>
+    <xhtml:link rel="alternate" hreflang="it" href="https://www.studiodentisticomarostica.com/servizi/russamento-apnee" />
+    <xhtml:link rel="alternate" hreflang="en" href="https://www.studiodentisticomarostica.com/en/services/snoring-sleep-apnea" />
+    <xhtml:link rel="alternate" hreflang="x-default" href="https://www.studiodentisticomarostica.com/servizi/russamento-apnee" />
   </url>
 </urlset>

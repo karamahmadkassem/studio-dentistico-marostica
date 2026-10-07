@@ -2,10 +2,59 @@
   "buildCommand": "npm run build",
   "outputDirectory": "dist",
   "framework": "vite",
+  "cleanUrls": true,
+  "trailingSlash": false,
+  "redirects": [
+    {
+      "source": "/:path*",
+      "has": [{ "type": "host", "value": "studiodentisticomarostica.com" }],
+      "destination": "https://www.studiodentisticomarostica.com/:path*",
+      "permanent": true
+    },
+    {
+      "source": "/services",
+      "destination": "/servizi",
+      "permanent": true
+    },
+    {
+      "source": "/en/servizi",
+      "destination": "/en/services",
+      "permanent": true
+    },
+    {
+      "source": "/en/servizi/:path*",
+      "destination": "/en/services/:path*",
+      "permanent": true
+    }
+  ],
   "rewrites": [
     {
-      "source": "/((?!assets/).*)",
+      "source": "/admin/:path*",
       "destination": "/index.html"
+    }
+  ],
+  "headers": [
+    {
+      "source": "/assets/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/images/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/fonts/(.*)",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }]
+    },
+    {
+      "source": "/(.*)\\.html",
+      "headers": [{ "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }]
+    }
+  ],
+  "crons": [
+    {
+      "path": "/api/cron-rebuild",
+      "schedule": "0 3 * * *"
     }
   ]
 }

@@ -12,6 +12,46 @@ export const translations: Record<Language, TranslationValue> = {
       reviews: 'Recensioni',
       contact: 'Contatti',
     },
+    seo: {
+      home: {
+        title: 'Dentista a Marostica (VI)',
+        description:
+          'Studio Dentistico Marostica in Via XXIV Maggio 39, 36063 Marostica. Visite, igiene, implantologia e cure odontoiatriche con il Dr. Mourtada. Prenota una visita.',
+      },
+      about: {
+        title: 'Chi siamo | Dr. Mourtada',
+        description:
+          'Dr. Mourtada, odontoiatra a Marostica: laurea a Trieste, Master in Implanto-Protesi a Siena, iscrizione OMCeO Vicenza. Formazione e cura del paziente.',
+      },
+      services: {
+        title: 'Servizi odontoiatrici a Marostica',
+        description:
+          'Odontoiatria generale, igiene, implantologia, endodonzia, protesi, estetica e chirurgia orale a Marostica (VI). Scopri i trattamenti dello studio.',
+      },
+      blog: {
+        title: 'Blog | Consigli di odontoiatria',
+        description:
+          'Approfondimenti su igiene, implantologia, gengive e prevenzione dallo Studio Dentistico Marostica, a cura del Dr. Mourtada.',
+      },
+      contact: {
+        title: 'Contatti e prenotazioni a Marostica',
+        description:
+          'Prenota una visita in Via XXIV Maggio 39, 36063 Marostica. Cell. 351 8228984, tel. 0424 73061. Orari e mappa dello studio.',
+      },
+      reviews: {
+        title: 'Recensioni pazienti a Marostica',
+        description:
+          'Esperienze dei pazienti dello Studio Dentistico Marostica. Leggi le recensioni e, se hai un invito, lascia la tua opinione.',
+      },
+      privacy: {
+        title: 'Privacy Policy',
+        description: 'Informativa privacy GDPR dello Studio Dentistico Marostica, Via XXIV Maggio 39, 36063 Marostica (VI).',
+      },
+      terms: {
+        title: 'Termini e condizioni',
+        description: 'Termini di utilizzo del sito dello Studio Dentistico Marostica, Marostica (Vicenza).',
+      },
+    },
     common: {
       brand: 'Studio Dentistico Marostica',
       readMore: 'Leggi di più',
@@ -29,10 +69,16 @@ export const translations: Record<Language, TranslationValue> = {
       fabBook: 'Prenota',
       fabWhatsApp: 'WhatsApp',
       fabCall: 'Chiama',
+      consent: {
+        message:
+          'Usiamo solo misurazioni tecniche (senza cookie di profilazione) a meno che tu non accetti Google Analytics.',
+        accept: 'Accetta analytics',
+        decline: 'Solo necessari',
+      },
     },
     home: {
       hero: {
-        title: 'Il tuo sorriso merita il meglio',
+        title: 'Dentista a Marostica',
         subtitle: 'Cure odontoiatriche di eccellenza a Marostica, in un ambiente moderno e accogliente.',
         cta: 'Prenota una visita',
         secondary: 'I nostri servizi',
@@ -253,6 +299,14 @@ export const translations: Record<Language, TranslationValue> = {
           'Proveniente da una famiglia di medici ed odontoiatri, ho coltivato fin da piccolo la passione per l’odontoiatria e la chirurgia. Rivolgo particolare attenzione ai bambini — sono padre di tre meravigliose creature — e al primo approccio con il paziente, con forte attenzione alla prevenzione.',
         languagesTitle: 'Lingue parlate',
         languages: 'Italiano, inglese, francese e arabo',
+        credentialsTitle: 'Titoli e iscrizioni',
+        credentials: [
+          'Laurea in Odontoiatria e Protesi Dentaria, Università degli Studi di Trieste',
+          'Abilitazione all’esercizio della professione (Università di Trieste)',
+          'Iscrizione all’Ordine dei Medici Chirurghi e degli Odontoiatri di Vicenza',
+          'Master di II livello in Implanto-Protesi, Università degli Studi di Siena',
+        ],
+        reviewedBy: 'Contenuti clinici revisionati dal Dr. Mourtada',
       },
       team: {
         title: 'Il nostro team',
@@ -275,6 +329,15 @@ export const translations: Record<Language, TranslationValue> = {
         hoursSat: 'Sabato: 9:00 – 13:00',
         hoursSun: 'Domenica: Chiuso',
         map: 'Dove siamo',
+        directionsTitle: 'Come raggiungerci',
+        directions: [
+          'Siamo in Via XXIV Maggio 39, 36063 Marostica (VI), vicino al centro e al Castello Scaligero.',
+          'Da Bassano del Grappa: circa 15 minuti in auto verso Marostica.',
+          'Da Thiene: circa 20 minuti in auto.',
+          'Da Vicenza: circa 35–40 minuti in auto (A31 / SP248 secondo il percorso).',
+          'Parcheggio in zona: verifica la sosta nelle vie adiacenti al centro storico.',
+        ],
+        googleReview: 'Lascia una recensione su Google',
       },
       form: {
         title: 'Prenota una visita',
@@ -396,7 +459,7 @@ export const translations: Record<Language, TranslationValue> = {
     footer: {
       tagline: 'Il tuo sorriso è la nostra priorità.',
       rights: 'Tutti i diritti riservati.',
-      address: 'Via XXIV Maggio 39, Marostica - Vicenza',
+      address: 'Via XXIV Maggio 39, 36063 Marostica (VI)',
       mobile: '+39 351 8228984',
       mobileHref: '+393518228984',
       phone: '+39 0424 73061',
@@ -418,7 +481,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '1. Titolare del trattamento',
             paragraphs: [
-              'Il Titolare del trattamento dei dati personali è Studio Dentistico Marostica, con sede in Via XXIV Maggio 39, Marostica - Vicenza, email info@studiodentisticomarostica.it, cellulare 351 8228984, telefono 0424 73061.',
+              'Il Titolare del trattamento dei dati personali è Studio Dentistico Marostica, con sede in Via XXIV Maggio 39, 36063 Marostica - Vicenza, email info@studiodentisticomarostica.it, cellulare 351 8228984, telefono 0424 73061.',
               'Per qualsiasi richiesta relativa alla privacy è possibile contattare il Titolare ai recapiti indicati.',
             ],
           },
@@ -493,7 +556,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '2. Informazioni sullo studio',
             paragraphs: [
-              'Studio Dentistico Marostica è uno studio odontoiatrico con sede in Via XXIV Maggio 39, Marostica - Vicenza. Per appuntamenti e informazioni: cellulare 351 8228984, telefono 0424 73061, email info@studiodentisticomarostica.it.',
+              'Studio Dentistico Marostica è uno studio odontoiatrico con sede in Via XXIV Maggio 39, 36063 Marostica - Vicenza. Per appuntamenti e informazioni: cellulare 351 8228984, telefono 0424 73061, email info@studiodentisticomarostica.it.',
             ],
           },
           {
@@ -552,6 +615,46 @@ export const translations: Record<Language, TranslationValue> = {
       reviews: 'Reviews',
       contact: 'Contact',
     },
+    seo: {
+      home: {
+        title: 'Dentist in Marostica (VI), Italy',
+        description:
+          'Studio Dentistico Marostica at Via XXIV Maggio 39, 36063 Marostica. Check-ups, hygiene, implants and dental care with Dr. Mourtada. Book a visit.',
+      },
+      about: {
+        title: 'About us | Dr. Mourtada',
+        description:
+          'Dr. Mourtada, dentist in Marostica: degree in Trieste, Master in implant-prosthetics in Siena, registered with OMCeO Vicenza.',
+      },
+      services: {
+        title: 'Dental services in Marostica',
+        description:
+          'General dentistry, hygiene, implants, root canals, prosthetics, cosmetics and oral surgery in Marostica (VI), Italy.',
+      },
+      blog: {
+        title: 'Blog | Dental care notes',
+        description:
+          'Articles on hygiene, implants, gums and prevention from Studio Dentistico Marostica, reviewed by Dr. Mourtada.',
+      },
+      contact: {
+        title: 'Contact and bookings in Marostica',
+        description:
+          'Book a visit at Via XXIV Maggio 39, 36063 Marostica. Mobile 351 8228984, phone 0424 73061. Hours and map.',
+      },
+      reviews: {
+        title: 'Patient reviews in Marostica',
+        description:
+          'Patient experiences at Studio Dentistico Marostica. Read reviews or leave yours if you received an invite.',
+      },
+      privacy: {
+        title: 'Privacy Policy',
+        description: 'GDPR privacy notice of Studio Dentistico Marostica, Via XXIV Maggio 39, 36063 Marostica (VI), Italy.',
+      },
+      terms: {
+        title: 'Terms and conditions',
+        description: 'Website terms of Studio Dentistico Marostica, Marostica (Vicenza), Italy.',
+      },
+    },
     common: {
       brand: 'Studio Dentistico Marostica',
       readMore: 'Read more',
@@ -569,10 +672,16 @@ export const translations: Record<Language, TranslationValue> = {
       fabBook: 'Book',
       fabWhatsApp: 'WhatsApp',
       fabCall: 'Call',
+      consent: {
+        message:
+          'We use cookieless event tracking unless you accept Google Analytics.',
+        accept: 'Accept analytics',
+        decline: 'Necessary only',
+      },
     },
     home: {
       hero: {
-        title: 'Your smile deserves the best',
+        title: 'Dentist in Marostica',
         subtitle: 'Exceptional dental care in Marostica, in a modern and welcoming environment.',
         cta: 'Book a visit',
         secondary: 'Our services',
@@ -793,6 +902,14 @@ export const translations: Record<Language, TranslationValue> = {
           'Coming from a family of physicians and dentists, I developed a passion for dentistry and surgery from an early age. I pay special attention to children — I am the father of three wonderful kids — and to the first patient visit, with a strong focus on prevention.',
         languagesTitle: 'Languages spoken',
         languages: 'Italian, English, French, and Arabic',
+        credentialsTitle: 'Qualifications and registrations',
+        credentials: [
+          'Degree in Dentistry and Dental Prosthetics, University of Trieste',
+          'Licence to practise (University of Trieste)',
+          'Registered with the Order of Physicians and Dentists of Vicenza (OMCeO)',
+          'Second-level Master in Implant-Prosthetics, University of Siena',
+        ],
+        reviewedBy: 'Clinical content reviewed by Dr. Mourtada',
       },
       team: {
         title: 'Our team',
@@ -815,6 +932,15 @@ export const translations: Record<Language, TranslationValue> = {
         hoursSat: 'Saturday: 9:00 – 13:00',
         hoursSun: 'Sunday: Closed',
         map: 'Where we are',
+        directionsTitle: 'How to find us',
+        directions: [
+          'We are at Via XXIV Maggio 39, 36063 Marostica (VI), near the historic centre and the Scaliger Castle.',
+          'From Bassano del Grappa: about 15 minutes by car to Marostica.',
+          'From Thiene: about 20 minutes by car.',
+          'From Vicenza: about 35–40 minutes by car (A31 / SP248 depending on the route).',
+          'Parking: check nearby streets around the historic centre.',
+        ],
+        googleReview: 'Leave a Google review',
       },
       form: {
         title: 'Book a visit',
@@ -936,7 +1062,7 @@ export const translations: Record<Language, TranslationValue> = {
     footer: {
       tagline: 'Your smile is our priority.',
       rights: 'All rights reserved.',
-      address: 'Via XXIV Maggio 39, Marostica - Vicenza',
+      address: 'Via XXIV Maggio 39, 36063 Marostica (VI)',
       mobile: '+39 351 8228984',
       mobileHref: '+393518228984',
       phone: '+39 0424 73061',
@@ -958,7 +1084,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '1. Data controller',
             paragraphs: [
-              'The data controller is Studio Dentistico Marostica, located at Via XXIV Maggio 39, Marostica - Vicenza, Italy, email info@studiodentisticomarostica.it, mobile 351 8228984, phone 0424 73061.',
+              'The data controller is Studio Dentistico Marostica, located at Via XXIV Maggio 39, 36063 Marostica - Vicenza, Italy, email info@studiodentisticomarostica.it, mobile 351 8228984, phone 0424 73061.',
               'For any privacy-related request, you may contact the controller using the details above.',
             ],
           },
@@ -1033,7 +1159,7 @@ export const translations: Record<Language, TranslationValue> = {
           {
             title: '2. Information about the practice',
             paragraphs: [
-              'Studio Dentistico Marostica is a dental practice located at Via XXIV Maggio 39, Marostica - Vicenza, Italy. For appointments and information: mobile 351 8228984, phone 0424 73061, email info@studiodentisticomarostica.it.',
+              'Studio Dentistico Marostica is a dental practice located at Via XXIV Maggio 39, 36063 Marostica - Vicenza, Italy. For appointments and information: mobile 351 8228984, phone 0424 73061, email info@studiodentisticomarostica.it.',
             ],
           },
           {

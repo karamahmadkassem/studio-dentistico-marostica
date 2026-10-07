@@ -1,5 +1,5 @@
 import React, { useEffect, useMemo, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { LocalizedLink, useLocalizedPath } from '../i18n/LocalizedLink';
 import { Calendar, CaretRight, User } from '@phosphor-icons/react';
 import { PUBLIC_ICON_WEIGHT } from '../components/ui/Icon';
 import { useLanguage } from '../context/LanguageContext';
@@ -7,7 +7,8 @@ import PageHero from '../components/PageHero';
 import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import { fetchPublishedBlogPosts, subscribeNewsletter } from '../lib/api';
-import { usePageTitle } from '../hooks/usePageTitle';
+import Seo from '../seo/Seo';
+import { breadcrumbSchema, dentistSchema, graph, physicianSchema, websiteSchema } from '../seo/schema';
 import { ASSETS } from '../config/assets';
 
 interface DisplayPost {
@@ -22,7 +23,7 @@ interface DisplayPost {
 
 const BlogPage: React.FC = () => {
   const { t, language } = useLanguage();
-  usePageTitle(String(t('nav.blog')));
+  const localize = useLocalizedPath();
   const [activeCategory, setActiveCategory] = useState('all');
   const [query, setQuery] = useState('');
   const [posts, setPosts] = useState<DisplayPost[]>([]);
@@ -92,6 +93,20 @@ const BlogPage: React.FC = () => {
 
   return (
     <div>
+      <Seo
+        title={String(t('seo.blog.title'))}
+        description={String(t('seo.blog.description'))}
+        path={localize('/blog')}
+        jsonLd={graph([
+          dentistSchema(language),
+          physicianSchema(),
+          websiteSchema(language),
+          breadcrumbSchema([
+            { name: String(t('nav.home')), path: language === 'en' ? '/en' : '/' },
+            { name: String(t('nav.blog')), path: localize('/blog') },
+          ]),
+        ])}
+      />
       <PageHero title={t('blog.hero.title')} subtitle={t('blog.hero.subtitle')} />
 
       <Section muted>
@@ -139,13 +154,13 @@ const BlogPage: React.FC = () => {
           <>
             <FadeIn>
               <article className="mb-10 grid grid-cols-1 overflow-hidden border border-ink-soft/20 bg-white lg:grid-cols-2">
-                <Link to={`/blog/${featured.slug}`} className="aspect-[16/10] lg:aspect-auto lg:min-h-[320px]">
+                <LocalizedLink to={`/blog/${featured.slug}`} className="aspect-[16/10] lg:aspect-auto lg:min-h-[320px]">
                   <img
                     src={featured.image}
                     alt={featured.title}
                     className="h-full w-full object-cover"
                   />
-                </Link>
+                </LocalizedLink>
                 <div className="flex flex-col justify-center p-6 md:p-10">
                   <span className="mb-2 text-sm font-semibold text-brand-cyan">{featured.category}</span>
                   <h2 className="mb-3 font-display text-2xl font-bold text-ink md:text-3xl">
@@ -160,9 +175,9 @@ const BlogPage: React.FC = () => {
                       <User size={14} weight={PUBLIC_ICON_WEIGHT} /> {featured.author}
                     </span>
                   </div>
-                  <Link to={`/blog/${featured.slug}`} className="link-accent">
+                  <LocalizedLink to={`/blog/${featured.slug}`} className="link-accent">
                     {t('common.readMore')} <CaretRight size={14} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
-                  </Link>
+                  </LocalizedLink>
                 </div>
               </article>
             </FadeIn>
@@ -171,14 +186,14 @@ const BlogPage: React.FC = () => {
               {rest.map((post, i) => (
                 <FadeIn key={post.slug} delay={i * 0.05}>
                   <article className="flex h-full flex-col border border-ink-soft/20 bg-white">
-                    <Link to={`/blog/${post.slug}`} className="aspect-[16/10] overflow-hidden">
+                    <LocalizedLink to={`/blog/${post.slug}`} className="aspect-[16/10] overflow-hidden">
                       <img
                         src={post.image}
                         alt={post.title}
                         className="h-full w-full object-cover"
                         loading="lazy"
                       />
-                    </Link>
+                    </LocalizedLink>
                     <div className="flex flex-1 flex-col p-5">
                       <span className="mb-2 text-sm font-semibold text-brand-cyan">{post.category}</span>
                       <h3 className="mb-2 font-display text-lg font-semibold text-ink">{post.title}</h3>
@@ -191,9 +206,9 @@ const BlogPage: React.FC = () => {
                           <User size={12} weight={PUBLIC_ICON_WEIGHT} /> {post.author}
                         </span>
                       </div>
-                      <Link to={`/blog/${post.slug}`} className="link-accent text-sm">
+                      <LocalizedLink to={`/blog/${post.slug}`} className="link-accent text-sm">
                         {t('common.readMore')} <CaretRight size={14} weight={PUBLIC_ICON_WEIGHT} className="ml-1" />
-                      </Link>
+                      </LocalizedLink>
                     </div>
                   </article>
                 </FadeIn>

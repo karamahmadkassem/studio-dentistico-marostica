@@ -1,5 +1,9 @@
 import React, { useEffect, useRef, useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import { LocalizedLink } from '../i18n/LocalizedLink';
+import { trackEvent } from '../lib/analytics';
+import { localizePath } from '../i18n/paths';
+import { languageFromPath } from '../i18n/paths';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Calendar, Phone } from '@phosphor-icons/react';
 import { PUBLIC_ICON_WEIGHT } from './ui/Icon';
@@ -49,13 +53,19 @@ const AppointmentButton: React.FC = () => {
     setOpen(false);
   }, [location.pathname]);
 
-  if (location.pathname === '/contact') return null;
+  const lang = languageFromPath(location.pathname);
+  if (location.pathname === localizePath('/contact', lang)) return null;
 
   const actions = [
     {
       id: 'call',
       render: (
-        <a href={`tel:${phoneHref}`} className="contact-fab-action" aria-label={String(t('common.fabCall'))}>
+        <a
+          href={`tel:${phoneHref}`}
+          className="contact-fab-action"
+          aria-label={String(t('common.fabCall'))}
+          onClick={() => trackEvent('phone_click', { source: 'fab' })}
+        >
           <Phone size={22} weight={PUBLIC_ICON_WEIGHT} />
         </a>
       ),
@@ -69,6 +79,7 @@ const AppointmentButton: React.FC = () => {
           rel="noreferrer"
           className="contact-fab-action contact-fab-action--whatsapp"
           aria-label={String(t('common.fabWhatsApp'))}
+          onClick={() => trackEvent('whatsapp_click')}
         >
           <WhatsAppIcon size={24} />
         </a>
@@ -77,14 +88,14 @@ const AppointmentButton: React.FC = () => {
     {
       id: 'book',
       render: (
-        <Link
+        <LocalizedLink
           to="/contact"
           className="contact-fab-action"
           aria-label={String(t('common.fabBook'))}
           onClick={() => setOpen(false)}
         >
           <Calendar size={22} weight={PUBLIC_ICON_WEIGHT} />
-        </Link>
+        </LocalizedLink>
       ),
     },
   ];

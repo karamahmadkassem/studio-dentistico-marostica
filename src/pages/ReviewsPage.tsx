@@ -6,7 +6,17 @@ import Section from '../components/Section';
 import FadeIn from '../components/FadeIn';
 import { fetchPublishedReviews } from '../lib/api';
 import { STATIC_REVIEWS } from '../config/staticFallback';
-import { usePageTitle } from '../hooks/usePageTitle';
+import { CLINIC } from '../config/clinic';
+import { trackEvent } from '../lib/analytics';
+import Seo from '../seo/Seo';
+import {
+  breadcrumbSchema,
+  dentistSchema,
+  graph,
+  websiteSchema,
+  withAggregateRating,
+} from '../seo/schema';
+import { useLocalizedPath } from '../i18n/LocalizedLink';
 
 interface DisplayReview {
   id: string;
@@ -19,7 +29,7 @@ interface DisplayReview {
 
 const ReviewsPage: React.FC = () => {
   const { t, language } = useLanguage();
-  usePageTitle(t('nav.reviews'));
+  const localize = useLocalizedPath();
   const [activeFilter, setActiveFilter] = useState('all');
   const [reviews, setReviews] = useState<DisplayReview[]>([]);
 
@@ -97,6 +107,19 @@ const ReviewsPage: React.FC = () => {
 
   return (
     <div>
+      <Seo
+        title={String(t('seo.reviews.title'))}
+        description={String(t('seo.reviews.description'))}
+        path={localize('/reviews')}
+        jsonLd={graph([
+          withAggregateRating(dentistSchema(language)),
+          websiteSchema(language),
+          breadcrumbSchema([
+            { name: String(t('nav.home')), path: language === 'en' ? '/en' : '/' },
+            { name: String(t('nav.reviews')), path: localize('/reviews') },
+          ]),
+        ])}
+      />
       <PageHero title={t('reviews.hero.title')} subtitle={t('reviews.hero.subtitle')} />
 
       <Section>
@@ -116,6 +139,15 @@ const ReviewsPage: React.FC = () => {
               </div>
               <p className="font-display text-3xl font-bold text-ink">{avg} / 5</p>
               <p className="text-sm text-ink-muted">{basedOn}</p>
+              <a
+                href={CLINIC.googleReviewUrl}
+                target="_blank"
+                rel="noreferrer"
+                className="link-accent mt-3 inline-flex"
+                onClick={() => trackEvent('google_review_click')}
+              >
+                {t('contact.info.googleReview')}
+              </a>
             </div>
           </FadeIn>
         </div>

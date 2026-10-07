@@ -1,5 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import { Link } from 'react-router-dom';
+import { LocalizedLink, useLocalizedPath } from '../i18n/LocalizedLink';
+import { CLINIC } from '../config/clinic';
+import { trackEvent } from '../lib/analytics';
+import Seo from '../seo/Seo';
+import {
+  breadcrumbSchema,
+  dentistSchema,
+  faqSchema,
+  graph,
+  physicianSchema,
+  websiteSchema,
+  withAggregateRating,
+} from '../seo/schema';
 import {
   CaretDown,
   CheckCircle,
@@ -23,11 +35,10 @@ import { isSupabaseConfigured } from '../lib/supabase';
 import { formatDateKey } from '../config/appointmentSchedule';
 import { BOOKING_SERVICE_KEYS, type BookingServiceKey } from '../config/bookingServices';
 import { scrollToElement } from '../lib/scrollToElement';
-import { usePageTitle } from '../hooks/usePageTitle';
 
 const ContactPage: React.FC = () => {
   const { t, language } = useLanguage();
-  usePageTitle(t('nav.contact'));
+  const localize = useLocalizedPath();
   const [openFaq, setOpenFaq] = useState<number | null>(0);
   const [selectedDate, setSelectedDate] = useState<Date | null>(null);
   const [selectedTime, setSelectedTime] = useState<string | null>(null);
@@ -77,6 +88,7 @@ const ContactPage: React.FC = () => {
         message: fd.get('message') || '',
         locale: language,
       });
+      trackEvent('booking_submit');
       setSubmitted(true);
       form.reset();
       setSelectedDate(null);
@@ -101,6 +113,21 @@ const ContactPage: React.FC = () => {
 
   return (
     <div>
+      <Seo
+        title={String(t('seo.contact.title'))}
+        description={String(t('seo.contact.description'))}
+        path={localize('/contact')}
+        jsonLd={graph([
+          withAggregateRating(dentistSchema(language)),
+          physicianSchema(),
+          websiteSchema(language),
+          breadcrumbSchema([
+            { name: String(t('nav.home')), path: language === 'en' ? '/en' : '/' },
+            { name: String(t('nav.contact')), path: localize('/contact') },
+          ]),
+          faqSchema(Array.isArray(faqItems) ? faqItems : []),
+        ])}
+      />
       <PageHero title={t('contact.hero.title')} subtitle={t('contact.hero.subtitle')} />
 
       <Section>
@@ -116,7 +143,7 @@ const ContactPage: React.FC = () => {
                   <MapPin size={22} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-1 shrink-0 text-brand-cyan" />
                   <div>
                     <h3 className="mb-1 font-semibold text-ink">{t('contact.info.address')}</h3>
-                    <p className="text-ink-muted">{t('footer.address')}</p>
+                    <address className="not-italic text-ink-muted">{CLINIC.addressLine}</address>
                   </div>
                 </li>
                 <li className="flex gap-4">
@@ -124,7 +151,11 @@ const ContactPage: React.FC = () => {
                   <div>
                     <p>
                       <span className="font-semibold text-ink">{t('contact.info.mobile')}: </span>
-                      <a href={`tel:${mobileHref}`} className="text-ink-muted hover:text-brand-cyan">
+                      <a
+                        href={`tel:${mobileHref}`}
+                        className="text-ink-muted hover:text-brand-cyan"
+                        onClick={() => trackEvent('phone_click', { source: 'contact' })}
+                      >
                         {t('footer.mobile')}
                       </a>
                     </p>
@@ -163,16 +194,42 @@ const ContactPage: React.FC = () => {
                 </h3>
                 <div className="h-64 overflow-hidden rounded-md bg-surface-muted md:h-80">
                   <iframe
-                    src="https://maps.google.com/maps?q=Via%20XXIV%20Maggio%2039,%20Marostica%20VI&t=&z=16&ie=UTF8&iwloc=&output=embed"
+                    src={CLINIC.mapEmbedUrl}
                     width="100%"
                     height="100%"
                     style={{ border: 0 }}
                     allowFullScreen
                     loading="lazy"
                     referrerPolicy="no-referrer-when-downgrade"
-                    title="Mappa Studio Dentistico Marostica"
+                    title={language === 'it' ? 'Mappa Studio Dentistico Marostica' : 'Map of Studio Dentistico Marostica'}
                   />
                 </div>
+                <a
+                  href={CLINIC.mapsSearchUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="link-accent mt-3 inline-flex"
+                  onClick={() => trackEvent('directions_click')}
+                >
+                  {language === 'it' ? 'Apri in Google Maps' : 'Open in Google Maps'}
+                </a>
+                <a
+                  href={CLINIC.googleReviewUrl}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="link-accent mt-2 ml-4 inline-flex"
+                  onClick={() => trackEvent('google_review_click')}
+                >
+                  {t('contact.info.googleReview')}
+                </a>
+                <h3 className="mb-3 mt-8 font-display text-xl font-semibold text-ink">
+                  {t('contact.info.directionsTitle')}
+                </h3>
+                <ul className="space-y-2 text-ink-muted">
+                  {((t('contact.info.directions') as string[]) ?? []).map((line) => (
+                    <li key={line}>{line}</li>
+                  ))}
+                </ul>
               </div>
             </div>
           </FadeIn>
@@ -278,9 +335,9 @@ const ContactPage: React.FC = () => {
                     />
                     <span>
                       {t('contact.form.privacyBefore')}{' '}
-                      <Link to="/privacy" className="font-medium text-brand-cyan hover:underline">
+                      <LocalizedLink to="/privacy" className="font-medium text-brand-cyan hover:underline">
                         {t('common.privacy')}
-                      </Link>
+                      </LocalizedLink>
                       <RequiredMark />
                     </span>
                   </label>

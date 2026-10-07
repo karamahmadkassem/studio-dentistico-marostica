@@ -1,5 +1,6 @@
 import React from 'react';
-import { Link } from 'react-router-dom';
+import { LocalizedLink } from '../i18n/LocalizedLink';
+import { CLINIC } from '../config/clinic';
 import {
   Clock,
   Envelope,
@@ -71,12 +72,12 @@ const Footer: React.FC = () => {
             <ul className="space-y-2">
               {links.map((link) => (
                 <li key={link.to}>
-                  <Link
+                  <LocalizedLink
                     to={link.to}
                     className="text-white/80 transition-colors hover:text-[#4AACE1]"
                   >
                     {String(link.label)}
-                  </Link>
+                  </LocalizedLink>
                 </li>
               ))}
             </ul>
@@ -89,7 +90,7 @@ const Footer: React.FC = () => {
             <ul className="space-y-3 text-white/80">
               <li className="flex items-start gap-3">
                 <MapPin size={18} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-0.5 shrink-0 text-[#4AACE1]" />
-                <span>{String(t('footer.address'))}</span>
+                <address className="not-italic">{CLINIC.addressLine}</address>
               </li>
               <li className="flex items-start gap-3">
                 <Phone size={18} weight={PUBLIC_ICON_WEIGHT} className="icon-duotone-brand mt-0.5 shrink-0 text-[#4AACE1]" />
@@ -136,12 +137,12 @@ const Footer: React.FC = () => {
             © {year} Studio Dentistico Marostica. {String(t('footer.rights'))}
           </p>
           <div className="flex gap-4">
-            <Link to="/privacy" className="hover:text-[#4AACE1]">
+            <LocalizedLink to="/privacy" className="hover:text-[#4AACE1]">
               {String(t('common.privacy'))}
-            </Link>
-            <Link to="/terms" className="hover:text-[#4AACE1]">
+            </LocalizedLink>
+            <LocalizedLink to="/terms" className="hover:text-[#4AACE1]">
               {String(t('common.terms'))}
-            </Link>
+            </LocalizedLink>
           </div>
         </div>
       </div>
